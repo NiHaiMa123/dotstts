@@ -28,7 +28,7 @@
         "report_sha256": "ae362457486aa16b6fc35cb955214887797003d1cd71fee410b55e3239e6e7fd"
       },
       "evidence_type": "near_text",
-      "included_in_group": false,
+      "included_in_group": true,
       "left": {
         "asset_sha256": "0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7",
         "audio_absolute_path": "audio/0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7.wav",
@@ -46,8 +46,19 @@
         "risk:punctuation_removed",
         "risk:named_entity_present"
       ],
-      "review": null,
-      "review_status": "pending_review",
+      "review": {
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "evidence_type": "near_text",
+        "left_asset_sha256": "0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:edge",
+        "review_id": "75e11363-a346-5d04-883a-ea0f6f5e9f68",
+        "review_note": "{\"exclude_asset_sha256s\":[\"0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7\"],\"note\":\"同一语音内容；左侧为截取版本，保留带完整开头且时长更长的右侧样本。\",\"representative_asset_sha256\":\"562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98\"}",
+        "review_round": 1,
+        "review_status": "accepted",
+        "right_asset_sha256": "562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98",
+        "source_row_index": 0
+      },
+      "review_status": "accepted",
       "right": {
         "asset_sha256": "562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98",
         "audio_absolute_path": "audio/562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98.wav",
@@ -85,7 +96,7 @@
         "report_sha256": "ae362457486aa16b6fc35cb955214887797003d1cd71fee410b55e3239e6e7fd"
       },
       "evidence_type": "near_text",
-      "included_in_group": false,
+      "included_in_group": true,
       "left": {
         "asset_sha256": "230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7",
         "audio_absolute_path": "audio/230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7.wav",
@@ -102,8 +113,19 @@
         "near_text_score_at_or_above_calibrated_threshold",
         "risk:punctuation_removed"
       ],
-      "review": null,
-      "review_status": "pending_review",
+      "review": {
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "evidence_type": "near_text",
+        "left_asset_sha256": "230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:edge",
+        "review_id": "7119ca5a-a91c-5d3b-9a90-25e38668084c",
+        "review_note": "{\"exclude_asset_sha256s\":[\"230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7\"],\"note\":\"同一语音内容；左侧为截取版本，保留带完整开头且时长更长的右侧样本。\",\"representative_asset_sha256\":\"6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954\"}",
+        "review_round": 1,
+        "review_status": "accepted",
+        "right_asset_sha256": "6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954",
+        "source_row_index": 1
+      },
+      "review_status": "accepted",
       "right": {
         "asset_sha256": "6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954",
         "audio_absolute_path": "audio/6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954.wav",
@@ -141,7 +163,7 @@
         "report_sha256": "ae362457486aa16b6fc35cb955214887797003d1cd71fee410b55e3239e6e7fd"
       },
       "evidence_type": "near_text",
-      "included_in_group": false,
+      "included_in_group": true,
       "left": {
         "asset_sha256": "f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5",
         "audio_absolute_path": "audio/f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5.wav",
@@ -158,8 +180,19 @@
         "near_text_score_at_or_above_calibrated_threshold",
         "risk:punctuation_removed"
       ],
-      "review": null,
-      "review_status": "pending_review",
+      "review": {
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "evidence_type": "near_text",
+        "left_asset_sha256": "f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:edge",
+        "review_id": "1e36019c-517a-5454-9459-2dec115d5ef1",
+        "review_note": "{\"exclude_asset_sha256s\":[\"fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3\"],\"note\":\"用户确认属于相同语音；保留时长更长、内容更完整的左侧样本。\",\"representative_asset_sha256\":\"f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5\"}",
+        "review_round": 1,
+        "review_status": "accepted",
+        "right_asset_sha256": "fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3",
+        "source_row_index": 2
+      },
+      "review_status": "accepted",
       "right": {
         "asset_sha256": "fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3",
         "audio_absolute_path": "audio/fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3.wav",
@@ -270,7 +303,17 @@
         "center_cosine_below_calibrated_threshold",
         "knn_cosine_below_calibrated_threshold"
       ],
-      "review_status": "pending_review"
+      "review": {
+        "asset_sha256": "f6236d60a75f9cfe3805ccd23d3e1bf20d407381a5298fbd712bff7de4b1973c",
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:speaker",
+        "review_id": "8abdcdae-9872-5a8e-887f-5f2869468824",
+        "review_note": "用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。",
+        "review_round": 1,
+        "review_status": "confirmed_same_speaker",
+        "source_row_index": 0
+      },
+      "review_status": "confirmed_same_speaker"
     },
     {
       "asset": {
@@ -356,7 +399,17 @@
         "center_cosine_below_calibrated_threshold",
         "knn_cosine_below_calibrated_threshold"
       ],
-      "review_status": "pending_review"
+      "review": {
+        "asset_sha256": "83b471e85f922ab58c1bf28963a3f58185b9b3091e89cf9ce1e51c7ea97c85f1",
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:speaker",
+        "review_id": "c17c7634-bda5-5284-9a16-91ca01ae54b1",
+        "review_note": "用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。",
+        "review_round": 1,
+        "review_status": "confirmed_same_speaker",
+        "source_row_index": 1
+      },
+      "review_status": "confirmed_same_speaker"
     },
     {
       "asset": {
@@ -442,7 +495,17 @@
         "center_cosine_below_calibrated_threshold",
         "knn_cosine_below_calibrated_threshold"
       ],
-      "review_status": "pending_review"
+      "review": {
+        "asset_sha256": "3846a4deabe2d2cacdabd72c4a9862405b2f0d9eef40c8986d97c43b4a37514e",
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:speaker",
+        "review_id": "ef460fe2-7acb-547a-bc93-807feedb86b0",
+        "review_note": "用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。",
+        "review_round": 1,
+        "review_status": "confirmed_same_speaker",
+        "source_row_index": 2
+      },
+      "review_status": "confirmed_same_speaker"
     },
     {
       "asset": {
@@ -527,7 +590,17 @@
       "reasons": [
         "center_cosine_below_calibrated_threshold"
       ],
-      "review_status": "pending_review"
+      "review": {
+        "asset_sha256": "407a6e002c09e9e74c21542fa193588372244e7bae77199cbc2ba17a4fe0cca1",
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:speaker",
+        "review_id": "ab24b9e8-4e71-5b56-8bcf-1677bc77bd0f",
+        "review_note": "用户确认音质很差，无法作为可靠训练样本，排除出冻结数据集。",
+        "review_round": 1,
+        "review_status": "exclude_uncertain",
+        "source_row_index": 3
+      },
+      "review_status": "exclude_uncertain"
     },
     {
       "asset": {
@@ -612,7 +685,17 @@
       "reasons": [
         "center_cosine_below_calibrated_threshold"
       ],
-      "review_status": "pending_review"
+      "review": {
+        "asset_sha256": "1032d71af7b0928812ecde223e23bacf029cfe0fd94c52deb3ec8be76fb753c5",
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:speaker",
+        "review_id": "39719526-16e0-5f07-9a69-8c779ab27e8c",
+        "review_note": "用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。",
+        "review_round": 1,
+        "review_status": "confirmed_same_speaker",
+        "source_row_index": 4
+      },
+      "review_status": "confirmed_same_speaker"
     },
     {
       "asset": {
@@ -697,10 +780,20 @@
       "reasons": [
         "center_cosine_below_calibrated_threshold"
       ],
-      "review_status": "pending_review"
+      "review": {
+        "asset_sha256": "1ff8948795a937f583c78fa243192b470df5d87875aa50533f0c3b3d509e771c",
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:speaker",
+        "review_id": "64d5995f-92c8-5d1d-9ab5-637be5c6ad2e",
+        "review_note": "用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。",
+        "review_round": 1,
+        "review_status": "confirmed_same_speaker",
+        "source_row_index": 5
+      },
+      "review_status": "confirmed_same_speaker"
     }
   ],
-  "status": "review_required",
+  "status": "reviewed",
   "summary": {
     "candidate_count": 277,
     "dataset_id": "fuxuan",
@@ -712,12 +805,14 @@
       "near_audio": 0,
       "near_text": 3
     },
-    "edge_review_snapshot_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-    "group_count": 277,
-    "multi_asset_group_count": 0,
-    "pending_duplicate_review_count": 3,
+    "edge_review_snapshot_sha256": "34002c03383950819b018cc1c5fe1a5fdf8ca13243a057e5730fc836b51345df",
+    "group_count": 274,
+    "multi_asset_group_count": 3,
+    "pending_duplicate_review_count": 0,
+    "pending_speaker_review_count": 0,
     "run_id": "9e2ff68f-b473-4e3a-acf9-b333c54c3535",
-    "singleton_group_count": 277,
+    "singleton_group_count": 271,
+    "speaker_exclusion_count": 1,
     "speaker_outlier_count": 6
   },
   "thresholds": {
