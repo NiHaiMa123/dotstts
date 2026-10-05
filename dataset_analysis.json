@@ -1,0 +1,824 @@
+{
+  "duplicate_edges": [
+    {
+      "analysis_status": "pending_review",
+      "evidence": {
+        "metric": "symmetric_normalized_levenshtein",
+        "pair": {
+          "edit_distance": 3,
+          "left_asset_sha256": "0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7",
+          "left_named_entities": [
+            "本座"
+          ],
+          "left_normalized_text": "一旦丹炉熄灭烟气散去本座立即赶来",
+          "left_text": "一旦丹炉熄灭，烟气散去，本座立即赶来。",
+          "length_ratio": 0.8421052631578947,
+          "right_asset_sha256": "562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98",
+          "right_named_entities": [
+            "本座"
+          ],
+          "right_normalized_text": "快去吧一旦丹炉熄灭烟气散去本座立即赶来",
+          "right_text": "快去吧。一旦丹炉熄灭，烟气散去，本座立即赶来。",
+          "risk_flags": [
+            "punctuation_removed",
+            "named_entity_present"
+          ],
+          "similarity": 0.8421052631578947
+        },
+        "report_sha256": "ae362457486aa16b6fc35cb955214887797003d1cd71fee410b55e3239e6e7fd"
+      },
+      "evidence_type": "near_text",
+      "included_in_group": true,
+      "left": {
+        "asset_sha256": "0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7",
+        "audio_absolute_path": "audio/0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7.wav",
+        "audio_relative_path": "0f/0f435961ebfd37c0d21452d6bec6738e9e0a243d4d3daa13812d4904f7dc8d54.wav",
+        "audio_url": "audio/0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7.wav",
+        "duration_seconds": 6.990083333333334,
+        "emotion_primary": "生气_angry",
+        "fid": "0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7",
+        "text": "一旦丹炉熄灭，烟气散去，本座立即赶来。",
+        "text_source": "filename_candidate_unreviewed"
+      },
+      "margin": 0.11222910216718263,
+      "reasons": [
+        "near_text_score_at_or_above_calibrated_threshold",
+        "risk:punctuation_removed",
+        "risk:named_entity_present"
+      ],
+      "review": {
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "evidence_type": "near_text",
+        "left_asset_sha256": "0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:edge",
+        "review_id": "75e11363-a346-5d04-883a-ea0f6f5e9f68",
+        "review_note": "{\"exclude_asset_sha256s\":[\"0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7\"],\"note\":\"同一语音内容；左侧为截取版本，保留带完整开头且时长更长的右侧样本。\",\"representative_asset_sha256\":\"562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98\"}",
+        "review_round": 1,
+        "review_status": "accepted",
+        "right_asset_sha256": "562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98",
+        "source_row_index": 0
+      },
+      "review_status": "accepted",
+      "right": {
+        "asset_sha256": "562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98",
+        "audio_absolute_path": "audio/562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98.wav",
+        "audio_relative_path": "5c/5cd1cf32106ba020a11579d22fcdad199b1aa4f25676ab6146bbf505a7783c76.wav",
+        "audio_url": "audio/562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98.wav",
+        "duration_seconds": 8.060354166666666,
+        "emotion_primary": "生气_angry",
+        "fid": "562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98",
+        "text": "快去吧。一旦丹炉熄灭，烟气散去，本座立即赶来。",
+        "text_source": "filename_candidate_unreviewed"
+      },
+      "score": 0.8421052631578947,
+      "threshold": 0.7298761609907121
+    },
+    {
+      "analysis_status": "pending_review",
+      "evidence": {
+        "metric": "symmetric_normalized_levenshtein",
+        "pair": {
+          "edit_distance": 2,
+          "left_asset_sha256": "230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7",
+          "left_named_entities": [],
+          "left_normalized_text": "纯粹理性的乐趣所在注定不为所有人理解",
+          "left_text": "纯粹理性的乐趣所在，注定不为所有人理解。",
+          "length_ratio": 0.9,
+          "right_asset_sha256": "6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954",
+          "right_named_entities": [],
+          "right_normalized_text": "无妨纯粹理性的乐趣所在注定不为所有人理解",
+          "right_text": "无妨，纯粹理性的乐趣所在，注定不为所有人理解。",
+          "risk_flags": [
+            "punctuation_removed"
+          ],
+          "similarity": 0.9
+        },
+        "report_sha256": "ae362457486aa16b6fc35cb955214887797003d1cd71fee410b55e3239e6e7fd"
+      },
+      "evidence_type": "near_text",
+      "included_in_group": true,
+      "left": {
+        "asset_sha256": "230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7",
+        "audio_absolute_path": "audio/230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7.wav",
+        "audio_relative_path": "09/094c10cc0cf34ca7dd0550a5ecc7552191e2caf5603c364ab8e8a72c56ec9d66.wav",
+        "audio_url": "audio/230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7.wav",
+        "duration_seconds": 3.471,
+        "emotion_primary": "中立_neutral",
+        "fid": "230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7",
+        "text": "纯粹理性的乐趣所在，注定不为所有人理解。",
+        "text_source": "filename_candidate_unreviewed"
+      },
+      "margin": 0.17012383900928796,
+      "reasons": [
+        "near_text_score_at_or_above_calibrated_threshold",
+        "risk:punctuation_removed"
+      ],
+      "review": {
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "evidence_type": "near_text",
+        "left_asset_sha256": "230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:edge",
+        "review_id": "7119ca5a-a91c-5d3b-9a90-25e38668084c",
+        "review_note": "{\"exclude_asset_sha256s\":[\"230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7\"],\"note\":\"同一语音内容；左侧为截取版本，保留带完整开头且时长更长的右侧样本。\",\"representative_asset_sha256\":\"6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954\"}",
+        "review_round": 1,
+        "review_status": "accepted",
+        "right_asset_sha256": "6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954",
+        "source_row_index": 1
+      },
+      "review_status": "accepted",
+      "right": {
+        "asset_sha256": "6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954",
+        "audio_absolute_path": "audio/6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954.wav",
+        "audio_relative_path": "2d/2d41cb0bf73004c37f96abd9e57749fc55eda6f738d06a7354d09843b8b592db.wav",
+        "audio_url": "audio/6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954.wav",
+        "duration_seconds": 5.118979166666667,
+        "emotion_primary": "生气_angry",
+        "fid": "6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954",
+        "text": "无妨，纯粹理性的乐趣所在，注定不为所有人理解。",
+        "text_source": "filename_candidate_unreviewed"
+      },
+      "score": 0.9,
+      "threshold": 0.7298761609907121
+    },
+    {
+      "analysis_status": "pending_review",
+      "evidence": {
+        "metric": "symmetric_normalized_levenshtein",
+        "pair": {
+          "edit_distance": 3,
+          "left_asset_sha256": "f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5",
+          "left_named_entities": [],
+          "left_normalized_text": "但你和绘影图形里记录的样子所差无几持明的转生真的会让人重获新生吗",
+          "left_text": "但，你和绘影图形里记录的样子所差无几，持明的转生真的会让人重获新生吗？",
+          "length_ratio": 0.96875,
+          "right_asset_sha256": "fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3",
+          "right_named_entities": [],
+          "right_normalized_text": "你和绘影图形里记录的样子所差无几持明的转生真的会让人蜕变新生吗",
+          "right_text": "你和绘影图形里记录的样子所差无几，持明的转生真的会让人蜕变新生吗？",
+          "risk_flags": [
+            "punctuation_removed"
+          ],
+          "similarity": 0.90625
+        },
+        "report_sha256": "ae362457486aa16b6fc35cb955214887797003d1cd71fee410b55e3239e6e7fd"
+      },
+      "evidence_type": "near_text",
+      "included_in_group": true,
+      "left": {
+        "asset_sha256": "f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5",
+        "audio_absolute_path": "audio/f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5.wav",
+        "audio_relative_path": "e2/e2a6b43fa01bb32dbfc1f65a0cd4fc4d132c53c10eed684fc1c1e4fb7b353c7d.wav",
+        "audio_url": "audio/f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5.wav",
+        "duration_seconds": 8.433,
+        "emotion_primary": "开心_happy",
+        "fid": "f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5",
+        "text": "但，你和绘影图形里记录的样子所差无几，持明的转生真的会让人重获新生吗？",
+        "text_source": "filename_candidate_unreviewed"
+      },
+      "margin": 0.17637383900928794,
+      "reasons": [
+        "near_text_score_at_or_above_calibrated_threshold",
+        "risk:punctuation_removed"
+      ],
+      "review": {
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "evidence_type": "near_text",
+        "left_asset_sha256": "f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:edge",
+        "review_id": "1e36019c-517a-5454-9459-2dec115d5ef1",
+        "review_note": "{\"exclude_asset_sha256s\":[\"fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3\"],\"note\":\"用户确认属于相同语音；保留时长更长、内容更完整的左侧样本。\",\"representative_asset_sha256\":\"f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5\"}",
+        "review_round": 1,
+        "review_status": "accepted",
+        "right_asset_sha256": "fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3",
+        "source_row_index": 2
+      },
+      "review_status": "accepted",
+      "right": {
+        "asset_sha256": "fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3",
+        "audio_absolute_path": "audio/fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3.wav",
+        "audio_relative_path": "08/0833509f28a6fdf76d48f2ad376c5dd35e9e5e1ef33ed462df8febe037045247.wav",
+        "audio_url": "audio/fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3.wav",
+        "duration_seconds": 6.974,
+        "emotion_primary": "中立_neutral",
+        "fid": "fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3",
+        "text": "你和绘影图形里记录的样子所差无几，持明的转生真的会让人蜕变新生吗？",
+        "text_source": "filename_candidate_unreviewed"
+      },
+      "score": 0.90625,
+      "threshold": 0.7298761609907121
+    }
+  ],
+  "provenance": {
+    "calibration_config_sha256": "8d2b6f4003f0936f0aa9b03df3ae63baeab8b1469cf9195ec80e54089abf38c2",
+    "calibration_id": "fuxuan_dataset_thresholds",
+    "calibration_report_sha256": "c9703fd572e1e58f6776d94a085a4e4440917011f63ae22261c591e34bf41677",
+    "calibration_version": 1,
+    "candidate_snapshot_sha256": "5fd831600c498344166af3834a5809e0bba2a7831f5bea63f498deaac1daceea",
+    "catalog_path": "not_included_in_portable_bundle",
+    "speaker_report_sha256": "c126c40c3d5aa07af3b9aa34a819a0aaa12d01f12ff29b7d4721524e72a9e499"
+  },
+  "schema_version": 1,
+  "speaker_outliers": [
+    {
+      "asset": {
+        "asset_sha256": "f6236d60a75f9cfe3805ccd23d3e1bf20d407381a5298fbd712bff7de4b1973c",
+        "audio_absolute_path": "audio/f6236d60a75f9cfe3805ccd23d3e1bf20d407381a5298fbd712bff7de4b1973c.wav",
+        "audio_relative_path": "c4/c4019867a47586cce33b4c4fdea64863aa4e2d112779d62d5f9c751ae49b963c.wav",
+        "audio_url": "audio/f6236d60a75f9cfe3805ccd23d3e1bf20d407381a5298fbd712bff7de4b1973c.wav",
+        "duration_seconds": 3.0286875,
+        "emotion_primary": "生气_angry",
+        "fid": "f6236d60a75f9cfe3805ccd23d3e1bf20d407381a5298fbd712bff7de4b1973c",
+        "text": "难以置信……",
+        "text_source": "filename_candidate_unreviewed"
+      },
+      "center_cosine": 0.387058190878195,
+      "center_threshold": 0.6545700366223228,
+      "knn_cosine": 0.5973997137891847,
+      "knn_threshold": 0.6766019064784982,
+      "neighbors": [
+        {
+          "asset_sha256": "1032d71af7b0928812ecde223e23bacf029cfe0fd94c52deb3ec8be76fb753c5",
+          "audio_absolute_path": "audio/1032d71af7b0928812ecde223e23bacf029cfe0fd94c52deb3ec8be76fb753c5.wav",
+          "audio_relative_path": "a2/a2000783b3f93386f5d57a7afdec71a77821872f2b616db6dda3bbc59f199368.wav",
+          "audio_url": "audio/1032d71af7b0928812ecde223e23bacf029cfe0fd94c52deb3ec8be76fb753c5.wav",
+          "cosine": 0.6424920751848175,
+          "duration_seconds": 4.180479166666666,
+          "emotion_primary": "生气_angry",
+          "fid": "1032d71af7b0928812ecde223e23bacf029cfe0fd94c52deb3ec8be76fb753c5",
+          "text": "哈！荒谬！竟然会有这种事……",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "d3b242d18f6a0f6bb802ed235013a16ad3ee7156eec9c413cf2a9b10444a10cd",
+          "audio_absolute_path": "audio/d3b242d18f6a0f6bb802ed235013a16ad3ee7156eec9c413cf2a9b10444a10cd.wav",
+          "audio_relative_path": "e6/e68bedef620d82993d50d75889264a6e01658332f62238704b15d90d5e129c35.wav",
+          "audio_url": "audio/d3b242d18f6a0f6bb802ed235013a16ad3ee7156eec9c413cf2a9b10444a10cd.wav",
+          "cosine": 0.6186091079108761,
+          "duration_seconds": 6.2026666666666666,
+          "emotion_primary": "生气_angry",
+          "fid": "d3b242d18f6a0f6bb802ed235013a16ad3ee7156eec9c413cf2a9b10444a10cd",
+          "text": "卡芙卡与星核无关，倒是你们…居然是你们……",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "02272cc79883d4f7a8fee676a5cb61289171d41af3596f5c603951c9a3e0bc82",
+          "audio_absolute_path": "audio/02272cc79883d4f7a8fee676a5cb61289171d41af3596f5c603951c9a3e0bc82.wav",
+          "audio_relative_path": "9b/9b3534796f57a2c35120423150670d424dcc0233beb0210ebb079afc9c5998dc.wav",
+          "audio_url": "audio/02272cc79883d4f7a8fee676a5cb61289171d41af3596f5c603951c9a3e0bc82.wav",
+          "cosine": 0.5917245805309106,
+          "duration_seconds": 6.369041666666667,
+          "emotion_primary": "生气_angry",
+          "fid": "02272cc79883d4f7a8fee676a5cb61289171d41af3596f5c603951c9a3e0bc82",
+          "text": "行有眚，无攸利…还真是应了卦象。可恶。",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "4b12656c1c4053df204d1624f34acea1beda24ee59aaa26d764de407c9cd349f",
+          "audio_absolute_path": "audio/4b12656c1c4053df204d1624f34acea1beda24ee59aaa26d764de407c9cd349f.wav",
+          "audio_relative_path": "5c/5cb9014a74b95574ff93ea5b92c1aac87f84b84d047a2fb0cebc7c3fc838dbe4.wav",
+          "audio_url": "audio/4b12656c1c4053df204d1624f34acea1beda24ee59aaa26d764de407c9cd349f.wav",
+          "cosine": 0.5825265765974509,
+          "duration_seconds": 5.119979166666667,
+          "emotion_primary": "难过_sad",
+          "fid": "4b12656c1c4053df204d1624f34acea1beda24ee59aaa26d764de407c9cd349f",
+          "text": "我…我没事。只是有些头疼。",
+          "text_source": "human_review"
+        },
+        {
+          "asset_sha256": "40ae70e147cffa1752e9d4a25ffab93e2d808c159849f74c5de58f917e307163",
+          "audio_absolute_path": "audio/40ae70e147cffa1752e9d4a25ffab93e2d808c159849f74c5de58f917e307163.wav",
+          "audio_relative_path": "aa/aacd42c9afeb8638a62f848e5a9cfe28cbeebc2d97b945c90599656e6d638269.wav",
+          "audio_url": "audio/40ae70e147cffa1752e9d4a25ffab93e2d808c159849f74c5de58f917e307163.wav",
+          "cosine": 0.5516462287218684,
+          "duration_seconds": 3.2526041666666665,
+          "emotion_primary": "生气_angry",
+          "fid": "40ae70e147cffa1752e9d4a25ffab93e2d808c159849f74c5de58f917e307163",
+          "text": "…可是，「穷观阵」是不会错的。",
+          "text_source": "filename_candidate_unreviewed"
+        }
+      ],
+      "outlier_rank": 1,
+      "outlier_score": 0.5077710476663102,
+      "reasons": [
+        "center_cosine_below_calibrated_threshold",
+        "knn_cosine_below_calibrated_threshold"
+      ],
+      "review": {
+        "asset_sha256": "f6236d60a75f9cfe3805ccd23d3e1bf20d407381a5298fbd712bff7de4b1973c",
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:speaker",
+        "review_id": "8abdcdae-9872-5a8e-887f-5f2869468824",
+        "review_note": "用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。",
+        "review_round": 1,
+        "review_status": "confirmed_same_speaker",
+        "source_row_index": 0
+      },
+      "review_status": "confirmed_same_speaker"
+    },
+    {
+      "asset": {
+        "asset_sha256": "83b471e85f922ab58c1bf28963a3f58185b9b3091e89cf9ce1e51c7ea97c85f1",
+        "audio_absolute_path": "audio/83b471e85f922ab58c1bf28963a3f58185b9b3091e89cf9ce1e51c7ea97c85f1.wav",
+        "audio_relative_path": "8d/8dd889f35885407546e08240f34a9811cfe3c653562414d575f6bbc61c42e2f4.wav",
+        "audio_url": "audio/83b471e85f922ab58c1bf28963a3f58185b9b3091e89cf9ce1e51c7ea97c85f1.wav",
+        "duration_seconds": 3.269979166666667,
+        "emotion_primary": "生气_angry",
+        "fid": "83b471e85f922ab58c1bf28963a3f58185b9b3091e89cf9ce1e51c7ea97c85f1",
+        "text": "道路，从来就只有一条。",
+        "text_source": "filename_candidate_unreviewed"
+      },
+      "center_cosine": 0.5289580503982492,
+      "center_threshold": 0.6545700366223228,
+      "knn_cosine": 0.635378794549311,
+      "knn_threshold": 0.6766019064784982,
+      "neighbors": [
+        {
+          "asset_sha256": "02272cc79883d4f7a8fee676a5cb61289171d41af3596f5c603951c9a3e0bc82",
+          "audio_absolute_path": "audio/02272cc79883d4f7a8fee676a5cb61289171d41af3596f5c603951c9a3e0bc82.wav",
+          "audio_relative_path": "9b/9b3534796f57a2c35120423150670d424dcc0233beb0210ebb079afc9c5998dc.wav",
+          "audio_url": "audio/02272cc79883d4f7a8fee676a5cb61289171d41af3596f5c603951c9a3e0bc82.wav",
+          "cosine": 0.6538436674292764,
+          "duration_seconds": 6.369041666666667,
+          "emotion_primary": "生气_angry",
+          "fid": "02272cc79883d4f7a8fee676a5cb61289171d41af3596f5c603951c9a3e0bc82",
+          "text": "行有眚，无攸利…还真是应了卦象。可恶。",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "21118299a84188577b3dc7577f040317e448ed2dd45f4a386790b83103667817",
+          "audio_absolute_path": "audio/21118299a84188577b3dc7577f040317e448ed2dd45f4a386790b83103667817.wav",
+          "audio_relative_path": "8e/8e8e6186c88fbca3d0ac12f6966bf55d20961098c1916a336f9bb7e480bf9136.wav",
+          "audio_url": "audio/21118299a84188577b3dc7577f040317e448ed2dd45f4a386790b83103667817.wav",
+          "cosine": 0.6470610709476692,
+          "duration_seconds": 6.241,
+          "emotion_primary": "开心_happy",
+          "fid": "21118299a84188577b3dc7577f040317e448ed2dd45f4a386790b83103667817",
+          "text": "不过我猜你会回答「人并非机器」「世界不只一条道路」！",
+          "text_source": "human_review"
+        },
+        {
+          "asset_sha256": "c8a4709953dc30d1427d7201d37288576b49fa33d969d5cab61854af3a90e1cf",
+          "audio_absolute_path": "audio/c8a4709953dc30d1427d7201d37288576b49fa33d969d5cab61854af3a90e1cf.wav",
+          "audio_relative_path": "74/74ed350167834d82001765d5d0ad9bd5c174f0ec4d9c8092f855e36645b9c4c4.wav",
+          "audio_url": "audio/c8a4709953dc30d1427d7201d37288576b49fa33d969d5cab61854af3a90e1cf.wav",
+          "cosine": 0.6269439539816017,
+          "duration_seconds": 9.299979166666667,
+          "emotion_primary": "生气_angry",
+          "fid": "c8a4709953dc30d1427d7201d37288576b49fa33d969d5cab61854af3a90e1cf",
+          "text": "如果你还不服气，本座可以拨冗为你演示究竟何为命中注定——用你人类的脑袋所能理解的方式。",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "c981d56af59d57d21a252302465d80ee11d2587a300e4fc10588421042059361",
+          "audio_absolute_path": "audio/c981d56af59d57d21a252302465d80ee11d2587a300e4fc10588421042059361.wav",
+          "audio_relative_path": "2d/2d4158f6efa1d3a5aec0cb13851cd8a8c3d0fb164467f49db7d03a821e0dcb9c.wav",
+          "audio_url": "audio/c981d56af59d57d21a252302465d80ee11d2587a300e4fc10588421042059361.wav",
+          "cosine": 0.6259308687964917,
+          "duration_seconds": 9.174979166666667,
+          "emotion_primary": "生气_angry",
+          "fid": "c981d56af59d57d21a252302465d80ee11d2587a300e4fc10588421042059361",
+          "text": "青雀！又是你，是你把这些外人带进司部的吗？你把我平日里所立的规矩都当作耳旁风了吗？",
+          "text_source": "human_review"
+        },
+        {
+          "asset_sha256": "75be17ec3b495698f3fa4a247c217fb470f5fb6878d420600e4e054781e6abe4",
+          "audio_absolute_path": "audio/75be17ec3b495698f3fa4a247c217fb470f5fb6878d420600e4e054781e6abe4.wav",
+          "audio_relative_path": "06/06bfc4a7edba6e8f6d4ecab4cb44467e521b575e829d3b619b90639f7e4984ee.wav",
+          "audio_url": "audio/75be17ec3b495698f3fa4a247c217fb470f5fb6878d420600e4e054781e6abe4.wav",
+          "cosine": 0.6231144115915164,
+          "duration_seconds": 5.227979166666667,
+          "emotion_primary": "中立_neutral",
+          "fid": "75be17ec3b495698f3fa4a247c217fb470f5fb6878d420600e4e054781e6abe4",
+          "text": "「太卜被岁阳附体」这件事传出去不好听，我明白了。",
+          "text_source": "filename_candidate_unreviewed"
+        }
+      ],
+      "outlier_rank": 2,
+      "outlier_score": 0.4178315775262199,
+      "reasons": [
+        "center_cosine_below_calibrated_threshold",
+        "knn_cosine_below_calibrated_threshold"
+      ],
+      "review": {
+        "asset_sha256": "83b471e85f922ab58c1bf28963a3f58185b9b3091e89cf9ce1e51c7ea97c85f1",
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:speaker",
+        "review_id": "c17c7634-bda5-5284-9a16-91ca01ae54b1",
+        "review_note": "用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。",
+        "review_round": 1,
+        "review_status": "confirmed_same_speaker",
+        "source_row_index": 1
+      },
+      "review_status": "confirmed_same_speaker"
+    },
+    {
+      "asset": {
+        "asset_sha256": "3846a4deabe2d2cacdabd72c4a9862405b2f0d9eef40c8986d97c43b4a37514e",
+        "audio_absolute_path": "audio/3846a4deabe2d2cacdabd72c4a9862405b2f0d9eef40c8986d97c43b4a37514e.wav",
+        "audio_relative_path": "b2/b2f0a334e24e93b89b513928057681c7b0fce36917cc6216d73e2486bf977cb5.wav",
+        "audio_url": "audio/3846a4deabe2d2cacdabd72c4a9862405b2f0d9eef40c8986d97c43b4a37514e.wav",
+        "duration_seconds": 3.4599583333333332,
+        "emotion_primary": "生气_angry",
+        "fid": "3846a4deabe2d2cacdabd72c4a9862405b2f0d9eef40c8986d97c43b4a37514e",
+        "text": "…又是我出主意？",
+        "text_source": "human_review"
+      },
+      "center_cosine": 0.6255131277690342,
+      "center_threshold": 0.6545700366223228,
+      "knn_cosine": 0.6528336057367288,
+      "knn_threshold": 0.6766019064784982,
+      "neighbors": [
+        {
+          "asset_sha256": "d5a6c14e7999c0779a76bc857e27d840bac82e9d8bbed75c5277a41ddbce1b0a",
+          "audio_absolute_path": "audio/d5a6c14e7999c0779a76bc857e27d840bac82e9d8bbed75c5277a41ddbce1b0a.wav",
+          "audio_relative_path": "e4/e44c7cbf6079746e45c6e56bb3bf13c466d97f9ba069582dba060385771d1aca.wav",
+          "audio_url": "audio/d5a6c14e7999c0779a76bc857e27d840bac82e9d8bbed75c5277a41ddbce1b0a.wav",
+          "cosine": 0.6648903362309817,
+          "duration_seconds": 9.174,
+          "emotion_primary": "生气_angry",
+          "fid": "d5a6c14e7999c0779a76bc857e27d840bac82e9d8bbed75c5277a41ddbce1b0a",
+          "text": "不必，本座这儿有将军文告，请看。诸位捕获星核猎手之后，即由太卜司接手审问事宜。",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "f1a94c9be91b84f0b65a027b417618f371869d1f9d80ada468163c66dbd42250",
+          "audio_absolute_path": "audio/f1a94c9be91b84f0b65a027b417618f371869d1f9d80ada468163c66dbd42250.wav",
+          "audio_relative_path": "20/208bc141e36d4658e3593a1a1cf3138fe6546e232d5c5e407e6e0f78d5126b82.wav",
+          "audio_url": "audio/f1a94c9be91b84f0b65a027b417618f371869d1f9d80ada468163c66dbd42250.wav",
+          "cosine": 0.658443884404668,
+          "duration_seconds": 3.2974375,
+          "emotion_primary": "生气_angry",
+          "fid": "f1a94c9be91b84f0b65a027b417618f371869d1f9d80ada468163c66dbd42250",
+          "text": "你……盯着我干什么？",
+          "text_source": "human_review"
+        },
+        {
+          "asset_sha256": "75bb8edebd85a5bd42ed6ca524936277de38f139a81a90af4618b3a85b33492b",
+          "audio_absolute_path": "audio/75bb8edebd85a5bd42ed6ca524936277de38f139a81a90af4618b3a85b33492b.wav",
+          "audio_relative_path": "07/071f8dc988add79afaab87a9e2d06029f849024cd4d759c8f89d9715adbb6275.wav",
+          "audio_url": "audio/75bb8edebd85a5bd42ed6ca524936277de38f139a81a90af4618b3a85b33492b.wav",
+          "cosine": 0.6543289761179436,
+          "duration_seconds": 8.456979166666667,
+          "emotion_primary": "生气_angry",
+          "fid": "75bb8edebd85a5bd42ed6ca524936277de38f139a81a90af4618b3a85b33492b",
+          "text": "谁、谁说的？咳，我可没说做不到。做不到与「未必」之间，有百万光年的差距。",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "91819a2166ec39730d75054e52ce9b7ed57f8e00e964dd8750d2fb7a6c28977c",
+          "audio_absolute_path": "audio/91819a2166ec39730d75054e52ce9b7ed57f8e00e964dd8750d2fb7a6c28977c.wav",
+          "audio_relative_path": "b5/b580fe9a92927c0c415c339ae9b37df4634a4fa6371315b6ecbf9a5607ae1365.wav",
+          "audio_url": "audio/91819a2166ec39730d75054e52ce9b7ed57f8e00e964dd8750d2fb7a6c28977c.wav",
+          "cosine": 0.6456167371309725,
+          "duration_seconds": 8.318875,
+          "emotion_primary": "生气_angry",
+          "fid": "91819a2166ec39730d75054e52ce9b7ed57f8e00e964dd8750d2fb7a6c28977c",
+          "text": "平时你却不让，这回突然…明白了，就依你说的办。",
+          "text_source": "human_review"
+        },
+        {
+          "asset_sha256": "143bb656086d798769db75045c9cd92695d9416082dae112f4f6b19b1b75649a",
+          "audio_absolute_path": "audio/143bb656086d798769db75045c9cd92695d9416082dae112f4f6b19b1b75649a.wav",
+          "audio_relative_path": "c9/c929643775a420979bf1cebc8b706bb7eb7af997e831d706a7d1024ff1c9b7ba.wav",
+          "audio_url": "audio/143bb656086d798769db75045c9cd92695d9416082dae112f4f6b19b1b75649a.wav",
+          "cosine": 0.6408880947990783,
+          "duration_seconds": 8.414,
+          "emotion_primary": "中立_neutral",
+          "fid": "143bb656086d798769db75045c9cd92695d9416082dae112f4f6b19b1b75649a",
+          "text": "医士认为，「魔阴身」与记忆有关。长生种虽有极其漫长的寿命，记忆的容量终有极限。",
+          "text_source": "filename_candidate_unreviewed"
+        }
+      ],
+      "outlier_rank": 3,
+      "outlier_score": 0.3608266332471185,
+      "reasons": [
+        "center_cosine_below_calibrated_threshold",
+        "knn_cosine_below_calibrated_threshold"
+      ],
+      "review": {
+        "asset_sha256": "3846a4deabe2d2cacdabd72c4a9862405b2f0d9eef40c8986d97c43b4a37514e",
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:speaker",
+        "review_id": "ef460fe2-7acb-547a-bc93-807feedb86b0",
+        "review_note": "用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。",
+        "review_round": 1,
+        "review_status": "confirmed_same_speaker",
+        "source_row_index": 2
+      },
+      "review_status": "confirmed_same_speaker"
+    },
+    {
+      "asset": {
+        "asset_sha256": "407a6e002c09e9e74c21542fa193588372244e7bae77199cbc2ba17a4fe0cca1",
+        "audio_absolute_path": "audio/407a6e002c09e9e74c21542fa193588372244e7bae77199cbc2ba17a4fe0cca1.wav",
+        "audio_relative_path": "79/7927cee7feea9effb63f3f8d29ceae7af4f895e59d3463738da14f0e13c66255.wav",
+        "audio_url": "audio/407a6e002c09e9e74c21542fa193588372244e7bae77199cbc2ba17a4fe0cca1.wav",
+        "duration_seconds": 4.176833333333334,
+        "emotion_primary": "开心_happy",
+        "fid": "407a6e002c09e9e74c21542fa193588372244e7bae77199cbc2ba17a4fe0cca1",
+        "text": "好…好极了。本座这就率军前来汇合。",
+        "text_source": "human_review"
+      },
+      "center_cosine": 0.6439234653680411,
+      "center_threshold": 0.6545700366223228,
+      "knn_cosine": 0.6895553038937299,
+      "knn_threshold": 0.6766019064784982,
+      "neighbors": [
+        {
+          "asset_sha256": "76820baa8546e6590f31e9110ce3b0b9e27d6599f91f69b1feb6917b013df23b",
+          "audio_absolute_path": "audio/76820baa8546e6590f31e9110ce3b0b9e27d6599f91f69b1feb6917b013df23b.wav",
+          "audio_relative_path": "f3/f3aab944b92e5d76c959db950e57455d1eb455d6097ebb3fe75b80b07c74e4a5.wav",
+          "audio_url": "audio/76820baa8546e6590f31e9110ce3b0b9e27d6599f91f69b1feb6917b013df23b.wav",
+          "cosine": 0.7094177065909604,
+          "duration_seconds": 9.455979166666667,
+          "emotion_primary": "生气_angry",
+          "fid": "76820baa8546e6590f31e9110ce3b0b9e27d6599f91f69b1feb6917b013df23b",
+          "text": "哼，虽然如此…本座心里面还是怕得要死！本座还年轻，不想这么快就坠入魔阴身啊！",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "ee7227093d571ef08f9d643e7b5120de6715c2e1f743aaf2052625ca34375d8c",
+          "audio_absolute_path": "audio/ee7227093d571ef08f9d643e7b5120de6715c2e1f743aaf2052625ca34375d8c.wav",
+          "audio_relative_path": "26/268530a7e7bdcc6593bc2e24e487eee5b2525b0b28eeea6af85053ea13332468.wav",
+          "audio_url": "audio/ee7227093d571ef08f9d643e7b5120de6715c2e1f743aaf2052625ca34375d8c.wav",
+          "cosine": 0.694562589682177,
+          "duration_seconds": 8.533,
+          "emotion_primary": "生气_angry",
+          "fid": "ee7227093d571ef08f9d643e7b5120de6715c2e1f743aaf2052625ca34375d8c",
+          "text": "那怎么成！景元将云骑交托给我，连身先士卒都做不到，还想继任将军…咳，还想服众吗？",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "05744752d29cee67d40c426350970cf64e9affa1ed11e7c60534d256e2660884",
+          "audio_absolute_path": "audio/05744752d29cee67d40c426350970cf64e9affa1ed11e7c60534d256e2660884.wav",
+          "audio_relative_path": "51/515d9b97deb512df46cb13fa0b303c57ab839ddae42e7e8ee0b39b8eb992c8ee.wav",
+          "audio_url": "audio/05744752d29cee67d40c426350970cf64e9affa1ed11e7c60534d256e2660884.wav",
+          "cosine": 0.6930875365241623,
+          "duration_seconds": 6.174979166666667,
+          "emotion_primary": "生气_angry",
+          "fid": "05744752d29cee67d40c426350970cf64e9affa1ed11e7c60534d256e2660884",
+          "text": "说起来，青雀，你为什么还在这儿，眼下你不该在书库值勤吗？",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "8d6e04220aee7d14165068a5bfc3e01ebb1a12a5d5c76b1816a41c089f9acb76",
+          "audio_absolute_path": "audio/8d6e04220aee7d14165068a5bfc3e01ebb1a12a5d5c76b1816a41c089f9acb76.wav",
+          "audio_relative_path": "71/7156d4f900f57d979b8c13ed0b088c7769bab87f4bb0536c61dd660b24116f5c.wav",
+          "audio_url": "audio/8d6e04220aee7d14165068a5bfc3e01ebb1a12a5d5c76b1816a41c089f9acb76.wav",
+          "cosine": 0.6763968286729185,
+          "duration_seconds": 8.507979166666667,
+          "emotion_primary": "生气_angry",
+          "fid": "8d6e04220aee7d14165068a5bfc3e01ebb1a12a5d5c76b1816a41c089f9acb76",
+          "text": "仙舟先民与帝弓同战，毁弃建木，设立「十王司」划定生死，正是为了重新以人类的姿态活下去。",
+          "text_source": "human_review"
+        },
+        {
+          "asset_sha256": "562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98",
+          "audio_absolute_path": "audio/562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98.wav",
+          "audio_relative_path": "5c/5cd1cf32106ba020a11579d22fcdad199b1aa4f25676ab6146bbf505a7783c76.wav",
+          "audio_url": "audio/562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98.wav",
+          "cosine": 0.6743118579984312,
+          "duration_seconds": 8.060354166666666,
+          "emotion_primary": "生气_angry",
+          "fid": "562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98",
+          "text": "快去吧。一旦丹炉熄灭，烟气散去，本座立即赶来。",
+          "text_source": "filename_candidate_unreviewed"
+        }
+      ],
+      "outlier_rank": 4,
+      "outlier_score": 0.33326061536911444,
+      "reasons": [
+        "center_cosine_below_calibrated_threshold"
+      ],
+      "review": {
+        "asset_sha256": "407a6e002c09e9e74c21542fa193588372244e7bae77199cbc2ba17a4fe0cca1",
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:speaker",
+        "review_id": "ab24b9e8-4e71-5b56-8bcf-1677bc77bd0f",
+        "review_note": "用户确认音质很差，无法作为可靠训练样本，排除出冻结数据集。",
+        "review_round": 1,
+        "review_status": "exclude_uncertain",
+        "source_row_index": 3
+      },
+      "review_status": "exclude_uncertain"
+    },
+    {
+      "asset": {
+        "asset_sha256": "1032d71af7b0928812ecde223e23bacf029cfe0fd94c52deb3ec8be76fb753c5",
+        "audio_absolute_path": "audio/1032d71af7b0928812ecde223e23bacf029cfe0fd94c52deb3ec8be76fb753c5.wav",
+        "audio_relative_path": "a2/a2000783b3f93386f5d57a7afdec71a77821872f2b616db6dda3bbc59f199368.wav",
+        "audio_url": "audio/1032d71af7b0928812ecde223e23bacf029cfe0fd94c52deb3ec8be76fb753c5.wav",
+        "duration_seconds": 4.180479166666666,
+        "emotion_primary": "生气_angry",
+        "fid": "1032d71af7b0928812ecde223e23bacf029cfe0fd94c52deb3ec8be76fb753c5",
+        "text": "哈！荒谬！竟然会有这种事……",
+        "text_source": "filename_candidate_unreviewed"
+      },
+      "center_cosine": 0.6472957229708557,
+      "center_threshold": 0.6545700366223228,
+      "knn_cosine": 0.7489195382125811,
+      "knn_threshold": 0.6766019064784982,
+      "neighbors": [
+        {
+          "asset_sha256": "40ae70e147cffa1752e9d4a25ffab93e2d808c159849f74c5de58f917e307163",
+          "audio_absolute_path": "audio/40ae70e147cffa1752e9d4a25ffab93e2d808c159849f74c5de58f917e307163.wav",
+          "audio_relative_path": "aa/aacd42c9afeb8638a62f848e5a9cfe28cbeebc2d97b945c90599656e6d638269.wav",
+          "audio_url": "audio/40ae70e147cffa1752e9d4a25ffab93e2d808c159849f74c5de58f917e307163.wav",
+          "cosine": 0.7693733730289812,
+          "duration_seconds": 3.2526041666666665,
+          "emotion_primary": "生气_angry",
+          "fid": "40ae70e147cffa1752e9d4a25ffab93e2d808c159849f74c5de58f917e307163",
+          "text": "…可是，「穷观阵」是不会错的。",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "02272cc79883d4f7a8fee676a5cb61289171d41af3596f5c603951c9a3e0bc82",
+          "audio_absolute_path": "audio/02272cc79883d4f7a8fee676a5cb61289171d41af3596f5c603951c9a3e0bc82.wav",
+          "audio_relative_path": "9b/9b3534796f57a2c35120423150670d424dcc0233beb0210ebb079afc9c5998dc.wav",
+          "audio_url": "audio/02272cc79883d4f7a8fee676a5cb61289171d41af3596f5c603951c9a3e0bc82.wav",
+          "cosine": 0.7636719619334745,
+          "duration_seconds": 6.369041666666667,
+          "emotion_primary": "生气_angry",
+          "fid": "02272cc79883d4f7a8fee676a5cb61289171d41af3596f5c603951c9a3e0bc82",
+          "text": "行有眚，无攸利…还真是应了卦象。可恶。",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "4b12656c1c4053df204d1624f34acea1beda24ee59aaa26d764de407c9cd349f",
+          "audio_absolute_path": "audio/4b12656c1c4053df204d1624f34acea1beda24ee59aaa26d764de407c9cd349f.wav",
+          "audio_relative_path": "5c/5cb9014a74b95574ff93ea5b92c1aac87f84b84d047a2fb0cebc7c3fc838dbe4.wav",
+          "audio_url": "audio/4b12656c1c4053df204d1624f34acea1beda24ee59aaa26d764de407c9cd349f.wav",
+          "cosine": 0.7464198500769108,
+          "duration_seconds": 5.119979166666667,
+          "emotion_primary": "难过_sad",
+          "fid": "4b12656c1c4053df204d1624f34acea1beda24ee59aaa26d764de407c9cd349f",
+          "text": "我…我没事。只是有些头疼。",
+          "text_source": "human_review"
+        },
+        {
+          "asset_sha256": "d3b242d18f6a0f6bb802ed235013a16ad3ee7156eec9c413cf2a9b10444a10cd",
+          "audio_absolute_path": "audio/d3b242d18f6a0f6bb802ed235013a16ad3ee7156eec9c413cf2a9b10444a10cd.wav",
+          "audio_relative_path": "e6/e68bedef620d82993d50d75889264a6e01658332f62238704b15d90d5e129c35.wav",
+          "audio_url": "audio/d3b242d18f6a0f6bb802ed235013a16ad3ee7156eec9c413cf2a9b10444a10cd.wav",
+          "cosine": 0.737369902155641,
+          "duration_seconds": 6.2026666666666666,
+          "emotion_primary": "生气_angry",
+          "fid": "d3b242d18f6a0f6bb802ed235013a16ad3ee7156eec9c413cf2a9b10444a10cd",
+          "text": "卡芙卡与星核无关，倒是你们…居然是你们……",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "82b02ed99cea826972292a1c2f74323d5e5919b480b14afa8dd60dca7b526026",
+          "audio_absolute_path": "audio/82b02ed99cea826972292a1c2f74323d5e5919b480b14afa8dd60dca7b526026.wav",
+          "audio_relative_path": "01/012d4557468b390a9b67ce1734413d0de638e397f50698736662bc7b028ab894.wav",
+          "audio_url": "audio/82b02ed99cea826972292a1c2f74323d5e5919b480b14afa8dd60dca7b526026.wav",
+          "cosine": 0.7277626038678979,
+          "duration_seconds": 7.247979166666667,
+          "emotion_primary": "生气_angry",
+          "fid": "82b02ed99cea826972292a1c2f74323d5e5919b480b14afa8dd60dca7b526026",
+          "text": "那家伙以仙舟人的样貌潜伏行事，愚弄我等…真是可恶、可恶至极。",
+          "text_source": "filename_candidate_unreviewed"
+        }
+      ],
+      "outlier_rank": 6,
+      "outlier_score": 0.30189236940828157,
+      "reasons": [
+        "center_cosine_below_calibrated_threshold"
+      ],
+      "review": {
+        "asset_sha256": "1032d71af7b0928812ecde223e23bacf029cfe0fd94c52deb3ec8be76fb753c5",
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:speaker",
+        "review_id": "39719526-16e0-5f07-9a69-8c779ab27e8c",
+        "review_note": "用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。",
+        "review_round": 1,
+        "review_status": "confirmed_same_speaker",
+        "source_row_index": 4
+      },
+      "review_status": "confirmed_same_speaker"
+    },
+    {
+      "asset": {
+        "asset_sha256": "1ff8948795a937f583c78fa243192b470df5d87875aa50533f0c3b3d509e771c",
+        "audio_absolute_path": "audio/1ff8948795a937f583c78fa243192b470df5d87875aa50533f0c3b3d509e771c.wav",
+        "audio_relative_path": "4e/4e16547d14b8e6d74185a2d9e36c14987543396909d55e13e4a6c31e752673a3.wav",
+        "audio_url": "audio/1ff8948795a937f583c78fa243192b470df5d87875aa50533f0c3b3d509e771c.wav",
+        "duration_seconds": 4.177979166666667,
+        "emotion_primary": "生气_angry",
+        "fid": "1ff8948795a937f583c78fa243192b470df5d87875aa50533f0c3b3d509e771c",
+        "text": "只有进攻，没有防御，这便是你的战术吗？",
+        "text_source": "filename_candidate_unreviewed"
+      },
+      "center_cosine": 0.6509703302351197,
+      "center_threshold": 0.6545700366223228,
+      "knn_cosine": 0.7895343696357332,
+      "knn_threshold": 0.6766019064784982,
+      "neighbors": [
+        {
+          "asset_sha256": "c981d56af59d57d21a252302465d80ee11d2587a300e4fc10588421042059361",
+          "audio_absolute_path": "audio/c981d56af59d57d21a252302465d80ee11d2587a300e4fc10588421042059361.wav",
+          "audio_relative_path": "2d/2d4158f6efa1d3a5aec0cb13851cd8a8c3d0fb164467f49db7d03a821e0dcb9c.wav",
+          "audio_url": "audio/c981d56af59d57d21a252302465d80ee11d2587a300e4fc10588421042059361.wav",
+          "cosine": 0.8091108070254506,
+          "duration_seconds": 9.174979166666667,
+          "emotion_primary": "生气_angry",
+          "fid": "c981d56af59d57d21a252302465d80ee11d2587a300e4fc10588421042059361",
+          "text": "青雀！又是你，是你把这些外人带进司部的吗？你把我平日里所立的规矩都当作耳旁风了吗？",
+          "text_source": "human_review"
+        },
+        {
+          "asset_sha256": "dc7a2be9fc29098e247d722db17c9bd4ad86d9fe6aabb4564cb200c59437b6b6",
+          "audio_absolute_path": "audio/dc7a2be9fc29098e247d722db17c9bd4ad86d9fe6aabb4564cb200c59437b6b6.wav",
+          "audio_relative_path": "55/55d9cc9cbd3caf0fda9c95b268a0e4d0fa06c232833e6b7a2a0a938b18ef643e.wav",
+          "audio_url": "audio/dc7a2be9fc29098e247d722db17c9bd4ad86d9fe6aabb4564cb200c59437b6b6.wav",
+          "cosine": 0.7996093405585352,
+          "duration_seconds": 9.216979166666667,
+          "emotion_primary": "生气_angry",
+          "fid": "dc7a2be9fc29098e247d722db17c9bd4ad86d9fe6aabb4564cb200c59437b6b6",
+          "text": "眼下占卜的工作正进行到重要关头，容不得他人扰乱。就算是十王司的判官，星穹列车的客人，也不得在这儿放肆！",
+          "text_source": "human_review"
+        },
+        {
+          "asset_sha256": "a443df6b10179a3edd925140c90e9ed37eed7031efeaa8e725926dcf91b08954",
+          "audio_absolute_path": "audio/a443df6b10179a3edd925140c90e9ed37eed7031efeaa8e725926dcf91b08954.wav",
+          "audio_relative_path": "92/9299cb9ac72abe99c3dec44c3b73de9f575a25ebd3cb3cdf1985afa55259279d.wav",
+          "audio_url": "audio/a443df6b10179a3edd925140c90e9ed37eed7031efeaa8e725926dcf91b08954.wav",
+          "cosine": 0.7830937061660116,
+          "duration_seconds": 9.504979166666667,
+          "emotion_primary": "生气_angry",
+          "fid": "a443df6b10179a3edd925140c90e9ed37eed7031efeaa8e725926dcf91b08954",
+          "text": "帮助仙舟击败幻胧的这次旅行，想必你深有体会吧？所有的结果早被那位隐于幕后的奴隶书写成了剧本。",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "c23f461a234c894708a7a71d516822ee2c628680ad9afa43527ccf790e44b609",
+          "audio_absolute_path": "audio/c23f461a234c894708a7a71d516822ee2c628680ad9afa43527ccf790e44b609.wav",
+          "audio_relative_path": "d5/d5e77a11bacf176f0d4e164e50ba5dd77d224a6a9d91b0226f92fc4df6232aae.wav",
+          "audio_url": "audio/c23f461a234c894708a7a71d516822ee2c628680ad9afa43527ccf790e44b609.wav",
+          "cosine": 0.7785680939270279,
+          "duration_seconds": 4.939979166666666,
+          "emotion_primary": "开心_happy",
+          "fid": "c23f461a234c894708a7a71d516822ee2c628680ad9afa43527ccf790e44b609",
+          "text": "用你们的「自由意志」把机巧带出沙盘吧。",
+          "text_source": "filename_candidate_unreviewed"
+        },
+        {
+          "asset_sha256": "c8a4709953dc30d1427d7201d37288576b49fa33d969d5cab61854af3a90e1cf",
+          "audio_absolute_path": "audio/c8a4709953dc30d1427d7201d37288576b49fa33d969d5cab61854af3a90e1cf.wav",
+          "audio_relative_path": "74/74ed350167834d82001765d5d0ad9bd5c174f0ec4d9c8092f855e36645b9c4c4.wav",
+          "audio_url": "audio/c8a4709953dc30d1427d7201d37288576b49fa33d969d5cab61854af3a90e1cf.wav",
+          "cosine": 0.777289900501641,
+          "duration_seconds": 9.299979166666667,
+          "emotion_primary": "生气_angry",
+          "fid": "c8a4709953dc30d1427d7201d37288576b49fa33d969d5cab61854af3a90e1cf",
+          "text": "如果你还不服气，本座可以拨冗为你演示究竟何为命中注定——用你人类的脑袋所能理解的方式。",
+          "text_source": "filename_candidate_unreviewed"
+        }
+      ],
+      "outlier_rank": 12,
+      "outlier_score": 0.27974765006457347,
+      "reasons": [
+        "center_cosine_below_calibrated_threshold"
+      ],
+      "review": {
+        "asset_sha256": "1ff8948795a937f583c78fa243192b470df5d87875aa50533f0c3b3d509e771c",
+        "created_at": "2026-09-08T01:30:27.378Z",
+        "review_batch_id": "fuxuan-slice8-boundary-review-v1:speaker",
+        "review_id": "64d5995f-92c8-5d1d-9ab5-637be5c6ad2e",
+        "review_note": "用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。",
+        "review_round": 1,
+        "review_status": "confirmed_same_speaker",
+        "source_row_index": 5
+      },
+      "review_status": "confirmed_same_speaker"
+    }
+  ],
+  "status": "reviewed",
+  "summary": {
+    "candidate_count": 277,
+    "dataset_id": "fuxuan",
+    "dataset_version": 1,
+    "duplicate_edge_count": 3,
+    "duplicate_edge_counts_by_type": {
+      "exact_audio": 0,
+      "exact_text": 0,
+      "near_audio": 0,
+      "near_text": 3
+    },
+    "edge_review_snapshot_sha256": "34002c03383950819b018cc1c5fe1a5fdf8ca13243a057e5730fc836b51345df",
+    "group_count": 274,
+    "multi_asset_group_count": 3,
+    "pending_duplicate_review_count": 0,
+    "pending_speaker_review_count": 0,
+    "run_id": "9e2ff68f-b473-4e3a-acf9-b333c54c3535",
+    "singleton_group_count": 271,
+    "speaker_exclusion_count": 1,
+    "speaker_outlier_count": 6
+  },
+  "thresholds": {
+    "acoustic_near_cosine": 0.8985896712935669,
+    "speaker_center_cosine": 0.6545700366223228,
+    "speaker_knn_cosine": 0.6766019064784982,
+    "text_near_similarity": 0.7298761609907121
+  }
+}
