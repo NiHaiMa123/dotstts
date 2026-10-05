@@ -46,13 +46,24 @@ dependencies = [
     "librosa>=0.11.0",
     "soundfile>=0.13.1",
     "numpy>=2.2.6",
+    "scipy>=1.15",
+    "soxr>=1.0,<2",
+    "pyloudnorm>=0.2,<0.3",
     "pydantic>=2.12.5,<3",
+    "pyarrow>=25.0.1,<26",
     "PyYAML>=6.0.3",
     "safetensors>=0.8.0rc0",
     "torchdiffeq",
     "tqdm",
     "lingua-language-detector",
-    "WeTextProcessing",
+    # Long-form prefilter (LF-12C): ONNX Silero VAD, loaded lazily.
+    "silero-vad>=6.2,<7",
+    # Long-form event evidence (LF-12E): PANNs CNN14 AudioSet tagger, loaded
+    # lazily; model files live in ~/panns_data and are hash-pinned by config.
+    "panns-inference>=0.1.1,<0.2",
+    # Pynini, pulled in by WeTextProcessing, does not publish Windows wheels.
+    # Text normalization is optional at runtime and is loaded lazily.
+    "WeTextProcessing; platform_system != 'Windows'",
 ]
 
 [project.optional-dependencies]
@@ -61,6 +72,7 @@ edit_playground_asr = [
 ]
 full = [
     "accelerate>=1.12.0",
+    "peft>=0.20.0,<1",
     "tensorboard>=2.20.0",
     "ruff>=0.15.12",
 ]
@@ -68,6 +80,7 @@ full = [
 [project.scripts]
 "dots.tts" = "dots_tts.cli:main"
 "dots.tts.edit" = "dots_tts.edit_cli:main"
+"dots.tts.lab" = "dots_tts_lab.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/studio-dots-ai/dots.tts"

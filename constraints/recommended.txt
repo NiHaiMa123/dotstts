@@ -4,19 +4,37 @@
 # compatible releases.
 torch==2.8.0
 torchaudio==2.8.0
-transformers==4.57.0
+transformers==4.57.6
 librosa==0.11.0
 soundfile==0.13.1
 numpy==2.2.6
+# Latest release that covers the project's full Python 3.10-3.12 range.
+scipy==1.15.3
+soxr==1.1.0
+pyloudnorm==0.2.0
 pydantic==2.12.5
+pyarrow==25.0.1
 PyYAML==6.0.3
 safetensors==0.8.0rc0
-gradio==6.17.0
+# 6.17.0 was never published on PyPI; 6.17.3 is the nearest compatible patch.
+gradio==6.17.3
 
 # Optional `full` extra.
 accelerate==1.12.0
+peft==0.20.0
 tensorboard==2.20.0
 ruff==0.15.12
 
 # Optional `edit_playground_asr` extra.
 qwen-asr==0.0.6
+
+# Long-form prefilter (LF-12C). onnxruntime is a silero-vad dependency and is
+# pinned here for reproducibility.
+silero-vad==6.2.0
+onnxruntime==1.29.0
+
+# Long-form event evidence (LF-12E). torchlibrosa/matplotlib are
+# panns-inference dependencies.
+panns-inference==0.1.1
+torchlibrosa==0.1.0
+matplotlib==3.11.2

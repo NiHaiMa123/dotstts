@@ -1,0 +1,40 @@
+schema_version: 1
+benchmark_id: fuxuan_slice12_soar_lora_step400_optimized_smoke
+benchmark_version: 1
+selection:
+  standardized_audio_root: data/work/standardized
+model:
+  model_id: dots-studio/dots.tts-soar+fuxuan-lora-step400
+  model_revision: 2f9b3e18d70d670d4c701da2dc55ded5755815ce
+  local_path: pretrained_models/dots.tts-soar
+  model_config_path: pretrained_models/dots.tts-soar/config.json
+  model_config_sha256: d38bd9cff56c9744e33dc0ba62ca39b1ae6ab64561628f8de8132e5b565e9fa5
+  adapter:
+    format: dots_tts_trainable_delta
+    training_step: 400
+    path: data/work/slice12/soar_lora_v1/checkpoint-00000400/model
+    weights_sha256: de5b3bb59e510d622cf65813f75fd0f5c287c3ea8f043ea132c213d3f0d0ed54
+    metadata_sha256: 73d139b84ad4417e6c952b7e0aec5b931107c47e5a48a45a7b9ae79f2b350011
+    merge_for_inference: true
+  optimize: true
+  warmup_on_optimize: true
+  vocoder_merge_steps: 4
+  precision: bfloat16
+  language: chinese
+  speaker_scale: 1.5
+  max_generate_length: 128
+  max_sequence_length: 1024
+  sampling:
+    ode_method: euler
+    num_steps: 10
+    guidance_scale: 1.2
+test_sentences:
+  - sentence_id: neutral_report
+    text: 本座已经看过这份报告，结论相当明确。
+    purpose: optimize_smoke
+seeds: [20260908, 20260909]
+outputs:
+  benchmark_manifest_path: data/reports/datasets/fuxuan_v1/slice12/baseline_manifest.jsonl
+  benchmark_manifest_sha256: ddfb42d6211f1c882bf77fe3c273dc7423fd52a8be3824a5650e66a6f43927b1
+  generation_root: data/work/slice12/soar_lora_step400_optimized_smoke
+  generation_manifest_path: data/reports/datasets/fuxuan_v1/slice12/soar_lora_step400_optimized_smoke_generation.jsonl

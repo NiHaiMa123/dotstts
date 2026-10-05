@@ -1,0 +1,46 @@
+schema_version: 1
+config_id: long_form_split
+config_version: 1
+
+# Whole-source isolation. Deterministic rule: the human-reviewed 岁岁 source
+# anchors the reference set; of the remaining sources sorted by sha256, the
+# first four form the development set and the last two are the untouched
+# holdout. Adjacent slices, raw/DFN3 pairs, and duplicate normalized texts may
+# never cross these assignments (see long_form_splits.check_split_isolation).
+assignments:
+  - source_sha256: 46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11
+    source_relative_path: 岁岁/林三歲-姐姐的憋尿野營.mp3
+    split: reference
+    reason: only source with completed human review and a v1 normal export; reference candidates are drawn from its confirmed material under the new labeling spec
+  - source_sha256: 150f1b2475b2a9e69e472a2bc1aa52d0c1c77333320f640aae005fa51da348d9
+    source_relative_path: 岁岁/林三歲 抖s姐姐的調教三部曲（3）.mp3
+    split: development
+    reason: sorted-sha256 order after removing the reference source, position 1 of 6
+  - source_sha256: 2c00ec10f91ca9217f24f1c212ace66a48b4ad6e252ceddc73c92bcc7f954ef0
+    source_relative_path: 岁岁/林三歲 抖s姐姐的調教三部曲（2）.mp3
+    split: development
+    reason: sorted-sha256 order after removing the reference source, position 2 of 6
+  - source_sha256: 550d741b69a2371b0b9cd0e295e2e4e9fb071fe76fd6644149dd7b75f0223bb3
+    source_relative_path: 岁岁/林三歲 抖s姐姐的調教三部曲（1）.mp3
+    split: development
+    reason: sorted-sha256 order after removing the reference source, position 3 of 6
+  - source_sha256: 98bb55921318898719eae28e8c6bf5f3a88602b20016f5d4eeb1933983ac30d6
+    source_relative_path: 岁岁/【岁岁】女王逼你吃黄金.mp3
+    split: development
+    reason: sorted-sha256 order after removing the reference source, position 4 of 6
+  - source_sha256: d4a5ff6f94795c9817afd87cf3610de42767898daa23009aa37d10164bb80349
+    source_relative_path: 岁岁/【岁岁】弟弟身体的阉割盛宴.mp3
+    split: holdout
+    reason: sorted-sha256 order after removing the reference source, position 5 of 6; acceptance-only
+  - source_sha256: fffddefd3105064e7cf92361340d532861845825d76cd9620b7bd5e65f1016bd
+    source_relative_path: 岁岁/【岁岁】绿帽粗口01女友的谩骂.mp3
+    split: holdout
+    reason: sorted-sha256 order after removing the reference source, position 6 of 6; acceptance-only
+
+notes: >-
+  All seven sources share the same advertised voice (suisui). Holdout results
+  therefore measure within-voice generalization only; a different speaker or
+  recording chain would be a domain shift requiring fresh evidence. Reference
+  material comes from the reviewed source only; threshold tuning happens on
+  the four development sources; the two holdout sources are reserved for the
+  LF-12I acceptance run and must not be inspected while calibrating.

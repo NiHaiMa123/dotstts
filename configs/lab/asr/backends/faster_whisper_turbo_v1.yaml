@@ -1,0 +1,30 @@
+schema_version: 1
+backend_id: faster_whisper
+backend_version: 1.2.1
+package: faster-whisper==1.2.1
+model_id: mobiuslabsgmbh/faster-whisper-large-v3-turbo
+model_revision: 0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf
+model_license: MIT
+device: cuda
+capabilities:
+  timestamps_available: true
+  timestamp_type: word
+  timestamps_enabled: false
+
+# CTranslate2 loads cuBLAS through the Windows search order, not through torch.
+# Without this declaration the backend only ran while a torch-enabled venv
+# happened to be on PATH. The shared torch build is reused instead of adding a
+# ~400 MB nvidia-cublas-cu12 copy to this isolated venv; the trade-off is that
+# this backend is not self-contained on Windows.
+native_library_dirs:
+  - .venv/Lib/site-packages/torch/lib
+required_native_libraries:
+  - cublas64_12.dll
+
+parameters:
+  compute_type: float16
+  language: zh
+  beam_size: 5
+  vad_filter: false
+  condition_on_previous_text: false
+  word_timestamps: false

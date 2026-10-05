@@ -21,6 +21,8 @@ from dots_tts.models.dots_tts import model as dots_tts_model
 from dots_tts.training import checkpoint as train_checkpoint
 from dots_tts.training import losses as loss_ops
 from dots_tts.training import utils as train_utils
+from dots_tts.training.peft import configure_lora_modules
+from dots_tts.training.runtime_metrics import write_training_runtime_metrics
 from dots_tts.utils import util as util_module
 
 _EMPTY_EPOCH_TOLERANCE = 32
@@ -82,16 +84,32 @@ class DotsTtsTrainingRun:
             project_config=project_config,
             step_scheduler_with_optimizer=False,
         )
+        self._runtime_started_at = time.perf_counter()
+        if self.accelerator.device.type == "cuda":
+            torch.cuda.reset_peak_memory_stats(self.accelerator.device)
 
         util_module.seed_everything(self.cfg.train.seed)
 
         model = dots_tts_model.DotsTtsModel.from_pretrained(
             self.cfg.train.pretrained_model_path
         )
-        # model.set_cfg_droprate(
-        #     cfg_droprate=self.cfg.train.cfg_droprate,
-        #     xvec_drop_rate=self.cfg.train.xvec_drop_rate,
-        # )
+        if self.cfg.train.lora is not None and self.cfg.train.lora.enabled:
+            lora_summary = configure_lora_modules(
+                model,
+                self.cfg.train.lora,
+                for_training=True,
+            )
+            self.accelerator.print(
+                "LoRA parameters: "
+                f"{lora_summary['lora_parameters']:,}; "
+                f"total trainable: {lora_summary['trainable_parameters']:,}"
+            )
+        if self.cfg.train.gradient_checkpointing:
+            model.core.velocity_field_predictor.set_gradient_checkpointing(True)
+        model.set_cfg_droprate(
+            cfg_droprate=self.cfg.train.cfg_droprate,
+            xvec_drop_rate=self.cfg.train.xvec_drop_rate,
+        )
         optimizer = AdamW(
             (param for param in model.parameters() if param.requires_grad),
             lr=self.cfg.train.learning_rate,
@@ -199,6 +217,7 @@ class DotsTtsTrainingRun:
         self.train_loader.set_epoch(self.progress.epoch)
 
     def run(self) -> int:
+        start_global_step = int(self.progress.global_step)
         self.accelerator.init_trackers("dots_tts")
         self._write_run_config()
         self.optimizer.zero_grad(set_to_none=True)
@@ -224,12 +243,38 @@ class DotsTtsTrainingRun:
 
             if not self.saved_latest_checkpoint:
                 self._save_checkpoint(float(self.optimizer.param_groups[0]["lr"]))
+            self._write_runtime_metrics(
+                status="succeeded",
+                start_global_step=start_global_step,
+            )
             return 0
+        except BaseException:
+            try:
+                self._write_runtime_metrics(
+                    status="failed",
+                    start_global_step=start_global_step,
+                )
+            except Exception:
+                pass
+            raise
         finally:
             try:
                 self._close_data_streams()
             finally:
                 self.accelerator.end_training()
+
+    def _write_runtime_metrics(self, *, status: str, start_global_step: int) -> None:
+        write_training_runtime_metrics(
+            output_dir=self.cfg.train.output_dir,
+            status=status,
+            start_global_step=start_global_step,
+            end_global_step=int(self.progress.global_step),
+            runtime_started_at=self._runtime_started_at,
+            device=self.accelerator.device,
+            is_main_process=bool(
+                getattr(self.accelerator, "is_main_process", True)
+            ),
+        )
 
     def _write_run_config(self) -> None:
         if not bool(getattr(self.accelerator, "is_main_process", True)):
@@ -757,13 +802,30 @@ def parse_args(argv=None):
         action="store_true",
         help="Print training debug information.",
     )
+    parser.add_argument("--max-train-steps", type=int, help="Override train.max_train_steps for a bounded smoke run.")
+    parser.add_argument("--output-dir", help="Override train.output_dir, for example to isolate a smoke checkpoint.")
+    parser.add_argument(
+        "--skip-validation",
+        action="store_true",
+        help="Disable initial and interval validation for a bounded smoke run.",
+    )
     return parser.parse_args(argv)
 
 
 def main(argv=None):
     args = parse_args(argv)
+    cfg = app_config.load_config(args.config)
+    if args.max_train_steps is not None:
+        if args.max_train_steps <= 0:
+            raise ValueError("--max-train-steps must be positive")
+        cfg.train.max_train_steps = args.max_train_steps
+    if args.output_dir is not None:
+        cfg.train.output_dir = args.output_dir
+    if args.skip_validation:
+        cfg.train.run_eval_on_start = False
+        cfg.train.eval_interval = None
     return DotsTtsTrainingRun(
-        app_config.load_config(args.config),
+        cfg,
         debug_enabled=args.debug,
     ).run()
 

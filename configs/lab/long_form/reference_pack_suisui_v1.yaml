@@ -1,0 +1,283 @@
+schema_version: 1
+pack_id: long_form_reference_suisui
+pack_version: 1
+voice_id: suisui
+status: confirmed
+clips:
+- clip_id: 6d16350f6c2eb9df2f58338eaab22b64a910673deb3c3997673411a4371c0230
+  audio_relative_path: audio/ba9230a4a39c5e56fdf4d3f7b2cb7fed3807114a9f01ad5a3d8e9720a1cca7ce.wav
+  audio_sha256: 6d16350f6c2eb9df2f58338eaab22b64a910673deb3c3997673411a4371c0230
+  source_sha256: 46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 31942634
+    source_end_frame: 32013674
+  - source_start_frame: 32023274
+    source_end_frame: 32090474
+  - source_start_frame: 32149034
+    source_end_frame: 32274794
+  duration_seconds: 5.66
+  text_sha256: a107f669455e3dedfa42f226e72bcae7c1572b7e8d4142506ed014d992ea1b51
+  confirmed_review_batch_id: ed8fe889-35e8-4084-a65c-6748a1079a02
+  confirmed_at: '2026-09-13T04:08:39.676Z'
+- clip_id: ecbf586c6ea8fb6abacbd2957ff031caeffb05ce62b1625adb7eb7a5e83ee31d
+  audio_relative_path: audio/f0c1c6902f21949ded96c8f15c3588d9a300828a46779e28d263f0e278d7d86c.wav
+  audio_sha256: ecbf586c6ea8fb6abacbd2957ff031caeffb05ce62b1625adb7eb7a5e83ee31d
+  source_sha256: 46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 3325698
+    source_end_frame: 3546498
+  - source_start_frame: 3559938
+    source_end_frame: 3600258
+  duration_seconds: 5.52
+  text_sha256: 2fa1182fa8a4e03641bd8aa5968da2f7f13d11ea9114f85ab33e0e70424b52ff
+  confirmed_review_batch_id: ed8fe889-35e8-4084-a65c-6748a1079a02
+  confirmed_at: '2026-09-13T04:08:39.676Z'
+- clip_id: 22c06a0c7b271e46054c9e7ecae0bd5b7a189ff4e6942ed0739f0dc9e7c47411
+  audio_relative_path: audio/e1759b16f9041aadf6a9dd190e06bfac3d1b8faafc40e725c02e3bf25f927044.wav
+  audio_sha256: 22c06a0c7b271e46054c9e7ecae0bd5b7a189ff4e6942ed0739f0dc9e7c47411
+  source_sha256: 46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 7284332
+    source_end_frame: 7394732
+  - source_start_frame: 7412972
+    source_end_frame: 7461932
+  - source_start_frame: 7504172
+    source_end_frame: 7558892
+  duration_seconds: 4.62
+  text_sha256: ec17b4d90b94eee1c37b8a3e9d551e9e9bfed8ad42bf9b330416b43af6281424
+  confirmed_review_batch_id: ed8fe889-35e8-4084-a65c-6748a1079a02
+  confirmed_at: '2026-09-13T04:08:39.676Z'
+- clip_id: 91c1cb852a8ecd266208e954ca790c2f51457addbd5033f10fc46dd66d117823
+  audio_relative_path: audio/339938bc1a56d78ff0f9a50aa68a154d779f24a9168b023e630da520b95dabca.wav
+  audio_sha256: 91c1cb852a8ecd266208e954ca790c2f51457addbd5033f10fc46dd66d117823
+  source_sha256: 46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 5969797
+    source_end_frame: 6044677
+  - source_start_frame: 6055237
+    source_end_frame: 6152197
+  - source_start_frame: 6168517
+    source_end_frame: 6258757
+  - source_start_frame: 6281797
+    source_end_frame: 6370117
+  duration_seconds: 7.54
+  text_sha256: 19a2721b3d5bf693edff63367bdee564026b14a74158fc01f71fc2b8c379f4fd
+  confirmed_review_batch_id: ed8fe889-35e8-4084-a65c-6748a1079a02
+  confirmed_at: '2026-09-13T04:08:39.676Z'
+- clip_id: 32c499aff96aac7720c0e471c87fb019f1a2d37f507401788bf9a446511c7072
+  audio_relative_path: audio/4767bd976592daa58c92acae0f1b65ee01de37c974c56a62ae7a3b93dd68d996.wav
+  audio_sha256: 32c499aff96aac7720c0e471c87fb019f1a2d37f507401788bf9a446511c7072
+  source_sha256: 46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 27084000
+    source_end_frame: 27135840
+  - source_start_frame: 27167520
+    source_end_frame: 27240480
+  - source_start_frame: 27263520
+    source_end_frame: 27338400
+  duration_seconds: 4.32
+  text_sha256: bfa6b0c17e8bc084471748e7a588839a285d6b02fc4d03b566a53eb8eb03cd79
+  confirmed_review_batch_id: ed8fe889-35e8-4084-a65c-6748a1079a02
+  confirmed_at: '2026-09-13T04:08:39.676Z'
+- clip_id: b4b6362da0a122d82bfde7b1b7f7dd2e3f744fae10db888a6906ae0880a4bc44
+  audio_relative_path: audio/fb86d5724a9a68c573b2f16537b6286da402247450d3bab793760c6355d25e53.wav
+  audio_sha256: b4b6362da0a122d82bfde7b1b7f7dd2e3f744fae10db888a6906ae0880a4bc44
+  source_sha256: 46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 53615040
+    source_end_frame: 53821440
+  duration_seconds: 4.3
+  text_sha256: 12039c463d98b8245b379d2bef24851b2e9cc8715a107381eb658f12e366bb32
+  confirmed_review_batch_id: ed8fe889-35e8-4084-a65c-6748a1079a02
+  confirmed_at: '2026-09-13T04:08:39.676Z'
+- clip_id: 992955b9ed4025541dafb1aef272d33c1c6f621a0ceb8e12b0656bd92eadf945
+  audio_relative_path: audio/ea1b77ac49e422a58247f2edb7c48b1f85cd9ebedf7ea1068837381a5c4e8759.wav
+  audio_sha256: 992955b9ed4025541dafb1aef272d33c1c6f621a0ceb8e12b0656bd92eadf945
+  source_sha256: 46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 4020406
+    source_end_frame: 4053046
+  - source_start_frame: 4085686
+    source_end_frame: 4178806
+  - source_start_frame: 4204726
+    source_end_frame: 4271926
+  duration_seconds: 4.18
+  text_sha256: 2604c1bec3007ea1a03d08ddb6dfd5b44ee660bbbe6b87d2cae5541cc8f2fab3
+  confirmed_review_batch_id: ed8fe889-35e8-4084-a65c-6748a1079a02
+  confirmed_at: '2026-09-13T04:08:39.676Z'
+- clip_id: ac0721042f8df5e29cfdeea3a7735d4418fb0f47e3565a4d5ad1e24a6c85858b
+  audio_relative_path: audio/7a3bce52e54c028241995a668c3a31e00e73d33b54f9ba7559093c0e855dfa9a.wav
+  audio_sha256: ac0721042f8df5e29cfdeea3a7735d4418fb0f47e3565a4d5ad1e24a6c85858b
+  source_sha256: 46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 11117206
+    source_end_frame: 11283286
+  - source_start_frame: 11292886
+    source_end_frame: 11356246
+  - source_start_frame: 11362006
+    source_end_frame: 11441686
+  - source_start_frame: 11478166
+    source_end_frame: 11545366
+  duration_seconds: 8.08
+  text_sha256: 177bc9769c9128dc616c8e4a53b414e3e52f24dd925d0a1edfe0efbec5d38baf
+  confirmed_review_batch_id: ed8fe889-35e8-4084-a65c-6748a1079a02
+  confirmed_at: '2026-09-13T04:08:39.676Z'
+negatives:
+- clip_id: 242c9f8bf6f2bd152d9996c446dd7f47c926572f34d554020724344c6028a49c
+  audio_relative_path: data/work/long_form/sources/15/150f1b2475b2a9e69e472a2bc1aa52d0c1c77333320f640aae005fa51da348d9/segments/242c9f8bf6f2bd152d9996c446dd7f47c926572f34d554020724344c6028a49c.wav
+  audio_sha256: 67d5a582e1187da3f68ebd2de9116847e1a7e795612e6c88199660db8ff88e4c
+  source_sha256: 150f1b2475b2a9e69e472a2bc1aa52d0c1c77333320f640aae005fa51da348d9
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 43062800
+    source_end_frame: 43559520
+  duration_seconds: 10.348333333333333
+  text_sha256: 5d4fc889971964dfb4277f7669cb110f8f1ac962c462095a8570036edee3ec30
+  kind: same_actor_roleplay
+  note: ''
+- clip_id: 01b899e5db9a3115728d7e937f3cc3d26a6d1a55ba220f57538cd4052357f990
+  audio_relative_path: data/work/long_form/sources/46/46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11/segments/01b899e5db9a3115728d7e937f3cc3d26a6d1a55ba220f57538cd4052357f990.wav
+  audio_sha256: 68b1a6c91ad3ea42f636af20c97e807d1a7a9a3bb4a3f48006f472ce695f7b98
+  source_sha256: 46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 29047126
+    source_end_frame: 29615668
+  duration_seconds: 11.844625
+  text_sha256: c406ade35f46868e0cffec35950ee569efecee258ba4a70f37e54ebd5ae73954
+  kind: same_actor_roleplay
+  note: ''
+- clip_id: 617d10fbf44b536f2ae0200fa95a76bd59a8c3e317c398d44539d658fdfe84aa
+  audio_relative_path: data/work/long_form/sources/ff/fffddefd3105064e7cf92361340d532861845825d76cd9620b7bd5e65f1016bd/segments/617d10fbf44b536f2ae0200fa95a76bd59a8c3e317c398d44539d658fdfe84aa.wav
+  audio_sha256: ec00deb1e22f5229f384bca5764b5e34cf5fd9de9b2f20c93f3a26012ca1072f
+  source_sha256: fffddefd3105064e7cf92361340d532861845825d76cd9620b7bd5e65f1016bd
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 22949640
+    source_end_frame: 23122953
+  duration_seconds: 3.93
+  text_sha256: 3bdc608458b50faff3b3cf2e649cf68831eb8fdb249b996320840dce5e406ddb
+  kind: whispered_text
+  note: ''
+- clip_id: f2cf74c6babedbd761d32d70a0817f4b545262d49a0bd6cf97af0486bd401b05
+  audio_relative_path: data/work/long_form/sources/15/150f1b2475b2a9e69e472a2bc1aa52d0c1c77333320f640aae005fa51da348d9/segments/f2cf74c6babedbd761d32d70a0817f4b545262d49a0bd6cf97af0486bd401b05.wav
+  audio_sha256: dae94805cfb322264e4ad6caf888c357833fcfd14045d2aba0af185b1a6bf6fa
+  source_sha256: 150f1b2475b2a9e69e472a2bc1aa52d0c1c77333320f640aae005fa51da348d9
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 165349248
+    source_end_frame: 165810816
+  duration_seconds: 9.616
+  text_sha256: e821182358a365ddcfb217c96e7ee9116f3131d8d7fab7dd796e406af42479f5
+  kind: event_over_speech
+  note: ''
+- clip_id: 0792fea6456c4eb16b52102ac1dc84c41ca5c4c11dd4eb42c38ca37c7fb7c71c
+  audio_relative_path: data/work/long_form/sources/98/98bb55921318898719eae28e8c6bf5f3a88602b20016f5d4eeb1933983ac30d6/segments/0792fea6456c4eb16b52102ac1dc84c41ca5c4c11dd4eb42c38ca37c7fb7c71c.wav
+  audio_sha256: ba97ca5b6457c3dcbf71b8ca53a8d1f1e5e4c338b2f93eec8f4f6f02111922bd
+  source_sha256: 98bb55921318898719eae28e8c6bf5f3a88602b20016f5d4eeb1933983ac30d6
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 27098560
+    source_end_frame: 27500480
+  duration_seconds: 8.373333333333333
+  text_sha256: c01abe0d574b6a0faa202c93d806a035d39a278615b7f131ed2f27b1f4da019a
+  kind: event_over_speech
+  note: ''
+- clip_id: f0e965088f8f7c8a3fb7127cd37de7a62b45ab734f86f0717336ae67cc511dc4
+  audio_relative_path: data/work/long_form/sources/d4/d4a5ff6f94795c9817afd87cf3610de42767898daa23009aa37d10164bb80349/segments/f0e965088f8f7c8a3fb7127cd37de7a62b45ab734f86f0717336ae67cc511dc4.wav
+  audio_sha256: 4d5879488b412f1b0d880b7089e70135cf9a830c0fc4a3101d89ce6610817c64
+  source_sha256: d4a5ff6f94795c9817afd87cf3610de42767898daa23009aa37d10164bb80349
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 98242783
+    source_end_frame: 98749382
+  duration_seconds: 11.48750566893424
+  text_sha256: 4700ee38fab25c54da06f75ccc09d9edb984d1962357dbe37e7f1344d9837095
+  kind: event_over_speech
+  note: ''
+- clip_id: a34a62593c63611b831d698f56cf88871b46daf409199609f3e2d824e2eaebcd
+  audio_relative_path: data/work/long_form/sources/15/150f1b2475b2a9e69e472a2bc1aa52d0c1c77333320f640aae005fa51da348d9/segments/a34a62593c63611b831d698f56cf88871b46daf409199609f3e2d824e2eaebcd.wav
+  audio_sha256: 014c111ae04ee77422f6e4cc7d424b6d3dc7348a3b4218ee7cdf7102eb1b77a2
+  source_sha256: 150f1b2475b2a9e69e472a2bc1aa52d0c1c77333320f640aae005fa51da348d9
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 96042400
+    source_end_frame: 96491840
+  duration_seconds: 9.363333333333333
+  text_sha256: 15e23d713065b7ed44af6cd45dd59f767792178b0685f21ef2522ae9faa49487
+  kind: nearfield_binaural
+  note: ''
+- clip_id: 0f9ea9232abb704f4d9eba8fa877cf46fc3f9e25d9fb8d5bec99f07b8bc5d73b
+  audio_relative_path: data/work/long_form/sources/2c/2c00ec10f91ca9217f24f1c212ace66a48b4ad6e252ceddc73c92bcc7f954ef0/segments/0f9ea9232abb704f4d9eba8fa877cf46fc3f9e25d9fb8d5bec99f07b8bc5d73b.wav
+  audio_sha256: 210abceb0ef51f289beef940fd8ec63e722ba57fcbdb94885451e07b5f32f75c
+  source_sha256: 2c00ec10f91ca9217f24f1c212ace66a48b4ad6e252ceddc73c92bcc7f954ef0
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 52149120
+    source_end_frame: 52264320
+  duration_seconds: 2.4
+  text_sha256: e15e8c0308584cce4ac1051fcaa7af528efba6cb3f7b6723f876fc0e6cdef2ae
+  kind: nearfield_binaural
+  note: ''
+- clip_id: eedd041289177958f74fb41feb250a9efb6c0d4a5b0ba93a20adcb0a4a50da8d
+  audio_relative_path: data/work/long_form/sources/46/46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11/segments/eedd041289177958f74fb41feb250a9efb6c0d4a5b0ba93a20adcb0a4a50da8d.wav
+  audio_sha256: 09310e8622ab52afed60bfcb3e028238ebdeb7cbbd7fb8ac9cd2f7dd8bf25bd7
+  source_sha256: 46d41e37fc4fbc0f73ee05d64da8866101e9fa87ad3481b99efcff5e6e5c4c11
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 43641120
+    source_end_frame: 43750080
+  duration_seconds: 2.27
+  text_sha256: 083b302dc0827b7db2eef8c79b505b0e54703f6274d0b858df6208791db56d5f
+  kind: nearfield_binaural
+  note: ''
+- clip_id: 5f62a5189e24d65e376965b85808d698eea97a2052cddaf46adfa3db87bed414
+  audio_relative_path: data/work/long_form/sources/55/550d741b69a2371b0b9cd0e295e2e4e9fb071fe76fd6644149dd7b75f0223bb3/segments/5f62a5189e24d65e376965b85808d698eea97a2052cddaf46adfa3db87bed414.wav
+  audio_sha256: c0f83211707da361b753ee34b62d3d5615cba6b09c0c7192dfb66d09e2b3c712
+  source_sha256: 550d741b69a2371b0b9cd0e295e2e4e9fb071fe76fd6644149dd7b75f0223bb3
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 60732480
+    source_end_frame: 60845280
+  duration_seconds: 2.35
+  text_sha256: 63aff16927ed7802af4ae7e472589bff3d2a53d0340ad6b93881228b85bf97d4
+  kind: nearfield_binaural
+  note: ''
+- clip_id: 43f4fc25a1bba8f26a90284cb3b6b5651f02bb5b2babd318397f8deb6941bf30
+  audio_relative_path: data/work/long_form/sources/d4/d4a5ff6f94795c9817afd87cf3610de42767898daa23009aa37d10164bb80349/segments/43f4fc25a1bba8f26a90284cb3b6b5651f02bb5b2babd318397f8deb6941bf30.wav
+  audio_sha256: a0f013c29435861136c465b938f8c87b14e8617ce26c03da821da21037f433be
+  source_sha256: d4a5ff6f94795c9817afd87cf3610de42767898daa23009aa37d10164bb80349
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 59649660
+    source_end_frame: 60151665
+  duration_seconds: 11.383333333333333
+  text_sha256: 1ad42ab9818fceaa338dbde10d52e477f6c6ec8bd1c13cfa63c5973cada60119
+  kind: nearfield_binaural
+  note: ''
+- clip_id: 0c567cd8cfbfba87b0ad1edc73c9762717e5c757438ffa0d62b11356daa7a59a
+  audio_relative_path: data/work/long_form/sources/ff/fffddefd3105064e7cf92361340d532861845825d76cd9620b7bd5e65f1016bd/segments/0c567cd8cfbfba87b0ad1edc73c9762717e5c757438ffa0d62b11356daa7a59a.wav
+  audio_sha256: 30d294d4103edbd342762a981fa5b7ac8e8ddc520d902ddf5cf187d18f27d0ef
+  source_sha256: fffddefd3105064e7cf92361340d532861845825d76cd9620b7bd5e65f1016bd
+  source_sample_rate_hz: 48000
+  source_spans:
+  - source_start_frame: 40417209
+    source_end_frame: 40514670
+  duration_seconds: 2.21
+  text_sha256: a857ca88a14e5681b50e5bf0aa70a58b69c6d233d7db5a2e672fdef41fe95b36
+  kind: nearfield_binaural
+  note: ''
+created_from_review_batches:
+- ed8fe889-35e8-4084-a65c-6748a1079a02
+- ef16890f-26ac-42c6-ad88-39ef0afc6c2d
+created_at: '2026-09-13T04:08:39.676Z'
+labeling_spec: docs/long-form-labeling-v1.md
+pack_sha256: 0ea3fc6765bec50b7d0e2aa2076ca1421b68a0383dcee165e44292ab5cbe460a

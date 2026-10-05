@@ -1,0 +1,36 @@
+schema_version: 1
+config_id: long_form_transcript_v1
+config_version: 1
+
+# 主后端 = faster-whisper（词级时间戳，兼作选定的中文 aligner）
+primary:
+  backend_id: faster_whisper
+  env_python: data/work/asr_envs/faster_whisper/Scripts/python.exe
+  backend_config: configs/lab/asr/backends/faster_whisper_long_form_v1.yaml
+
+# 次后端 = SenseVoice（无时间戳，独立文本假设）
+secondary:
+  backend_id: sensevoice
+  env_python: data/work/asr_envs/sensevoice/Scripts/python.exe
+  backend_config: configs/lab/asr/backends/sensevoice_small_v1.yaml
+
+# 全部语音区域（含预筛隔离区——隔离非拒绝，下游仍需证据）按 ≤2.0s 间隙并入
+# ≤34s 转写单元；覆盖隔离区的句 span 标 overlaps_quarantine，不得成为候选；
+# ASR 音频 16k 单声道 PCM16
+asr_segment:
+  merge_gap_seconds: 2.0
+  transcribe_quarantined: true
+  max_seconds: 34.0
+  audio_sample_rate_hz: 16000
+  audio_subtype: PCM_16
+
+# 最终自然句 3–12s；按句号类标点或 ≥0.5s 停顿切，超长句在最深停顿处再切
+sentence:
+  min_seconds: 3.0
+  max_seconds: 12.0
+  pause_split_seconds: 0.5
+  edge_margin_seconds: 0.05
+
+paths:
+  work_root: data/work/long_form/transcript
+  report_root: data/reports/long_form/transcript

@@ -1,0 +1,18 @@
+schema_version: 1
+config_id: long_form_route_v1
+config_version: 1
+
+# LF-13C：每区域路由 raw / dfn3_denoised。
+# - 非 usable 预筛区域不路由（skipped，不处理）
+# - 立体声且无空间下混许可 → blocked_spatial（绝不静默压扁）
+# - 稳态噪声分（style_event.noise_scores 最大值）≥ 阈值 → dfn3_denoised
+# - 其余走 raw；噪声证据缺失也默认 raw（干净原音优先，DFN3 需证据支持）
+# 阈值未标定：LF-12G 在开发集标定后改 threshold_calibrated: true
+routing:
+  dfn3_noise_threshold: 0.30
+  threshold_calibrated: false
+
+output:
+  work_root: data/work/long_form/routes
+  final_sample_rate_hz: 48000
+  final_subtype: PCM_16

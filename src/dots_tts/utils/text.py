@@ -6,21 +6,35 @@ from typing import Literal
 
 from langcodes import Language as LangcodesLanguage
 from lingua import Language, LanguageDetectorBuilder
-from tn.chinese.normalizer import Normalizer as ZhNormalizer
-from tn.english.normalizer import Normalizer as EnNormalizer
 
 TextLanguage = Literal["zh", "en", "unknown"]
 
 _WHITESPACE_PATTERN = re.compile(r"\s+")
 
 
+def _raise_text_normalization_unavailable(error: ModuleNotFoundError) -> None:
+    raise RuntimeError(
+        "Text normalization requires WeTextProcessing. It is not installed on "
+        "Windows because its Pynini dependency has no Windows wheel. Run without "
+        "--normalize-text, or use a Linux environment with WeTextProcessing."
+    ) from error
+
+
 @lru_cache(maxsize=1)
-def get_chinese_text_normalizer() -> ZhNormalizer:
+def get_chinese_text_normalizer():
+    try:
+        from tn.chinese.normalizer import Normalizer as ZhNormalizer
+    except ModuleNotFoundError as error:
+        _raise_text_normalization_unavailable(error)
     return ZhNormalizer()
 
 
 @lru_cache(maxsize=1)
-def get_english_text_normalizer() -> EnNormalizer:
+def get_english_text_normalizer():
+    try:
+        from tn.english.normalizer import Normalizer as EnNormalizer
+    except ModuleNotFoundError as error:
+        _raise_text_normalization_unavailable(error)
     return EnNormalizer()
 
 

@@ -1,0 +1,22 @@
+schema_version: 1
+policy_id: training_source_review
+policy_version: 2
+
+# Game-voice-line review policy. v1 assumed audiobook-length lines and rejected
+# nothing automatically; v2 keeps the same fail-closed semantics but lowers the
+# duration floor so short combat barks (~0.4-2s) are valid training samples.
+# Clips above 15s still require review because the trainer batches at most
+# 10-30s of audio per sample; long monologues belong to the long-form slicing
+# flow rather than this short-form dataset.
+min_sample_rate_hz: 40000
+min_duration_seconds: 0.3
+max_duration_seconds: 15.0
+max_abs_dc_offset: 0.01
+max_leading_silence_seconds: 0.5
+max_trailing_silence_seconds: 0.5
+max_silence_ratio: 0.45
+max_flat_top_run_count: 0
+min_integrated_loudness_lufs: -35.0
+max_integrated_loudness_lufs: -10.0
+max_true_peak_estimate_dbtp: 0.0
+min_snr_proxy_db: 12.0

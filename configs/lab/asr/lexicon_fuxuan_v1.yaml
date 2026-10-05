@@ -1,0 +1,57 @@
+schema_version: 1
+lexicon_id: fuxuan_domain
+lexicon_version: 1
+
+# Terms drawn from the fuxuan_asr benchmark references only. A term counts as
+# recalled when it survives benchmark normalization as a contiguous substring of
+# the backend hypothesis, so entries must be written exactly as the ground truth
+# spells them. Character-level CER hides these misses: a two-character slip in a
+# proper noun costs almost nothing on a 30-character line, yet it destroys the
+# term that makes the line worth keeping as character corpus.
+named_entities:
+  - 游云天君
+  - 贝洛伯格
+  - 姬子
+  - 黑塔空间站
+  - 建木
+  - 鳞渊境
+  - 持明龙尊
+  - 持明龙裔
+  - 狩原毛峰
+  - 波月莲子
+  - 伏冬桑
+  - 鳄蝽蜕
+  - 本座
+  - 无名客
+  - 太卜司
+  - 穷观阵
+  - 云上五骁
+  - 云骑
+  - 六御
+  - 仙舟
+  - 帝弓
+  - 十王司
+  - 星穹列车
+  - 司部
+  - 青雀
+  - 符玄
+  - 机巧
+  - 离坎
+
+# Literary and classical Chinese wording that the speaker uses heavily. Not
+# identity-bearing like a name, but just as easy for a general-domain model to
+# flatten into a common homophone.
+archaic_terms:
+  - 旨酒倒迎
+  - 无瑕胜玉美
+  - 至洁过冰清
+  - 劳神焦思
+  - 宵旰忧劳
+  - 摒除
+  - 遏制
+  - 寸功不竟
+  - 张弓搭箭
+  - 殃及
+  - 傀儡
+  - 颜面尽失
+  - 不义不占

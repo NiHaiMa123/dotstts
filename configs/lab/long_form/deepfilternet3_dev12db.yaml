@@ -1,0 +1,42 @@
+# DEV-ONLY LF-13D comparison arm: 12 dB attenuation limit. Not a
+# production config — exists solely to answer "is 8 dB simply too
+# weak" on the frozen 12-sentence acceptance set. The chosen limit is
+# frozen back into deepfilternet3_v2.yaml after the A/B verdict.
+schema_version: 1
+config_id: long_form_dfn3_dev12db
+config_version: 1
+backend:
+  name: deepfilternet
+  package_version: 0.5.6
+  model_name: DeepFilterNet3
+  attenuation_limit_db: 12.0
+  post_filter: false
+  compensate_delay: true
+  expected_image_tag: dotstts-long-form-denoise:deepfilternet-0.5.6
+model_files:
+  cache_root: data/work/models/deepfilternet-cache
+  config_relative_path: DeepFilterNet/DeepFilterNet3/config.ini
+  config_sha256: 415eb925d44990d938fb739f514aa3662c1ec0ea836cff044fa1291b82cb4290
+  weights_relative_path: DeepFilterNet/DeepFilterNet3/checkpoints/model_120.ckpt.best
+  weights_sha256: 23b92884f63ccf54bb026014604625ab231657b6480df65db4095c4c171e6003
+chunking:
+  core_max_seconds: 30.0
+  context_max_seconds: 2.0
+  reset_state_per_window: true
+  model_reuse_across_windows: true
+  seam_policy: reprocess_sentence_else_quarantine
+channels:
+  spatial_gate_before_downmix: true
+  downmix_rule: safe_mean_only
+  preserve_lr_evidence: true
+output:
+  work_root: data/work/long_form/enhancement/dfn3_dev12db
+  report_root: data/reports/long_form/dfn3_dev12db
+  final_sample_rate_hz: 48000
+  final_subtype: PCM_24
+  final_channels: 1
+failure_policy:
+  on_backend_failure: block_candidate
+  on_missing_weights: abort_run
+  on_output_mismatch: block_candidate
+  atomic_region_commit: true

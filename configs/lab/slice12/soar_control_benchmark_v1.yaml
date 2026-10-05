@@ -1,0 +1,74 @@
+schema_version: 1
+benchmark_id: fuxuan_slice12_soar_control
+benchmark_version: 1
+implementation_version: 1
+selection:
+  manifest_path: data/references/fuxuan/v1/manifest.json
+  manifest_sha256: 1a33c738c1b807337b97eaed278aee05c1458aebc1f4d16da32ba7dee879c085
+  dataset_id: fuxuan
+  dataset_version: 1
+  target_speaker_id: 崩铁符玄
+  standardized_audio_root: data/work/standardized
+model:
+  model_id: dots-studio/dots.tts-soar
+  model_revision: 2f9b3e18d70d670d4c701da2dc55ded5755815ce
+  local_path: pretrained_models/dots.tts-soar
+  model_config_path: pretrained_models/dots.tts-soar/config.json
+  model_config_sha256: d38bd9cff56c9744e33dc0ba62ca39b1ae6ab64561628f8de8132e5b565e9fa5
+  model_weights_sha256: 2787e6d4fe0b27ac33d28072abcadef53802c841bff037f3ee1f6bb5e1d3a2ce
+  speaker_encoder_weights_sha256: 1cf3861c9dee79e4db34bd0b8a4155e68bed27a7c6274e168bb6ee4fed191c85
+  vocoder_weights_sha256: c0e45c08f480df67ac4c354b465355fcc7e2f6c8765263b6dfeddd1f4671c93d
+  precision: bfloat16
+  language: chinese
+  speaker_scale: 1.5
+  max_generate_length: 500
+  max_sequence_length: 2048
+test_sentences:
+  - sentence_id: neutral_report
+    text: 本座已经看过这份报告，结论相当明确。
+    purpose: neutral_baseline
+  - sentence_id: named_entity
+    text: 请把列车长和将军的消息一并告诉我。
+    purpose: named_entities
+  - sentence_id: long_decision
+    text: 天命不会替任何人做决定，关键在于当机立断。
+    purpose: long_sentence
+  - sentence_id: date_number
+    text: 七月十五日，星穹列车将在长乐天停留三小时。
+    purpose: date_and_number
+  - sentence_id: short_ack
+    text: 好的。
+    purpose: short_sentence
+  - sentence_id: out_of_domain
+    text: 秋水共长天一色，落霞与孤鹜齐飞。
+    purpose: reference_external_text
+seeds:
+  - 20260908
+  - 20260909
+metrics:
+  asr_backend_id: faster_whisper
+  asr_model_id: mobiuslabsgmbh/faster-whisper-large-v3-turbo
+  asr_model_revision: 0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf
+  asr_model_root: data/work/models/asr
+  asr_python: data/work/asr_envs/faster_whisper/Scripts/python.exe
+  speaker_report_path: data/reports/datasets/fuxuan_v1/analysis/speaker_embeddings.json
+  speaker_config_path: configs/lab/datasets/fuxuan_v1.yaml
+  quality_analysis_config_path: configs/lab/quality/signal_analysis_v1.yaml
+  quality_policy_path: configs/lab/quality/training_source_review_v1.yaml
+  failure_statuses: [generation_error, invalid_audio, asr_error]
+  stability:
+    repeat_same_seed: true
+    max_duration_cv: 0.20
+    max_cer_range: 0.35
+    max_embedding_range: 0.20
+outputs:
+  run_root: data/reports/datasets/fuxuan_v1/slice12
+  benchmark_manifest_path: data/reports/datasets/fuxuan_v1/slice12/baseline_manifest.jsonl
+  benchmark_manifest_sha256: ddfb42d6211f1c882bf77fe3c273dc7423fd52a8be3824a5650e66a6f43927b1
+  generation_root: data/work/slice12/soar_control_generated
+  generation_manifest_path: data/reports/datasets/fuxuan_v1/slice12/soar_control_generation.jsonl
+  asr_output_path: data/reports/datasets/fuxuan_v1/slice12/soar_control_asr.jsonl
+  metrics_path: data/reports/datasets/fuxuan_v1/slice12/soar_control_metrics.json
+  ranking_path: data/reports/datasets/fuxuan_v1/slice12/soar_control_ranking.json
+  ranking_csv_path: data/reports/datasets/fuxuan_v1/slice12/soar_control_ranking.csv
+  ranking_html_path: data/reports/datasets/fuxuan_v1/slice12/soar_control_ranking.html

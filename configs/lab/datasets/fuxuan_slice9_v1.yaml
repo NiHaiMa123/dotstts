@@ -1,0 +1,165 @@
+schema_version: 1
+selection_id: fuxuan_reference_pools
+selection_version: 1
+implementation_version: 1
+
+# This is the only Slice 9 selection configuration for fuxuan@1.  A change to
+# any value requires selection_version++ and a new feature/ranking snapshot.
+input:
+  dataset_id: fuxuan
+  dataset_version: 1
+  dataset_tree_sha256: 77754574c4048a20682b0e8f9be95c322cf0848afedaf90d7c81b1f00df029af
+  source: catalog.dataset_item
+  split: train
+  target_speaker_id: 崩铁符玄
+  candidate_snapshot_path: data/reports/datasets/fuxuan_v1/audit/slice9_candidate_snapshot.json
+  candidate_snapshot_required: true
+
+standardized_audio:
+  config_id: training_audio
+  config_version: 1
+  config_sha256: a2a2c7d00ec638dc3e420692785c604b86d0997202dd35abdcff17c8abdda4d6
+  implementation_version: 1
+  sample_rate_hz: 48000
+  channels: 1
+  subtype: PCM_24
+
+runtime_contract:
+  trim_top_db: 30.0
+  model_sample_rate_hz: 48000
+  effective_duration_min_seconds: 0.0
+  effective_duration_min_inclusive: false
+  effective_duration_max_seconds: 10.0
+  effective_duration_max_inclusive: true
+  xvec_max_audio_seconds: 10.0
+
+provenance:
+  dataset_config_path: configs/lab/datasets/fuxuan_v1.yaml
+  dataset_config_canonical_sha256: 316b45f34f21a7b4a80455bacd574ba51512753be77ad4ed717c8143cdf9a43f
+  quality_report_path: data/reports/quality/quality.json
+  quality_report_sha256: c36616efbafec09a8b4880c108213cd4402109551b057ef7f8ef60a391ec1945
+  quality_analysis_id: objective_signal_metrics
+  quality_analysis_version: 1
+  quality_analysis_config_sha256: d5d8777566a92781831eba3134bb5fdccfc1d127bbba3c29f3e4f44cce9f199e
+  quality_policy_id: training_source_review
+  quality_policy_version: 1
+  quality_policy_config_sha256: a1c7ee50faf56dc2f90a7882036349040676c072d0653f7fa6cf4a4c516dd628
+  speaker_report_path: data/reports/datasets/fuxuan_v1/analysis/speaker_embeddings.json
+  speaker_report_sha256: c126c40c3d5aa07af3b9aa34a819a0aaa12d01f12ff29b7d4721524e72a9e499
+  speaker_identity_sha256: 1445b409333982a6efb80717c667bf3befd741c40e6d9e60015a3c17655248ec
+  threshold_calibration_report_path: data/reports/datasets/fuxuan_v1/analysis/threshold_calibration_v1.json
+  threshold_calibration_report_sha256: c9703fd572e1e58f6776d94a085a4e4440917011f63ae22261c591e34bf41677
+
+gates:
+  hard:
+    require_audio_sha256: true
+    require_text_sha256: true
+    require_finite_audio: true
+    require_non_silent_audio: true
+    require_unique_target_speaker: true
+    require_nonempty_text: true
+    require_standardized_hash_verified: true
+    require_quality_analysis_status: ok
+    effective_duration_min_seconds: 0.0
+    effective_duration_min_inclusive: false
+    effective_duration_max_seconds: 10.0
+    effective_duration_max_inclusive: true
+  quality_review:
+    action: review
+    max_abs_dc_offset: 0.01
+    max_leading_silence_seconds: 0.5
+    max_trailing_silence_seconds: 0.5
+    max_silence_ratio: 0.45
+    max_flat_top_run_count: 0
+    min_integrated_loudness_lufs: -35.0
+    max_integrated_loudness_lufs: -10.0
+    max_true_peak_estimate_dbtp: 0.0
+    min_snr_proxy_db: 12.0
+  speaker_review:
+    action: review
+    center_cosine_min: 0.6545700366223228
+    knn_cosine_min: 0.6766019064784982
+    source: threshold_calibration_v1
+    automatic_exclusion: false
+  text:
+    allowed_sources:
+      - human_review
+      - filename_candidate_unreviewed
+    asr_agreement_missing_is_unknown: true
+  coverage:
+    unresolved_action: score_exclusion
+    dependency_missing_action: score_exclusion
+
+score:
+  normalization:
+    method: per_pool_quantile_clip
+    lower_quantile: 0.05
+    upper_quantile: 0.95
+    missing_feature_policy: renormalize_available_weights
+    missing_value_is_not_zero: true
+  weights:
+    objective_quality: 0.30
+    speaker_similarity: 0.25
+    text_provenance: 0.15
+    silence: 0.10
+    duration: 0.05
+    phonological_coverage: 0.15
+  direction:
+    objective_quality: higher_is_better
+    speaker_similarity: higher_is_better
+    text_provenance: higher_is_better
+    silence: lower_is_better
+    duration: configured_range
+    phonological_coverage: higher_is_better
+
+pools:
+  main_neutral:
+    emotion_primary: 中立_neutral
+    purpose: general_voice_cloning
+    top_k: 10
+    minimum_publish_count: 6
+    boundary_count: 5
+  emotion_neutral:
+    emotion_primary: 中立_neutral
+    purpose: neutral_baseline
+    top_k: 6
+    minimum_publish_count: 5
+    boundary_count: 3
+  emotion_happy:
+    emotion_primary: 开心_happy
+    purpose: happy_reference
+    top_k: 6
+    minimum_publish_count: 5
+    boundary_count: 3
+  emotion_angry:
+    emotion_primary: 生气_angry
+    purpose: angry_reference
+    top_k: 6
+    minimum_publish_count: 5
+    boundary_count: 3
+  emotion_sad:
+    emotion_primary: 难过_sad
+    purpose: sad_reference
+    top_k: 5
+    minimum_publish_count: 3
+    boundary_count: 0
+
+ranking:
+  rank_key: pool_id_score_desc_asset_sha256
+  global_rank: forbidden
+  cross_pool_backfill: forbidden
+  cross_pool_normalization: forbidden
+  neutral_pool_overlap_max: 3
+  emotion_pool_asset_overlap: forbidden
+
+diversity:
+  enabled: true
+  stage: after_pool_score
+  duplicate_group_representative_only: true
+  tie_break: asset_sha256_ascending
+
+outputs:
+  feature_snapshot_path: data/reports/datasets/fuxuan_v1/analysis/slice9_features_v1.json
+  ranking_report_path: data/reports/datasets/fuxuan_v1/analysis/slice9_ranking_v1.json
+  candidate_csv_path: data/reports/datasets/fuxuan_v1/analysis/slice9_candidates_v1.csv
+  candidate_html_path: data/reports/datasets/fuxuan_v1/analysis/slice9_candidates_v1.html

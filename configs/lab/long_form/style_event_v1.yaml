@@ -1,0 +1,68 @@
+schema_version: 1
+config_id: long_form_style_event_v1
+config_version: 1
+
+# 冻结参考包：风格锚点（normal 分布 + 每类难负例分布）
+targets:
+  reference_pack_path: configs/lab/long_form/reference_pack_suisui_v1.yaml
+  reference_pack_sha256: 0ea3fc6765bec50b7d0e2aa2076ca1421b68a0383dcee165e44292ab5cbe460a
+  reference_audio_root: data/work/long_form/exports/suisui/v1
+  max_reference_seconds: 10.0
+
+# PANNs CNN14 AudioSet 打标；标签与权重 sha256 钉死，缺失/漂移 → 事件证据 missing
+# 注意 upstream 硬编码路径：文件须位于 ~/panns_data/
+events:
+  backend: panns_cnn14
+  sample_rate_hz: 32000
+  # 短区域打标时向两侧借真实上下文到该长度；记录扩展窗并标记 context_padded
+  min_tag_seconds: 1.0
+  labels_csv_sha256: cdd1049833c4b86127c2773ac0d14a2754b6a6d0d1798002ed5c66e699708429
+  checkpoint_sha256: 0dc499e40e9761ef5ea061ffc77697697f277f6a960894903df3ada000e34b31
+  frame_seconds: 0.01
+  # AudioSet display_name 子串匹配；命中即记录风险分数与时间
+  risk_label_patterns:
+    - male speech
+    - female speech
+    - child speech
+    - hubbub
+    - whisper
+    - singing
+    - music
+    - laugh
+    - giggle
+    - crying
+    - sobbing
+    - moan
+    - groan
+    - scream
+    - yell
+    - breathing
+    - slap
+    - clap
+    - bang
+    - knock
+    - burst
+    - hands
+    - finger snapping
+    - rustle
+    - scratch
+    - rub
+    - splash
+    - footsteps
+  # 稳态/背景噪声类（DFN3 可去除目标），与污染事件 risk_label_patterns 分开；
+  # 供 LF-13C 路由判定"需降噪"用，证据非 pass
+  noise_label_patterns:
+    - hiss
+    - static
+    - hum
+    - buzz
+    - rumble
+    - noise
+    - wind
+    - air conditioning
+  transient_hop_samples: 128
+  transient_zscore: 8.0
+
+paths:
+  work_root: data/work/long_form/style_event
+  report_root: data/reports/long_form/style_event

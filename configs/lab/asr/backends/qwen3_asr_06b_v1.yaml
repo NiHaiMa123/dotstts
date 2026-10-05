@@ -1,0 +1,19 @@
+schema_version: 1
+backend_id: qwen3_asr
+backend_version: 0.0.6
+package: qwen-asr==0.0.6
+model_id: Qwen/Qwen3-ASR-0.6B
+model_revision: 5eb144179a02acc5e5ba31e748d22b0cf3e303b0
+model_license: Apache-2.0
+device: cuda:0
+capabilities:
+  timestamps_available: true
+  timestamp_type: optional_forced_alignment
+  timestamps_enabled: false
+parameters:
+  dtype: bfloat16
+  language: Chinese
+  max_inference_batch_size: 1
+  max_new_tokens: 256
+  timestamps: false
+  attention: sdpa

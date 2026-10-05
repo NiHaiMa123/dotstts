@@ -1,0 +1,19 @@
+services:
+  trainer:
+    build:
+      context: ../..
+      dockerfile: docker/slice12/Dockerfile
+    image: dotstts-slice12:torch2.8-cu128
+    working_dir: /workspace
+    volumes:
+      - ../..:/workspace
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    shm_size: 8gb
+    stdin_open: true
+    tty: true

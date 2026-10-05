@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "status": "succeeded",
+  "benchmark_id": "fuxuan_slice12_soar_control",
+  "experiment_id": "slice12_fuxuan_formal_v2",
+  "model_id": "dots-studio/dots.tts-soar",
+  "model_revision": "2f9b3e18d70d670d4c701da2dc55ded5755815ce",
+  "benchmark_manifest_sha256": "ddfb42d6211f1c882bf77fe3c273dc7423fd52a8be3824a5650e66a6f43927b1",
+  "benchmark_config_file_sha256": "503f7ac2ebb2ea103588301f7a32b7e91a853a02f98e71a7289899665a0d6d04",
+  "benchmark_config_canonical_sha256": "3e4a5949d7ad547d26c228db7cbb9b06e1c3e73f2c6d80fd6550b67c096b7b8c",
+  "matrix": {
+    "reference_count": 6,
+    "sentence_count": 6,
+    "seed_count": 2,
+    "expected_count": 72,
+    "generation_success_count": 72,
+    "asr_success_count": 72,
+    "metric_success_count": 72
+  },
+  "summary": {
+    "failure_rate": 0.0,
+    "mean_cer": 0.058127088554720124,
+    "mean_speaker_cosine": 0.7817587194463926,
+    "quality_pass_rate": 0.18055555555555555,
+    "mean_rtf": 1.6860199635551603,
+    "inference_peak_cuda_gib": 5.541467189788818,
+    "generation_seconds_sum": 472.832626849,
+    "audio_seconds_sum": 281.92
+  },
+  "quality_review_reasons": {
+    "long_leading_silence": 51,
+    "high_silence_ratio": 12,
+    "too_short": 12
+  },
+  "artifacts": {
+    "generation_jsonl_sha256": "4c88afcb13e08ccac95ae49cf2dc10becbc0dfcbdf2249859203d6cff033f508",
+    "asr_jsonl_sha256": "bcc1af3c8a737fa65c61e49d5812e07d36bc0882ea5866d6bbe802caa3b71e01",
+    "metrics_json_sha256": "4300daa8c482fc833ac95c49d8a6f2dff21ba40ca94b17c8e965753cc9e4b6a6",
+    "ranking_json_sha256": "806a22bb3bfe27dccd8b0154ba03a2678f14eb9519f952c6e724e17913d8b6e6",
+    "regression_report_sha256": "cd31be17970dcedbf1b83e0639fc0f97df3c91494f5af063a9142996d7a5e9a7"
+  },
+  "gate_state": "blocked_missing_trained_candidate"
+}

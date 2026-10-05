@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "status": "manual_review_required",
+  "experiment_id": "slice12_fuxuan_step400_validation_selected_v1",
+  "selection": {
+    "policy": "minimum_validation_loss",
+    "selected_step": 400,
+    "selected_validation_loss": 0.6849,
+    "test_or_manual_results_used_for_selection": false,
+    "adapter_weights_sha256": "de5b3bb59e510d622cf65813f75fd0f5c287c3ea8f043ea132c213d3f0d0ed54",
+    "adapter_metadata_sha256": "73d139b84ad4417e6c952b7e0aec5b931107c47e5a48a45a7b9ae79f2b350011"
+  },
+  "matrix": {
+    "expected_count": 72,
+    "generation_success_count": 72,
+    "asr_success_count": 72,
+    "metric_success_count": 72
+  },
+  "control": {
+    "failure_rate": 0.0,
+    "mean_cer": 0.058127088554720124,
+    "mean_speaker_cosine": 0.7817587194463926,
+    "quality_pass_rate": 0.18055555555555555,
+    "mean_rtf": 1.6860199635551603,
+    "inference_peak_cuda_gib": 5.541467189788818
+  },
+  "trained": {
+    "failure_rate": 0.0,
+    "mean_cer": 0.05626696950710108,
+    "mean_speaker_cosine": 0.7948088026154377,
+    "quality_pass_rate": 0.09722222222222222,
+    "mean_rtf": 1.9606527430052028,
+    "inference_peak_cuda_gib": 5.544763088226318
+  },
+  "gate": {
+    "status": "failed",
+    "passed_count": 6,
+    "failed_count": 4,
+    "failed_gates": [
+      "min_quality_pass_rate",
+      "max_mean_rtf",
+      "max_quality_pass_rate_drop",
+      "max_mean_rtf_ratio"
+    ],
+    "mean_quality_pass_rate_drop": 0.08333333333333333,
+    "mean_rtf_ratio": 1.1628882132990577
+  },
+  "artifacts": {
+    "benchmark_config_sha256": "055109e62c5688d2e6ab225d52b8ad1107dabb8dac0e3fae9d198d98faadf40b",
+    "gate_contract_sha256": "79e601972005df9340398b5813a8052453e54a4cc23397723cf78f36db4b225b",
+    "generation_config_canonical_sha256": "62381c7af8b66854688830120909fd78f5f2670045ab3ee2965df51fe4760cbc",
+    "generation_jsonl_sha256": "297c62665d702d83e7eef9099deddc651d6f46ff8982a15daf67c9443c00f1e0",
+    "asr_jsonl_sha256": "efb562e070f9cf1aedcc4a5196a209bf7cd20efc87566feda5f32eb5d2c7bab3",
+    "metrics_json_sha256": "b15ce004162299d0d4dd849fced0f5fec20724ae4f7e80414391a87562bc98d3",
+    "ranking_json_sha256": "3ffdd67c85435ea01e7d8d37158f1ac31f655837989cad744a1542d555213cff",
+    "regression_report_sha256": "c07f86a633b53e5a3328126d6e14d55d340ba8347f7ea56ee47562936eaec980"
+  },
+  "blind_review": {
+    "status": "pending_manual_review",
+    "pair_count": 12,
+    "audio_count": 24,
+    "audio_set_sha256": "417e444558dd5754378411655fdcb213083650ce46206526e08949a8b2c7d645",
+    "manifest_sha256": "67e1e2ad051151cd025e32c685958ea780def5b9aae0dd9077aa084f9a18f3ef",
+    "sealed_key_sha256": "a636504d833b54b228c4fb849c8576efe27cb3ae52dc1b24140905fca4dd308b",
+    "html_sha256": "2b72df2f44cfb22ea6b3b9e3dc849b1c464e8caa43fa788b36010944fd684180",
+    "mapping_changed_from_step500_pair_count": 6,
+    "local_storage_key": "slice12-step400-blind-review-v1",
+    "expected_export_name": "slice12-step400-blind-review-decisions.json"
+  },
+  "decision": {
+    "slice12_acceptance": "pending_step400_manual_review",
+    "enter_slice13": false
+  }
+}

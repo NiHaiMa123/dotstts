@@ -1,0 +1,17 @@
+schema_version: 1
+backend_id: sensevoice
+backend_version: 1.4.4
+package: funasr==1.4.4
+model_id: FunAudioLLM/SenseVoiceSmall
+model_revision: 3847d57b6bdf2dd8875cb1508d2af43d80a16bf7
+model_license: FunASR Model Open Source License Agreement 1.1
+device: cuda:0
+capabilities:
+  timestamps_available: false
+  timestamp_type: none
+  timestamps_enabled: false
+parameters:
+  language: zh
+  use_itn: false
+  batch_size: 1
+  vad_model: null

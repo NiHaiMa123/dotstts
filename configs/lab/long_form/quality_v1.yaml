@@ -1,0 +1,23 @@
+schema_version: 1
+config_id: long_form_quality_v1
+config_version: 1
+
+# LF-12G：DNSMOS P.835 域内增益评估。模型 sha256 钉死，漂移即中止。
+# 短于 9.01s 的片段按上游方式自拼接填充，报告标 short_clip/padded——
+# 短片段分数稳定性在本阶段验证，不隐含可信。
+models:
+  model_root: data/work/models/dnsmos
+  primary_relative_path: sig_bak_ovr.onnx
+  primary_sha256: 269fbebdb513aa23cddfbb593542ecc540284a91849ac50516870e1ac78f6edd
+  p808_relative_path: model_v8.onnx
+  p808_sha256: 9246480c58567bc6affd4200938e77eef49468c8bc7ed3776d109c07456f6e91
+
+# 未标定：DFN3 路由验收阈值待开发集测定，当前只产证据
+thresholds:
+  dfn3_min_ovrl_gain: null
+  dfn3_min_sig_gain: null
+  calibrated: false
+
+paths:
+  work_root: data/work/long_form/quality
+  report_root: data/reports/long_form/quality

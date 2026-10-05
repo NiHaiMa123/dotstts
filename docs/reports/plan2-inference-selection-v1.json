@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "status": "selected",
+  "task": "P2-6",
+  "selection": {
+    "ode_method": "euler",
+    "num_steps": 10,
+    "guidance_scale": 1.2,
+    "merge_lora_for_inference": true,
+    "runtime_optimize": true,
+    "vocoder_merge_steps": 4,
+    "warmup_on_optimize": true,
+    "precision": "bfloat16"
+  },
+  "decision": "Keep the existing sampling contract because the optimized 10-step smoke already passes the performance and memory gates with substantial margin.",
+  "rejected_experiments": [
+    {
+      "num_steps": 8,
+      "reason": "unnecessary quality risk and would require a new human blind review"
+    },
+    {
+      "num_steps": 6,
+      "reason": "unnecessary quality risk and would require a new human blind review"
+    },
+    {
+      "num_steps": 4,
+      "reason": "unnecessary quality risk and would require a new human blind review"
+    }
+  ],
+  "evidence": "docs/reports/plan2-inference-smoke-v1.json"
+}

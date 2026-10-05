@@ -1,0 +1,119 @@
+schema_version: 1
+review_id: aemeath_v3_freeze_review
+review_version: 1
+dataset_id: aemeath
+dataset_version: 3
+analysis_run_id: 19103456-8b10-4ef7-ace4-8139670e6f00
+candidate_snapshot_sha256: 9b2e2f07eeedcecb653bb62111c4700a53231a08bee2b5e60686457f70aa5f12
+review_batch_id: aemeath-v3-freeze-review
+reviewed_at: '2026-09-23T05:44:41.511397Z'
+reviewer: freeze_speaker_dataset.py
+edge_decisions:
+- left_asset_sha256: 4102789cda48b027ab6a5d09e6b723f624a63b65b9b09f1ec433976a4398133d
+  right_asset_sha256: 602bdf04ace37020893b4a87a900c6db35457e2be9b8a0b522a076edf99338ad
+  evidence_type: exact_text
+  review_status: accepted
+  representative_asset_sha256: 4102789cda48b027ab6a5d09e6b723f624a63b65b9b09f1ec433976a4398133d
+  exclude_asset_sha256s:
+  - 602bdf04ace37020893b4a87a900c6db35457e2be9b8a0b522a076edf99338ad
+  review_note: 同一录音的两个来源(wiki批开心标签 vs 游戏批中立);时长逐样本一致,保留低资源开心标签版
+speaker_decisions:
+- asset_sha256: 0e9b866ad5a87d07eaddb71589f2dcf9f8ec31d275d66a7c5252a49b597cf51f
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 135f6634c8faca3ec4b31936f0c50e5fb97613223c1c2bac94f48c75b80ec9df
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 1b5e4b30427792d908a02de032c67e5f1602167a4e4a4d1b10a6bea7cc3a4c73
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 1bdc13b01f5565905c7f92efd3919b49db39be467b8e09aeb11e2cf70fd47da2
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 23930f0c80c46582715a83759f63d715aaca46a5900c47dc6f7fc7882a45c066
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 2cacb3f43eb74f11f47cdd74640130b390272502a232ea7ea0eb036517444ded
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 30841ad1a99f205b976db9d8f51c4c1e63324437c8a20813fe2119beb1ac4fe3
+  review_status: exclude_uncertain
+  review_note: 文本为纯省略号,规范化后为空,无法作为TTS转写;音频为无词叹息
+- asset_sha256: 30c645aa804b98bbcf245bdd330ba34f3004c73e35280559cf98374beb07451b
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 51258e6ae5afc82099e685fb4696fe6a9453e2359802064bfba96c3655ad5436
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 52d86ca20e466b6dff9729873744842d4ac64a6d77db8001fa3bf4110dfe1b8c
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 5f2761e65803965f9957acc58f8d88171c274929206b64ac6c312e99b02b9d86
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 701fb8f91d614695f57d5e30cbd5a86c18a5922fdc35597310f0b682a9e00c72
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 72c60ead08642d16e1ea1c948697927dc39348281df98a2346d3c05a02b35181
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 81f9654b616677dea50f452a17eb83d63ff84fccdeaaa8de33091db3132e060b
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 8d78f48f5ef368bfd89bf0602c83861712fb386bd39721d1e6792d1e04878285
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 9110d5c8da0bf0316d245c466989317ff40cca81fc0af3295f9d76a80331169c
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 934eba47f263fb528b44f8d01dbbef1339973a61e9ae1bc3e56ea2ac125da4fa
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 959eeeb2e7fb9a5d1f293109586c459b8ca7d5a0ae855cc48d3d15dbaec14e00
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 97514316d8d51dd57388dff2417c030aca032fe99ebb7b3fa88264a9c32e3ef8
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 9ded15de22f04afa3ed67901dbe1e1433c57fa659b3863c725432e31f679e498
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: b89362a338d5922f9ac51a21eef38fa9a33e7971773193576c98be6a11907d96
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: ba279509673aaf73f9fdee164eea027e46190ceeca2079d1ef71986ffd62393a
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: baa49c16417731513fc78b62fd44f5cb141af285201aaffbc65caae6b21b0418
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: c59378b7949c1f3a52efe7e67c5bcd7a4d82b3c9cc67953d9a7b5ca0dfaf5492
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: cb9ab69772fbe5290291e2ab73dcc37b6ff316bfc8dbe691d0ca8ec54bbacbd5
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: d1229e43dfb23dbf2044229edff6a61f4ca6eb295c8bb669b07a43851d4acf11
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: ea0b1de79148c874efd6d3c91aa3fd8c1dd679dbcfc6ed9187a11ab6e7b4331f
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: f2aac4771efde234f00067641e855b3d664b2b799e1895833590b4d68d7fbe52
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: f71e95676bb3bb811d116fd6b0dda966a6d098e1f9de0742656ce70e6f3b7f2a
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: f72bd2410f2f1b9bd10039431bdeac1b2342a7f3d8786f6f50d217c2e54d3e9b
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: fab1290e20b68262db0055fd2fe6a6cb6671ff8440237ca70e108c1941cd25d6
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: fff48aa208a022e627758359cedcc4db9b213c543ff4f817a1855cda23120fe7
+  review_status: confirmed_same_speaker
+  review_note: 官方库街区wiki爱弥斯战斗短喝;嵌入离群系<2s短音频所致,非说话人错误
+- asset_sha256: 0a88c610f23374c5fda5782f3672c0f063e3180b9f28da1f3ebb9c659dd15963
+  review_status: exclude_uncertain
+  review_note: ASR显示配音可能念了具体名字(Jake)而文本为占位词,VO/文本漂移,用户指示删除

@@ -1,0 +1,45 @@
+schema_version: 1
+profile_version: 3
+model_id: aemeath_lora_v1
+display_name: 爱弥斯 · 官方参数
+description: SOAR 官方采样，Euler 10 步、guidance 1.2、speaker scale 1.5。人耳筛选的 v4 训练段去掉发糊片段，并裁掉「去吧」前的喊声。LoRA step 300。
+base_model:
+  path: pretrained_models/dots.tts-soar
+  revision: 2f9b3e18d70d670d4c701da2dc55ded5755815ce
+adapter:
+  path: data/work/aemeath/aemeath_lora_v7_official/checkpoint-00000300/model
+  format: dots_tts_trainable_delta
+  training_step: 300
+  weights_sha256: 001b6fcc7b3c2c05d53f18f2d7f2dfcaae9d3a57a93f62582e11f6002883bf57
+  metadata_sha256: fbd3501c70b61015c04edb72b45bc5884d8f1948a65f28ad9c2af4f7d15f6105
+prompt:
+  audio_path: data/work/aemeath/v7_official/prompt_cropped_before_quba.wav
+  audio_sha256: df54e80c3d87716bcc5797c99f068ea8edbfff9ded916eecf056e9cfd14f3d92
+  text: 对。公路片圆满杀青，返程的时间已到，我们……一起回星炬学院
+runtime:
+  precision: bfloat16
+  optimize: false
+  max_generate_length: 500
+  max_sequence_length: 2048
+  vocoder_merge_steps: 4
+  warmup_on_optimize: false
+  merge_lora: true
+generation:
+  language: chinese
+  template_name: tts
+  normalize_text: false
+  speaker_scale: 1.5
+  ode_method: euler
+  num_steps: 10
+  guidance_scale: 1.2
+  base_seed: 42
+  pause_ms: 250
+  max_chars: 120
+postprocess:
+  edge_trim_config: configs/lab/postprocess/generated_audio_edge_trim_v1.yaml
+  edge_trim_sha256: 50d90b34a1dd38d363471293aba9fb675570271e6c50f5051b0ee37ffc5436f4
+  voice_polish_config: configs/lab/postprocess/aemeath_voice_polish_neutral_v1.yaml
+  voice_polish_sha256: d90be79c23559df700ed818eace93c0c17f5bb0c3a242017ce316bf106704ccd
+io:
+  input_dir: inputs/aemeath_text
+  output_dir: outputs/aemeath_audio

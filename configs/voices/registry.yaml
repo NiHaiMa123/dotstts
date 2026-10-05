@@ -1,0 +1,9 @@
+schema_version: 1
+registry_id: local_voice_models
+registry_version: 1
+default_model_id: fuxuan_step400_v1
+profiles:
+  - configs/voices/fuxuan_step400_v1.yaml
+  - configs/voices/aemeath_lora_v1.yaml
+  - configs/voices/shouanren_step500_v1.yaml
+  - configs/voices/shouanren_mf_zero_v1.yaml

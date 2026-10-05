@@ -1,0 +1,22 @@
+schema_version: 1
+config_id: training_audio
+config_version: 1
+
+target_sample_rate_hz: 48000
+mono_mix_strategy: mean
+resampler: soxr
+resampler_quality: HQ
+output_subtype: PCM_24
+
+# Edge activity uses the same conservative threshold as objective quality.
+silence_frame_ms: 20.0
+silence_hop_ms: 10.0
+silence_threshold_dbfs: -50.0
+trim_trigger_seconds: 0.5
+edge_padding_seconds: 0.1
+
+# Attenuation only. No upward gain or dataset-wide loudness normalization.
+true_peak_oversample: 4
+target_true_peak_dbtp: -1.0
+loudness_normalization: false
+dc_offset_removal: false

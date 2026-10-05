@@ -1,0 +1,34 @@
+schema_version: 1
+benchmark_id: fuxuan_slice12_soar_control_optimized_smoke
+benchmark_version: 1
+provenance:
+  source_benchmark: configs/lab/slice12/soar_control_optimized_smoke_v1.yaml
+model:
+  model_id: dots-studio/dots.tts-soar
+  model_revision: 2f9b3e18d70d670d4c701da2dc55ded5755815ce
+  runtime: merge_none_optimize
+metrics:
+  asr_backend_id: faster_whisper
+  asr_model_id: mobiuslabsgmbh/faster-whisper-large-v3-turbo
+  asr_model_revision: 0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf
+  asr_model_root: data/work/models/asr
+  asr_python: data/work/asr_envs/faster_whisper/Scripts/python.exe
+  speaker_report_path: data/reports/datasets/fuxuan_v1/analysis/speaker_embeddings.json
+  speaker_config_path: configs/lab/datasets/fuxuan_v1.yaml
+  quality_analysis_config_path: configs/lab/quality/signal_analysis_v1.yaml
+  quality_policy_path: configs/lab/quality/training_source_review_v1.yaml
+  stability:
+    repeat_same_seed: true
+    max_duration_cv: 0.20
+    max_cer_range: 0.35
+    max_embedding_range: 0.20
+outputs:
+  run_root: data/reports/datasets/fuxuan_v1/slice12
+  benchmark_manifest_path: data/reports/datasets/fuxuan_v1/slice12/baseline_manifest.jsonl
+  benchmark_manifest_sha256: ddfb42d6211f1c882bf77fe3c273dc7423fd52a8be3824a5650e66a6f43927b1
+  generation_manifest_path: data/reports/datasets/fuxuan_v1/slice12/soar_control_optimized_smoke_generation.jsonl
+  asr_output_path: data/reports/datasets/fuxuan_v1/slice12/soar_control_optimized_smoke_asr.jsonl
+  metrics_path: data/reports/datasets/fuxuan_v1/slice12/soar_control_optimized_smoke_metrics.json
+  ranking_path: data/reports/datasets/fuxuan_v1/slice12/soar_control_optimized_smoke_ranking.json
+  ranking_csv_path: data/reports/datasets/fuxuan_v1/slice12/soar_control_optimized_smoke_ranking.csv
+  ranking_html_path: data/reports/datasets/fuxuan_v1/slice12/soar_control_optimized_smoke_ranking.html

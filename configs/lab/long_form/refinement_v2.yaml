@@ -1,0 +1,31 @@
+schema_version: 1
+config_id: long_form_sentence_refinement
+config_version: 2
+
+sentence:
+  semantic_split_gap_seconds: 1.5
+  retained_internal_gap_seconds: 0.35
+  boundary_padding_seconds: 0.12
+  join_silence_seconds: 0.08
+  minimum_active_speech_seconds: 0.8
+  minimum_output_seconds: 2.0
+  minimum_text_characters: 5
+  maximum_output_seconds: 15.0
+
+boundary_repair:
+  context_seconds: 0.18
+  zero_crossing_search_seconds: 0.005
+  edge_fade_seconds: 0.025
+  join_fade_seconds: 0.015
+
+screening:
+  accepted_parent_styles:
+    - normal
+  require_dominant_speaker_cluster: true
+  minimum_asr_mean_word_probability: 0.78
+  minimum_snr_proxy_db: 15.0
+  maximum_silence_ratio: 0.35
+  maximum_near_clip_ratio: 0.0001
+  reject_spatial_risk: true
+  reject_dense_background_proxy: true
+  maximum_review_candidates_per_source: 40

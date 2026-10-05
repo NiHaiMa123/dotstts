@@ -1,0 +1,23 @@
+schema_version: 1
+comparison_id: fuxuan_asr_selection
+comparison_version: 1
+
+# Backends whose hypotheses agree with each other this closely, yet all differ
+# from the reference, point at the ground truth rather than at the models.
+# Calibrated on the 40-sample benchmark, where the median pairwise CER between
+# backends is 0.095.
+consensus_max_pairwise_cer: 0.10
+
+# Gap between the best and worst backend CER on one sample. Above the observed
+# third quartile (0.167), so this flags genuinely contentious audio. Distinct
+# from consensus_max_pairwise_cer, which compares hypotheses to each other
+# rather than comparing their accuracy scores.
+high_cer_delta_min: 0.20
+
+# Gates for picking a verification backend. CER is capped where a diff report
+# still carries more signal than noise; the realtime factor leaves ample margin
+# because 277 clips are processed in a single local pass. Named-entity recall is
+# reported but deliberately not a gate: 28 terms is too small a sample to
+# threshold, and it is a decision input rather than a pass/fail measure.
+selection_max_aggregate_cer: 0.10
+selection_max_realtime_factor: 0.5

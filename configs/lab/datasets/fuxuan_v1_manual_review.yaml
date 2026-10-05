@@ -1,0 +1,60 @@
+schema_version: 1
+review_id: fuxuan_slice8_boundary_review
+review_version: 1
+dataset_id: fuxuan
+dataset_version: 1
+analysis_run_id: 9e2ff68f-b473-4e3a-acf9-b333c54c3535
+candidate_snapshot_sha256: 5fd831600c498344166af3834a5809e0bba2a7831f5bea63f498deaac1daceea
+review_batch_id: fuxuan-slice8-boundary-review-v1
+reviewed_at: '2026-09-08T01:30:27.378Z'
+reviewer: dataset_owner
+edge_decisions:
+  - left_asset_sha256: 0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7
+    right_asset_sha256: 562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98
+    evidence_type: near_text
+    review_status: accepted
+    representative_asset_sha256: 562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98
+    exclude_asset_sha256s:
+      - 0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7
+    review_note: 同一语音内容；左侧为截取版本，保留带完整开头且时长更长的右侧样本。
+  - left_asset_sha256: 230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7
+    right_asset_sha256: 6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954
+    evidence_type: near_text
+    review_status: accepted
+    representative_asset_sha256: 6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954
+    exclude_asset_sha256s:
+      - 230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7
+    review_note: 同一语音内容；左侧为截取版本，保留带完整开头且时长更长的右侧样本。
+  - left_asset_sha256: f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5
+    right_asset_sha256: fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3
+    evidence_type: near_text
+    review_status: accepted
+    representative_asset_sha256: f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5
+    exclude_asset_sha256s:
+      - fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3
+    review_note: 用户确认属于相同语音；保留时长更长、内容更完整的左侧样本。
+speaker_decisions:
+  - asset_sha256: f6236d60a75f9cfe3805ccd23d3e1bf20d407381a5298fbd712bff7de4b1973c
+    outlier_rank: 1
+    review_status: confirmed_same_speaker
+    review_note: 用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。
+  - asset_sha256: 83b471e85f922ab58c1bf28963a3f58185b9b3091e89cf9ce1e51c7ea97c85f1
+    outlier_rank: 2
+    review_status: confirmed_same_speaker
+    review_note: 用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。
+  - asset_sha256: 3846a4deabe2d2cacdabd72c4a9862405b2f0d9eef40c8986d97c43b4a37514e
+    outlier_rank: 3
+    review_status: confirmed_same_speaker
+    review_note: 用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。
+  - asset_sha256: 407a6e002c09e9e74c21542fa193588372244e7bae77199cbc2ba17a4fe0cca1
+    outlier_rank: 4
+    review_status: exclude_uncertain
+    review_note: 用户确认音质很差，无法作为可靠训练样本，排除出冻结数据集。
+  - asset_sha256: 1032d71af7b0928812ecde223e23bacf029cfe0fd94c52deb3ec8be76fb753c5
+    outlier_rank: 6
+    review_status: confirmed_same_speaker
+    review_note: 用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。
+  - asset_sha256: 1ff8948795a937f583c78fa243192b470df5d87875aa50533f0c3b3d509e771c
+    outlier_rank: 12
+    review_status: confirmed_same_speaker
+    review_note: 用户仅指定 rank 4 排除；其余候选确认保留为同一 speaker。

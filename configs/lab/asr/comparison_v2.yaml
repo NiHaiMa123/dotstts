@@ -1,0 +1,17 @@
+schema_version: 1
+comparison_id: fuxuan_asr_selection
+comparison_version: 2
+
+# The final choice is an explicit, versioned human decision. Metrics below
+# validate the choice; they do not silently reduce license, punctuation and
+# domain-term behavior to one opaque score.
+selected_backend_id: qwen3_asr
+selection_rationale: >-
+  Qwen3-ASR leads aggregate CER and domain-term recall, remains stable across all
+  four weak emotion labels, emits consistent Chinese punctuation, fits the local
+  GPU budget, and uses the Apache-2.0 license.
+
+consensus_max_pairwise_cer: 0.10
+high_cer_delta_min: 0.20
+selection_max_aggregate_cer: 0.10
+selection_max_realtime_factor: 0.5

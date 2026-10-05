@@ -1,0 +1,101 @@
+schema_version: 1
+dataset_id: shouanren
+dataset_version: 2
+implementation_version: 1
+inputs:
+  standardization_config_id: training_audio
+  standardization_config_version: 1
+  standardization_config_path: configs/lab/standardize/training_audio_v1.yaml
+  quality_analysis_id: objective_signal_metrics
+  quality_analysis_version: 1
+  quality_policy_id: training_source_review
+  quality_policy_version: 2
+  quality_report_path: data/reports/quality_v2/quality.json
+  review_benchmark_id: shouanren_filename
+  review_benchmark_version: 1
+eligibility:
+  allow_quality_decisions:
+  - pass
+  quality_review_requires_latest_status: approved
+  exclude_latest_review_statuses:
+  - rejected
+  - pending
+  allow_unreviewed_filename_text: true
+  require_nonempty_text: true
+  require_available_source: true
+  require_verified_standardized_hash: true
+text_similarity:
+  unicode_form: NFKC
+  casefold: true
+  remove_unicode_category_prefixes:
+  - P
+  - Z
+  - C
+  candidate_length_ratio_min: 0.8
+  near_similarity_threshold: null
+  calibration_required: true
+acoustic_fingerprint:
+  sample_rate: 16000
+  trim_top_db: 30.0
+  rms_target_dbfs: -20.0
+  n_fft: 400
+  window_length: 400
+  hop_length: 160
+  n_mels: 64
+  pooled_frames: 64
+  duration_ratio_min: 0.9
+  near_cosine_threshold: null
+  storage_dtype: float32_le
+  calibration_required: true
+speaker_embedding:
+  model_family: campplus
+  model_id: dots-studio/dots.tts-mf-1step
+  model_revision: 4e872aa8f47ee67887468e7494e36aad30908b1e
+  weights_path: models/dots.tts-mf-1step/speaker_encoder.safetensors
+  weights_sha256: 1cf3861c9dee79e4db34bd0b8a4155e68bed27a7c6274e168bb6ee4fed191c85
+  model_config_path: models/dots.tts-mf-1step/config.json
+  model_config_sha256: f3388119ec80a559013092e1875d9df8cda812bd4517476b5fc744d4e05c7785
+  license: Apache-2.0
+  input_sample_rate: 48000
+  embedding_size: 512
+  max_audio_seconds: 0.0
+  inference_device: cpu
+  inference_dtype: float32
+  l2_normalize: true
+  knn_k: 5
+  center_cosine_threshold: null
+  knn_cosine_threshold: null
+  calibration_required: true
+split:
+  train_ratio: 0.8
+  validation_ratio: 0.1
+  test_ratio: 0.1
+  seed: 20261028
+  strata_field: emotion_primary
+  group_evidence:
+  - exact_audio
+  - exact_text
+  - reviewed_near_audio
+  - reviewed_near_text
+  low_resource_label: 中立_neutral
+  low_resource_min_groups_per_eval_split: 1
+  balance_fields:
+  - item_count
+  - emotion_primary
+  - duration_seconds
+  - group_count
+output:
+  dataset_root: datasets/shouanren/v2
+  canonical_parquet: dataset.parquet
+  manifest_json: manifest.json
+  stats_json: stats.json
+  train_jsonl: train.jsonl
+  validation_jsonl: validation.jsonl
+  test_jsonl: test.jsonl
+  frozen_config: build_config.yaml
+  checksums: checksums.txt
+  trainer_jsonl_fields:
+  - fid
+  - audio
+  - text
+  trainer_audio_paths: absolute

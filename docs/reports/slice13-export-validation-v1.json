@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "config_path": "configs/lab/slice13/release_presets_v1.yaml",
+  "config_sha256": "83a1609ba5d6295ea489cdc158d1e92e31ddcebb552a9193e6ae456c04cabe00",
+  "source_manifest_sha256": "a3f9eefb8150053ef7602873969067e58e0b8903a61b25df08cf15e642f0f2a5",
+  "presets": {
+    "raw": {
+      "job_count": 72,
+      "output_count": 72,
+      "formats": [
+        "wav"
+      ],
+      "manifest_sha256": "6d023415c720de5b7dcbf972effcff8974b4b39d6867636860b889f26e6b139d",
+      "idempotence_hash_matched": true,
+      "minimum_loudness_lufs": -20.796257382182365,
+      "maximum_loudness_lufs": -15.521461421308786,
+      "maximum_true_peak_dbtp": -0.2584020177799489
+    },
+    "training": {
+      "job_count": 72,
+      "output_count": 72,
+      "formats": [
+        "wav"
+      ],
+      "manifest_sha256": "634834728241e5702188ace5c179f6ca76126b6bfc43f7ef4039b6707dcee436",
+      "idempotence_hash_matched": true,
+      "minimum_loudness_lufs": -20.796257382182365,
+      "maximum_loudness_lufs": -15.521461421308786,
+      "maximum_true_peak_dbtp": -0.2584020177799489
+    },
+    "preview": {
+      "job_count": 72,
+      "output_count": 72,
+      "formats": [
+        "wav"
+      ],
+      "manifest_sha256": "d311319b2c7cf339b6b1cd56e9b2dbf43171d05158b63fc04ed4791dbde87148",
+      "idempotence_hash_matched": true,
+      "minimum_loudness_lufs": -18.11235389931632,
+      "maximum_loudness_lufs": -17.99999994936238,
+      "maximum_true_peak_dbtp": -1.0000006868330478
+    },
+    "release": {
+      "job_count": 72,
+      "output_count": 216,
+      "formats": [
+        "flac",
+        "mp3",
+        "wav"
+      ],
+      "manifest_sha256": "b61a0a927886dd26bd5c7176ec358b40e83a0b312217d1d898b65752b02b27fc",
+      "idempotence_hash_matched": true,
+      "minimum_loudness_lufs": -18.212538906119683,
+      "maximum_loudness_lufs": -15.970842576010556,
+      "maximum_true_peak_dbtp": -0.9995675396428443
+    }
+  },
+  "error_count": 0,
+  "errors": []
+}

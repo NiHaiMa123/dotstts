@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="本地扶玄文字转语音工作台">
+  <title>扶玄 TTS</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101522'/%3E%3Cpath d='M17 39c7-18 23-24 32-20-11 4-15 10-18 19 7-6 13-7 18-5-7 2-11 7-15 14-7 2-13-1-17-8Z' fill='%236ee7e0'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      font-family: Inter, "Microsoft YaHei UI", "PingFang SC", system-ui, sans-serif;
+      color: #edf6f7;
+      background: #080c13;
+      font-synthesis: none;
+      --panel: rgba(17, 24, 37, 0.92);
+      --panel-soft: #151e2c;
+      --line: rgba(172, 202, 211, 0.15);
+      --muted: #9eafb9;
+      --cyan: #73eee3;
+      --cyan-deep: #39c9c1;
+      --blue: #7aa2ff;
+      --danger: #ff8f9b;
+      --warning: #ffd18c;
+      --shadow: 0 36px 100px rgba(0, 0, 0, 0.48);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(56, 208, 198, 0.13), transparent 30rem),
+        radial-gradient(circle at 88% 76%, rgba(75, 112, 211, 0.13), transparent 34rem),
+        linear-gradient(145deg, #070a10 0%, #0b111b 48%, #080c13 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.16;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 82%);
+    }
+
+    main {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: 32px 20px;
+    }
+
+    .shell {
+      width: min(680px, 100%);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .accent {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--blue), transparent);
+    }
+
+    .content { padding: clamp(26px, 5vw, 44px); }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 34px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.65rem, 5vw, 2.15rem);
+      font-weight: 680;
+      line-height: 1.15;
+      letter-spacing: -0.035em;
+    }
+
+    .subtitle {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.6;
+    }
+
+    .status-pill {
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #cbd9df;
+      background: rgba(255, 255, 255, 0.035);
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--muted);
+      box-shadow: 0 0 0 4px rgba(158, 175, 185, 0.08);
+    }
+
+    .status-pill.active .dot {
+      background: var(--cyan);
+      box-shadow: 0 0 0 4px rgba(115, 238, 227, 0.12), 0 0 18px var(--cyan);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    .status-pill.completed .dot { background: var(--cyan); }
+    .status-pill.failed .dot, .status-pill.interrupted .dot { background: var(--danger); }
+
+    @keyframes pulse { 50% { opacity: .46; transform: scale(.82); } }
+
+    .field { margin-bottom: 18px; }
+
+    label {
+      display: block;
+      margin-bottom: 9px;
+      color: #d9e5e8;
+      font-size: 0.9rem;
+      font-weight: 620;
+    }
+
+    select, button {
+      width: 100%;
+      min-height: 52px;
+      border-radius: 13px;
+      font: inherit;
+    }
+
+    select {
+      appearance: none;
+      border: 1px solid rgba(175, 207, 216, 0.2);
+      padding: 0 48px 0 16px;
+      color: #f1f7f8;
+      background-color: var(--panel-soft);
+      background-image:
+        linear-gradient(45deg, transparent 50%, #a8bac1 50%),
+        linear-gradient(135deg, #a8bac1 50%, transparent 50%);
+      background-position:
+        calc(100% - 20px) 23px,
+        calc(100% - 15px) 23px;
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    select:focus-visible {
+      border-color: var(--cyan-deep);
+      box-shadow: 0 0 0 4px rgba(57, 201, 193, 0.12);
+    }
+
+    select:disabled { opacity: .58; cursor: wait; }
+
+    button {
+      border: 0;
+      padding: 0 20px;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: .01em;
+      transition: transform .16s, filter .16s, opacity .16s;
+    }
+
+    button:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.06); }
+    button:active:not(:disabled) { transform: translateY(0); }
+    button:focus-visible { outline: 3px solid rgba(122, 162, 255, .5); outline-offset: 3px; }
+    button:disabled { cursor: wait; opacity: .55; }
+
+    #generate {
+      color: #061312;
+      background: linear-gradient(110deg, #73eee3, #7dd8f3 58%, #95aefc);
+      box-shadow: 0 15px 32px rgba(55, 202, 195, .18);
+    }
+
+    .progress-panel {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+
+    .progress-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .progress-label { color: #dce8eb; font-size: .9rem; font-weight: 620; }
+    .progress-value { color: var(--cyan); font-variant-numeric: tabular-nums; font-size: .9rem; }
+
+    .progress-track {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: rgba(255,255,255,.07);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--cyan-deep), var(--cyan), var(--blue));
+      box-shadow: 0 0 20px rgba(115, 238, 227, .28);
+      transition: width .35s ease;
+    }
+
+    .progress-bar.indeterminate {
+      width: 32% !important;
+      animation: indeterminate 1.25s ease-in-out infinite;
+    }
+
+    @keyframes indeterminate {
+      from { transform: translateX(-110%); }
+      to { transform: translateX(330%); }
+    }
+
+    #message {
+      min-height: 48px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.65;
+      overflow-wrap: anywhere;
+    }
+
+    #message.error { color: var(--danger); }
+    #message.success { color: #a8f3e9; }
+
+    .result {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid rgba(115, 238, 227, .18);
+      border-radius: 14px;
+      background: rgba(79, 222, 210, .05);
+    }
+
+    .result.visible { display: block; }
+
+    .result-copy {
+      margin: 0 0 13px;
+      color: #c9dcdf;
+      font-size: .86rem;
+      line-height: 1.55;
+    }
+
+    #open-output {
+      min-height: 44px;
+      color: #dff9f7;
+      border: 1px solid rgba(115, 238, 227, .3);
+      background: rgba(115, 238, 227, .09);
+      box-shadow: none;
+    }
+
+    footer {
+      margin-top: 26px;
+      color: #748690;
+      font-size: .78rem;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    @media (max-width: 560px) {
+      main { padding: 14px; }
+      .shell { border-radius: 18px; }
+      .content { padding: 24px 20px 26px; }
+      header { display: block; margin-bottom: 27px; }
+      .status-pill { margin-top: 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="shell" aria-labelledby="title">
+      <div class="accent"></div>
+      <div class="content">
+        <header>
+          <div>
+            <h1 id="title">本地多音色 TTS</h1>
+            <p class="subtitle">自动读取输入目录中的 TXT，每个文件生成一个最终音频。</p>
+          </div>
+          <div id="status-pill" class="status-pill">
+            <span class="dot" aria-hidden="true"></span>
+            <span id="status-name">连接中</span>
+          </div>
+        </header>
+
+        <div class="field">
+          <label for="model">模型</label>
+          <select id="model" aria-describedby="model-description">
+            <option value="">正在读取模型注册表…</option>
+          </select>
+          <p id="model-description" class="subtitle">模型、参考音频、推理参数与后期会整体切换。</p>
+        </div>
+
+        <button id="generate" type="button">开始 TTS</button>
+
+        <section class="progress-panel" aria-live="polite" aria-atomic="true">
+          <div class="progress-head">
+            <span class="progress-label">输出进度</span>
+            <span id="progress-value" class="progress-value">0%</span>
+          </div>
+          <div
+            class="progress-track"
+            role="progressbar"
+            aria-label="音频生成进度"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+          <p id="message">正在连接本地服务…</p>
+        </section>
+
+        <section id="result" class="result">
+          <p id="result-copy" class="result-copy"></p>
+          <button id="open-output" type="button">打开输出目录</button>
+        </section>
+
+        <footer>关闭此页面后，本地 WebUI 和运行中的 TTS 任务会自动结束。</footer>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const activeStates = new Set(["preparing", "loading_model", "generating", "finalizing"]);
+    const labels = {
+      starting: "启动中",
+      idle: "就绪",
+      preparing: "准备中",
+      loading_model: "加载模型",
+      generating: "生成中",
+      finalizing: "保存中",
+      completed: "已完成",
+      failed: "出错",
+      interrupted: "已中断",
+      shutting_down: "正在关闭"
+    };
+
+    const model = document.querySelector("#model");
+    const modelDescription = document.querySelector("#model-description");
+    const generate = document.querySelector("#generate");
+    const progressTrack = document.querySelector(".progress-track");
+    const progressBar = document.querySelector("#progress-bar");
+    const progressValue = document.querySelector("#progress-value");
+    const message = document.querySelector("#message");
+    const statusPill = document.querySelector("#status-pill");
+    const statusName = document.querySelector("#status-name");
+    const result = document.querySelector("#result");
+    const resultCopy = document.querySelector("#result-copy");
+    const openOutput = document.querySelector("#open-output");
+    let lastStatus = null;
+    let connected = true;
+    let modelSpecs = new Map();
+    let audioCtx = null;
+    let sawActive = false;
+    const BASE_TITLE = document.title || "本地多音色 TTS";
+
+    function tone(freq, startOffset, duration, peak = 0.14) {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      const t0 = audioCtx.currentTime + startOffset;
+      gain.gain.setValueAtTime(0.0001, t0);
+      gain.gain.exponentialRampToValueAtTime(peak, t0 + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(t0);
+      osc.stop(t0 + duration + 0.02);
+    }
+
+    function chime(kind) {
+      try {
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        if (kind === "done") { tone(880, 0, 0.09); tone(1174.66, 0.09, 0.22); }
+        else if (kind === "fail") { tone(233.08, 0, 0.14); tone(174.61, 0.12, 0.26); }
+      } catch (_) {}
+    }
+
+    async function request(path, options = {}) {
+      const response = await fetch(path, {
+        cache: "no-store",
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+        ...options
+      });
+      let payload = {};
+      try { payload = await response.json(); } catch (_) {}
+      if (!response.ok) throw new Error(payload.message || `请求失败：${response.status}`);
+      return payload;
+    }
+
+    function updateModelDescription() {
+      const item = modelSpecs.get(model.value);
+      modelDescription.textContent = item
+        ? item.description
+        : "模型、参考音频、推理参数与后期会整体切换。";
+    }
+
+    function setModels(models, selected, defaultModel) {
+      if (!Array.isArray(models) || !models.length) return;
+      const signature = models.map((item) => `${item.id}:${item.profile_sha256}`).join("|");
+      if (model.dataset.signature !== signature) {
+        const previous = model.value;
+        model.replaceChildren();
+        modelSpecs = new Map();
+        for (const item of models) {
+          modelSpecs.set(item.id, item);
+          const option = document.createElement("option");
+          option.value = item.id;
+          option.textContent = item.id === defaultModel ? `${item.label}（默认）` : item.label;
+          model.appendChild(option);
+        }
+        const ids = new Set(models.map((item) => item.id));
+        model.value = ids.has(previous)
+          ? previous
+          : (ids.has(selected) ? selected : defaultModel || models[0].id);
+        model.dataset.signature = signature;
+      }
+      updateModelDescription();
+    }
+
+    function renderStatus(state) {
+      connected = true;
+      const prevStatus = lastStatus;
+      lastStatus = state.status;
+      const active = activeStates.has(state.status);
+      const progress = Math.max(0, Math.min(100, Number(state.progress) || 0));
+      const indeterminate = state.status === "loading_model";
+
+      if (active) sawActive = true;
+      else if (sawActive && prevStatus !== state.status) {
+        if (state.status === "completed") chime("done");
+        else if (state.status === "failed" || state.status === "interrupted") chime("fail");
+      }
+      const label = labels[state.status] || state.status || "未知";
+      document.title = active
+        ? `【${label} ${Math.round(progress)}%】${BASE_TITLE}`
+        : `【${label}】${BASE_TITLE}`;
+
+      setModels(state.models, state.selected_model || state.default_model, state.default_model);
+      model.disabled = active;
+      generate.disabled = active || state.status === "shutting_down";
+      generate.textContent = active ? "正在生成…" : "开始 TTS";
+
+      statusPill.className = `status-pill ${active ? "active" : state.status || ""}`;
+      statusName.textContent = label;
+      progressBar.classList.toggle("indeterminate", indeterminate);
+      progressBar.style.width = `${progress}%`;
+      progressValue.textContent = indeterminate ? "加载中" : `${Math.round(progress)}%`;
+      progressTrack.setAttribute("aria-valuenow", String(Math.round(progress)));
+      message.textContent = state.message || "";
+      message.className = state.status === "failed" || state.status === "interrupted"
+        ? "error"
+        : state.status === "completed" ? "success" : "";
+
+      const canOpen = Boolean(state.can_open_output);
+      result.classList.toggle("visible", canOpen);
+      if (canOpen) {
+        const count = Array.isArray(state.outputs) ? state.outputs.length : 0;
+        resultCopy.textContent = `已生成 ${count} 个最终 WAV。单句中间音频未写入磁盘。`;
+      }
+    }
+
+    async function pollStatus() {
+      try {
+        renderStatus(await request("/api/status"));
+      } catch (error) {
+        if (connected) {
+          connected = false;
+          statusPill.className = "status-pill interrupted";
+          statusName.textContent = "连接已关闭";
+          document.title = `【已断开】${BASE_TITLE}`;
+          message.className = "error";
+          message.textContent = "本地服务已退出。重新使用时请再次双击启动。";
+          generate.disabled = true;
+          model.disabled = true;
+        }
+      }
+    }
+
+    generate.addEventListener("click", async () => {
+      generate.disabled = true;
+      try {
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+      } catch (_) {}
+      result.classList.remove("visible");
+      message.className = "";
+      message.textContent = "正在创建任务…";
+      try {
+        await request("/api/generate", {
+          method: "POST",
+          body: JSON.stringify({ model: model.value })
+        });
+        await pollStatus();
+      } catch (error) {
+        message.className = "error";
+        message.textContent = error.message;
+        generate.disabled = false;
+      }
+    });
+
+    model.addEventListener("change", updateModelDescription);
+
+    openOutput.addEventListener("click", async () => {
+      openOutput.disabled = true;
+      try {
+        await request("/api/open-output", { method: "POST", body: "{}" });
+      } catch (error) {
+        message.className = "error";
+        message.textContent = error.message;
+      } finally {
+        openOutput.disabled = false;
+      }
+    });
+
+    async function heartbeat() {
+      try { await request("/api/heartbeat", { method: "POST", body: "{}" }); } catch (_) {}
+    }
+
+    window.addEventListener("pagehide", (event) => {
+      if (!event.persisted) {
+        navigator.sendBeacon("/api/close", new Blob(["{}"], { type: "application/json" }));
+      }
+    });
+
+    heartbeat();
+    pollStatus();
+    setInterval(heartbeat, 2000);
+    setInterval(pollStatus, 800);
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+schema_version: 1
+profile_version: 2
+model_id: fuxuan_step400_v1
+display_name: 扶玄 · Step 400
+description: SOAR + Slice 12 Step-400 LoRA；16 步稳定生成与粗糙感动态控制后期
+base_model:
+  path: pretrained_models/dots.tts-soar
+  revision: 2f9b3e18d70d670d4c701da2dc55ded5755815ce
+adapter:
+  path: data/work/slice12/soar_lora_v1/checkpoint-00000400/model
+  format: dots_tts_trainable_delta
+  training_step: 400
+  weights_sha256: de5b3bb59e510d622cf65813f75fd0f5c287c3ea8f043ea132c213d3f0d0ed54
+  metadata_sha256: 73d139b84ad4417e6c952b7e0aec5b931107c47e5a48a45a7b9ae79f2b350011
+prompt:
+  audio_path: data/work/standardized/6b/6bdb59898ba90334918498b7a86cdbf24e8c30a06caf4b90ab17581d069610e9.wav
+  audio_sha256: 76676771bf7b8d9f2159565ca5fa40ec58009533a649925eb33742ce012bddbb
+  text: 各位启程前，请先好好休养歇息一番。有什么想去的地方，尽可以逛逛。我要暂代云骑事务，无法奉陪了。
+runtime:
+  precision: bfloat16
+  optimize: false
+  max_generate_length: 128
+  max_sequence_length: 1024
+  vocoder_merge_steps: 4
+  warmup_on_optimize: false
+  merge_lora: true
+generation:
+  language: chinese
+  template_name: tts
+  normalize_text: false
+  speaker_scale: 1.5
+  ode_method: euler
+  num_steps: 16
+  guidance_scale: 1.2
+  base_seed: 20260908
+  pause_ms: 250
+  max_chars: 120
+postprocess:
+  edge_trim_config: configs/lab/postprocess/generated_audio_edge_trim_v1.yaml
+  edge_trim_sha256: 50d90b34a1dd38d363471293aba9fb675570271e6c50f5051b0ee37ffc5436f4
+  voice_polish_config: configs/lab/postprocess/fuxuan_voice_polish_roughness_control_v2.yaml
+  voice_polish_sha256: a78806b13019692c0899aa3e7d77cc013d07e776c34633dc1d86e1ed4fec07f3
+io:
+  input_dir: inputs/fuxuan_text
+  output_dir: outputs/fuxuan_audio

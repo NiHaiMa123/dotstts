@@ -3,6 +3,7 @@ from __future__ import annotations
 from pydantic import Field
 
 from dots_tts.config.base import StrictConfigBase
+from dots_tts.models.dots_tts.config import LoraArtifactConfig
 
 
 class TrainConfig(StrictConfigBase):
@@ -23,6 +24,8 @@ class TrainConfig(StrictConfigBase):
     eval_interval: int | None = Field(default=None, ge=1)
     max_eval_batches: int | None = None
     run_eval_on_start: bool = False
+    lora: LoraArtifactConfig | None = None
+    gradient_checkpointing: bool = False
 
 
 __all__ = ["TrainConfig"]

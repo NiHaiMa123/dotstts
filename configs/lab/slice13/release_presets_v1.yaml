@@ -1,0 +1,73 @@
+schema_version: 1
+config_id: fuxuan_step400_release_presets
+config_version: 1
+source:
+  generation_manifest: data/reports/datasets/fuxuan_v1/slice12/soar_lora_step400_optimized_formal_generation.jsonl
+  generation_manifest_sha256: a3f9eefb8150053ef7602873969067e58e0b8903a61b25df08cf15e642f0f2a5
+  acceptance_report: docs/reports/plan2-acceptance-v1.json
+  acceptance_required: true
+model:
+  model_id: dots-studio/dots.tts-soar+fuxuan-lora-step400
+  model_revision: 2f9b3e18d70d670d4c701da2dc55ded5755815ce
+  adapter_training_step: 400
+  adapter_weights_sha256: de5b3bb59e510d622cf65813f75fd0f5c287c3ea8f043ea132c213d3f0d0ed54
+  runtime:
+    merge_lora_for_inference: true
+    optimize: true
+    precision: bfloat16
+    ode_method: euler
+    num_steps: 10
+    guidance_scale: 1.2
+postprocess:
+  edge_trim_config: configs/lab/postprocess/generated_audio_edge_trim_v1.yaml
+  edge_trim_config_sha256: b0d7468dea7d5686e9e0b973e0f9011083510574703af3a8698cf2dbce1f6735
+presets:
+  raw:
+    description: Bit-for-bit copy of the accepted generated WAV; no signal processing.
+    edge_trim: false
+    loudness_normalization: false
+    target_loudness_lufs: null
+    maximum_gain_db: null
+    safety_limiter: false
+    true_peak_ceiling_dbtp: null
+    formats: [wav]
+  training:
+    description: PCM24 WAV with no trim, gain, limiting, resampling, or lossy encoding.
+    edge_trim: false
+    loudness_normalization: false
+    target_loudness_lufs: null
+    maximum_gain_db: null
+    safety_limiter: false
+    true_peak_ceiling_dbtp: null
+    formats: [wav]
+  preview:
+    description: Review-ready PCM24 WAV with validated edge trim and conservative loudness matching.
+    edge_trim: true
+    loudness_normalization: true
+    target_loudness_lufs: -18.0
+    maximum_gain_db: 12.0
+    safety_limiter: true
+    true_peak_ceiling_dbtp: -1.0
+    formats: [wav]
+  release:
+    description: Distribution preset with validated edge trim, voice loudness target, and peak-safe global gain.
+    edge_trim: true
+    loudness_normalization: true
+    target_loudness_lufs: -16.0
+    maximum_gain_db: 12.0
+    safety_limiter: true
+    true_peak_ceiling_dbtp: -1.0
+    formats: [wav, flac, mp3]
+formats:
+  wav:
+    container: WAV
+    subtype: PCM_24
+  flac:
+    container: FLAC
+    subtype: PCM_24
+  mp3:
+    container: MP3
+    subtype: MPEG_LAYER_III
+    bitrate_mode: VARIABLE
+    compression_level: 0.1
+output_root: data/exports/fuxuan_step400_v1

@@ -1,0 +1,10 @@
+schema_version: 1
+config_id: long_form_dataset_fragment
+config_version: 1
+voice_id: suisui
+speaker_id: 岁岁
+emotion_primary: 中立_neutral
+accepted_styles:
+  - normal
+output_root: data/work/long_form/exports/suisui/v1
+

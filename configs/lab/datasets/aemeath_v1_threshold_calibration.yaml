@@ -1,0 +1,12 @@
+schema_version: 1
+calibration_id: aemeath_dataset_thresholds
+calibration_version: 1
+dataset_config_path: E:\project\dotstts\configs\lab\datasets\aemeath_v1.yaml
+dataset_config_sha256: 47fda4aad6509f3324b4ed11a1500983c67fad9d05c944c55b78ecb0c02c9575
+candidate_snapshot_path: E:\project\dotstts\data\reports\datasets\aemeath_v1\audit\candidate_snapshot.json
+candidate_snapshot_sha256: dc4b687404259d727927a53a1dd57b5a0dd3dbb18576bbb0b5e5888651fc0157
+threshold_rules:
+  text: max_observed_pair_similarity_plus_margin
+  acoustic: max_background_cosine_plus_margin
+  speaker: median_minus_4.5_robust_sigma_lower_bound
+output_path: E:\project\dotstts\data\reports\datasets\aemeath_v1\analysis\threshold_calibration_v1.json

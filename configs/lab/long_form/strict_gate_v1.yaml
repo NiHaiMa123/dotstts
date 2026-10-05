@@ -1,0 +1,59 @@
+schema_version: 1
+config_id: long_form_strict_gate
+config_version: 1
+
+# Development mode: passing content gates yield calibration_sample, never a
+# reviewable or trainable state. Switching to production requires every
+# threshold below to carry a calibrated value backed by a held-out report.
+mode: calibration
+
+required_gates: [G0, G1, G2, G3, G4, G5, G6, G7, G8, G9]
+
+batch_budget:
+  total_candidates: 24
+  per_source: 6
+  calibration_batch_max: 6
+
+# Continuous thresholds stay unset until LF-12I freezes them on the
+# development split; uncalibrated evaluators cannot pass in production mode.
+thresholds:
+  identity:
+    value: null
+    calibrated: false
+  normal:
+    value: null
+    calibrated: false
+  event:
+    slap_impact:
+      value: null
+      calibrated: false
+    friction:
+      value: null
+      calibrated: false
+    bgm_music:
+      value: null
+      calibrated: false
+    laugh_cry:
+      value: null
+      calibrated: false
+    other_voice:
+      value: null
+      calibrated: false
+  noise:
+    value: null
+    calibrated: false
+  quality:
+    value: null
+    calibrated: false
+  alignment:
+    value: null
+    calibrated: false
+
+certification:
+  status: none
+  report_sha256: null
+  report_path: null
+
+paths:
+  work_root: data/work/long_form/strict_gate
+  report_root: data/reports/long_form/strict_gate

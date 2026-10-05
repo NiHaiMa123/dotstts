@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "status": "succeeded",
+  "experiment_id": "slice12_fuxuan_formal_v2",
+  "model_revision": "2f9b3e18d70d670d4c701da2dc55ded5755815ce",
+  "frozen_tree_sha256": "77754574c4048a20682b0e8f9be95c322cf0848afedaf90d7c81b1f00df029af",
+  "training_config_sha256": "5a3160b482b83f5ecf2e61e915d1103217e0cc63b1feeac33ce6d0812b7321b6",
+  "data_budget_repair": {
+    "invalid_attempt_archived_at": "data/work/slice12/soar_lora_incomplete_max10s",
+    "reason": "10.0 seconds mapped to 63 tokens and skipped four 64-65-token samples",
+    "max_frozen_train_audio_seconds": 9.977833333333333,
+    "corrected_max_audio_seconds_in_batch": 10.5,
+    "corrected_max_audio_tokens_in_batch": 66,
+    "skipped_sample_warnings_in_formal_run": 0
+  },
+  "training": {
+    "completed_optimizer_steps": 500,
+    "elapsed_seconds": 286.25077677299987,
+    "total_tokens": 36972,
+    "audio_tokens": 21203,
+    "text_tokens": 10769,
+    "total_parameters": 2388788830,
+    "lora_parameters": 2654208,
+    "trainable_parameters": 4884608,
+    "validation_loss_at_step_0": 0.7679,
+    "validation_loss_at_step_500": 0.7639,
+    "cuda": {
+      "device": "NVIDIA GeForce RTX 5080",
+      "peak_allocated_bytes": 10302515200,
+      "peak_reserved_bytes": 10510925824,
+      "total_memory_bytes": 17094475776,
+      "contract_peak_limit_bytes": 16106127360,
+      "within_contract_limit": true
+    }
+  },
+  "checkpoint": {
+    "path": "data/work/slice12/soar_lora_v1/checkpoint-00000500",
+    "recursive_size_bytes": 58888029,
+    "trainable_model_safetensors_sha256": "8e516aa6841ea28452fe7938b107844404fe47c90c50e287fc92be6732620497",
+    "trainable_model_metadata_sha256": "73d139b84ad4417e6c952b7e0aec5b931107c47e5a48a45a7b9ae79f2b350011",
+    "trainer_state_sha256": "bc142132b5cae6b2ca64734b9c066dade2d01e78853802547629ed64154b3305",
+    "resolved_config_sha256": "48a74507a622f61983753e4661a99a00f789e1fb95c8decbc12d5a528fcd888d",
+    "runtime_metrics_sha256": "d63d8f1173c9065c876c54adf5eb0ac9a3c962cabd05ff624b7dfe3d558d4061"
+  },
+  "restore_verification": {
+    "status": "succeeded",
+    "restored_global_step": 500,
+    "runtime_metrics_preserved": true,
+    "runtime_metrics_sha256_before": "d63d8f1173c9065c876c54adf5eb0ac9a3c962cabd05ff624b7dfe3d558d4061",
+    "runtime_metrics_sha256_after": "d63d8f1173c9065c876c54adf5eb0ac9a3c962cabd05ff624b7dfe3d558d4061"
+  }
+}

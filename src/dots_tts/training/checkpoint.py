@@ -16,6 +16,10 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.distributed as dist
+from safetensors.torch import load_file, save_file
+
+TRAINABLE_MODEL_FILENAME = "trainable_model.safetensors"
+TRAINABLE_MODEL_METADATA_FILENAME = "trainable_model.json"
 
 
 def _checkpoint_dir(log_dir: str, step: int) -> Path:
@@ -97,11 +101,26 @@ def _replace_latest_symlink(log_dir: str, save_dir: Path) -> None:
     link_path = log_path / "latest"
     tmp_link_path = log_path / "latest.tmp"
 
-    if tmp_link_path.exists() or tmp_link_path.is_symlink():
+    if tmp_link_path.is_symlink() or tmp_link_path.is_junction():
         tmp_link_path.unlink()
-    tmp_link_path.symlink_to(save_dir.name)
+    elif tmp_link_path.exists():
+        shutil.rmtree(tmp_link_path)
+    try:
+        tmp_link_path.symlink_to(save_dir.name)
+    except OSError:
+        # Windows without symlink privilege: a directory junction needs none
+        # and is transparent to downstream path consumers.
+        import subprocess
 
-    if link_path.exists() or link_path.is_symlink():
+        subprocess.run(
+            ["cmd", "/c", "mklink", "/J", str(tmp_link_path), str(save_dir.resolve())],
+            check=True,
+            capture_output=True,
+        )
+
+    if link_path.is_junction():
+        link_path.unlink()
+    elif link_path.exists() or link_path.is_symlink():
         if link_path.is_dir() and not link_path.is_symlink():
             shutil.rmtree(link_path)
         else:
@@ -169,6 +188,98 @@ def _extract_rank_payload(
     return payload["per_rank"][local_rank]
 
 
+def _uses_trainable_delta(model) -> bool:
+    lora_config = getattr(getattr(model, "config", None), "lora", None)
+    return bool(lora_config is not None and getattr(lora_config, "enabled", False))
+
+
+def save_trainable_model_artifact(model, model_dir: str | Path) -> Path:
+    """Save only parameters that can change during adapter training."""
+    model_dir = Path(model_dir)
+    model_dir.mkdir(parents=True, exist_ok=True)
+    trainable = {
+        name: parameter.detach().cpu().contiguous()
+        for name, parameter in model.named_parameters()
+        if parameter.requires_grad
+    }
+    if not trainable:
+        raise RuntimeError("Adapter checkpoint has no trainable parameters to save")
+
+    weights_path = model_dir / TRAINABLE_MODEL_FILENAME
+    save_file(trainable, str(weights_path))
+    lora_config = getattr(model.config, "lora", None)
+    metadata = {
+        "schema_version": 1,
+        "format": "dots_tts_trainable_delta",
+        "base_model_required": True,
+        "lora": (
+            lora_config.to_declared_dict()
+            if hasattr(lora_config, "to_declared_dict")
+            else None
+        ),
+        "parameter_count": sum(tensor.numel() for tensor in trainable.values()),
+        "parameters": {
+            name: {"shape": list(tensor.shape), "dtype": str(tensor.dtype)}
+            for name, tensor in trainable.items()
+        },
+    }
+    (model_dir / TRAINABLE_MODEL_METADATA_FILENAME).write_text(
+        json.dumps(metadata, ensure_ascii=True, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return weights_path
+
+
+def load_trainable_model_artifact(
+    model,
+    model_dir: str | Path,
+    *,
+    require_matching_trainable_parameters: bool = False,
+) -> dict:
+    """Overlay a trainable-delta artifact onto an already loaded base model."""
+    model_dir = Path(model_dir)
+    metadata_path = model_dir / TRAINABLE_MODEL_METADATA_FILENAME
+    weights_path = model_dir / TRAINABLE_MODEL_FILENAME
+    if not metadata_path.is_file() or not weights_path.is_file():
+        raise FileNotFoundError(f"Trainable-delta artifact is incomplete: {model_dir!s}")
+
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    if metadata.get("format") != "dots_tts_trainable_delta":
+        raise ValueError(f"Unsupported trainable-delta format in {metadata_path!s}")
+    weights = load_file(str(weights_path), device="cpu")
+    declared_names = set(metadata.get("parameters") or {})
+    if set(weights) != declared_names:
+        raise ValueError("Trainable-delta metadata does not match its weight keys")
+
+    model_parameters = dict(model.named_parameters())
+    missing_parameters = declared_names - set(model_parameters)
+    if missing_parameters:
+        raise ValueError(
+            "Trainable-delta parameters are absent from the base model: "
+            + ", ".join(sorted(missing_parameters))
+        )
+    for name, tensor in weights.items():
+        if tuple(tensor.shape) != tuple(model_parameters[name].shape):
+            raise ValueError(f"Trainable-delta shape mismatch for {name}")
+
+    if require_matching_trainable_parameters:
+        current_trainable = {
+            name for name, parameter in model_parameters.items() if parameter.requires_grad
+        }
+        if current_trainable != declared_names:
+            raise ValueError(
+                "Current trainable parameter set does not match the saved adapter checkpoint"
+            )
+
+    incompatible = model.load_state_dict(weights, strict=False)
+    if incompatible.unexpected_keys:
+        raise ValueError(
+            "Unexpected trainable-delta keys: "
+            + ", ".join(sorted(incompatible.unexpected_keys))
+        )
+    return metadata
+
+
 def save_train_checkpoint(
     accelerator,
     model,
@@ -182,7 +293,8 @@ def save_train_checkpoint(
     """Save a full resumable training checkpoint.
 
     Stored artifacts include:
-    - model weights in ``save_pretrained`` format
+    - full model weights in ``save_pretrained`` format, or a compact trainable
+      delta when LoRA is enabled
     - optimizer / scheduler / scaler state
     - training progress counters
     - rank-local RNG state
@@ -214,7 +326,10 @@ def save_train_checkpoint(
         try:
             # Write into a temporary directory first so interrupted saves never
             # leave behind a half-written checkpoint that looks valid.
-            unwrapped_model.save_pretrained(model_dir)
+            if _uses_trainable_delta(unwrapped_model):
+                save_trainable_model_artifact(unwrapped_model, model_dir)
+            else:
+                unwrapped_model.save_pretrained(model_dir)
 
             torch.save(optimizer.state_dict(), tmp_dir / "optimizer.pt")
             torch.save(scheduler_state, tmp_dir / "scheduler.pt")
@@ -271,7 +386,14 @@ def load_train_checkpoint(
     accelerator.wait_for_everyone()
 
     unwrapped_model = accelerator.unwrap_model(model)
-    unwrapped_model.load_pretrained_weights(model_dir)
+    if (model_dir / TRAINABLE_MODEL_METADATA_FILENAME).is_file():
+        load_trainable_model_artifact(
+            unwrapped_model,
+            model_dir,
+            require_matching_trainable_parameters=True,
+        )
+    else:
+        unwrapped_model.load_pretrained_weights(model_dir)
 
     optimizer.load_state_dict(
         torch.load(checkpoint_dir / "optimizer.pt", map_location="cpu")

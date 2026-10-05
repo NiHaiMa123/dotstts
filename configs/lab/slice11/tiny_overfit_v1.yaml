@@ -1,0 +1,38 @@
+experiment_id: slice11_tiny_overfit_v1
+pretrained_model_path: models/dots.tts-mf-1step
+manifest_path: data/reports/datasets/fuxuan_v1/slice11/tiny_overfit_train.jsonl
+output_dir: data/work/slice11/tiny_overfit_v1
+seed: 20260908
+sample_count: 8
+batch_size: 1
+mixed_precision: bf16
+trainable_modules:
+  - core.velocity_field_predictor.output_layer
+frozen_modules:
+  - core.llm
+  - core.patch_encoder
+  - core.velocity_field_predictor.blocks
+  - core.hidden_proj
+  - core.latent_proj
+  - core.coordinate_proj
+  - core.xvec_proj
+  - core.eos_proj
+  - vocoder
+  - xvector_extractor
+lora:
+  enabled: false
+  rank: 8
+  alpha: 16
+  target_modules:
+    - core.velocity_field_predictor.blocks.*.attn.q_proj
+    - core.velocity_field_predictor.blocks.*.attn.k_proj
+    - core.velocity_field_predictor.blocks.*.attn.v_proj
+    - core.velocity_field_predictor.blocks.*.attn.o_proj
+    - core.velocity_field_predictor.blocks.*.ffn.fc1
+    - core.velocity_field_predictor.blocks.*.ffn.fc2
+gradient_checkpointing:
+  enabled: planned
+  implementation: torch.utils.checkpoint around DiT blocks
+notes: >-
+  Feasibility-only smoke from the local mf-1step inference artifact. This is not
+  an official dots.tts-base/SOAR fine-tune and does not enable emotion control.

@@ -1,0 +1,20 @@
+services:
+  enhancer:
+    build:
+      context: ../..
+      dockerfile: docker/long_form_denoise/Dockerfile
+    image: dotstts-long-form-denoise:deepfilternet-0.5.6
+    working_dir: /workspace
+    volumes:
+      - ../..:/workspace
+      - ../../data/work/models/deepfilternet-cache:/root/.cache
+    environment:
+      PYTHONPATH: /workspace/src
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+

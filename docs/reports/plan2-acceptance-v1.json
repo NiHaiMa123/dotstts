@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "status": "accepted",
+  "task": "P2-7",
+  "control_generation": {
+    "item_count": 72,
+    "success_count": 72,
+    "failure_count": 0,
+    "failure_rate": 0.0,
+    "mean_rtf": 0.3140184988914263,
+    "peak_cuda_gib": 6.458004474639893,
+    "maximum_output_patches": 36.0
+  },
+  "candidate_generation": {
+    "item_count": 72,
+    "success_count": 72,
+    "failure_count": 0,
+    "failure_rate": 0.0,
+    "mean_rtf": 0.3003935855389593,
+    "peak_cuda_gib": 6.458289623260498,
+    "maximum_output_patches": 35.0
+  },
+  "control_raw_metrics": {
+    "item_count": 72,
+    "success_count": 72,
+    "cer": 0.05873407477025897,
+    "speaker_cosine": 0.781422496704992,
+    "quality_pass_rate": 0.18055555555555555,
+    "maximum_true_peak_dbtp": -0.5345579979753887,
+    "flat_top_run_count": 0,
+    "maximum_leading_silence_seconds": 1.05
+  },
+  "candidate_raw_metrics": {
+    "item_count": 72,
+    "success_count": 72,
+    "cer": 0.05626696950710108,
+    "speaker_cosine": 0.7993688351020996,
+    "quality_pass_rate": 0.041666666666666664,
+    "maximum_true_peak_dbtp": -0.2584020177799489,
+    "flat_top_run_count": 0,
+    "maximum_leading_silence_seconds": 1.03
+  },
+  "control_trimmed_metrics": {
+    "item_count": 72,
+    "success_count": 72,
+    "cer": 0.058003080618212195,
+    "speaker_cosine": 0.7796643340428455,
+    "quality_pass_rate": 0.8333333333333334,
+    "maximum_true_peak_dbtp": -0.5345579979753887,
+    "flat_top_run_count": 0,
+    "maximum_leading_silence_seconds": 0.47
+  },
+  "candidate_trimmed_metrics": {
+    "item_count": 72,
+    "success_count": 72,
+    "cer": 0.0555359753550543,
+    "speaker_cosine": 0.7924521143289629,
+    "quality_pass_rate": 0.8333333333333334,
+    "maximum_true_peak_dbtp": -0.2584020177799489,
+    "flat_top_run_count": 0,
+    "maximum_leading_silence_seconds": 0.45
+  },
+  "manual_review": {
+    "preference_counts": {
+      "control": 3,
+      "trained": 5,
+      "tie": 2,
+      "both_bad": 2
+    },
+    "decisive_pair_count": 8,
+    "trained_win_rate_among_decisive": 0.625
+  },
+  "checks": {
+    "model_failure_rate": {
+      "actual": 0.0,
+      "operator": "<=",
+      "threshold": 0.05,
+      "passed": true
+    },
+    "model_cer_increase": {
+      "actual": -0.0024671052631578885,
+      "operator": "<=",
+      "threshold": 0.02,
+      "passed": true
+    },
+    "model_speaker_drop": {
+      "actual": -0.017946338397107575,
+      "operator": "<=",
+      "threshold": 0.02,
+      "passed": true
+    },
+    "manual_decisive_wins": {
+      "actual": {
+        "trained": 5,
+        "control": 3
+      },
+      "operator": "trained > control",
+      "passed": true
+    },
+    "same_postprocess_config": {
+      "actual": true,
+      "operator": "is",
+      "threshold": true,
+      "passed": true
+    },
+    "postprocess_provenance": {
+      "actual": true,
+      "operator": "is",
+      "threshold": true,
+      "passed": true
+    },
+    "postprocess_quality_pass_rate": {
+      "actual": 0.8333333333333334,
+      "operator": ">=",
+      "threshold": 0.5,
+      "passed": true
+    },
+    "postprocess_quality_drop": {
+      "actual": 0.0,
+      "operator": "<=",
+      "threshold": 0.05,
+      "passed": true
+    },
+    "postprocess_cer_increase": {
+      "actual": -0.0007309941520467836,
+      "operator": "<=",
+      "threshold": 0.01,
+      "passed": true
+    },
+    "postprocess_no_clipping": {
+      "actual": {
+        "flat_top_run_count": 0,
+        "maximum_true_peak_dbtp": -0.2584020177799489
+      },
+      "operator": "flat_top_run_count == 0 and maximum_true_peak_dbtp <= 0",
+      "passed": true
+    },
+    "performance_mean_rtf": {
+      "actual": 0.3003935855389593,
+      "operator": "<=",
+      "threshold": 1.0,
+      "passed": true
+    },
+    "performance_rtf_ratio": {
+      "actual": 0.9566111124008082,
+      "operator": "<=",
+      "threshold": 1.15,
+      "passed": true
+    },
+    "performance_peak_cuda_gib": {
+      "actual": 6.458289623260498,
+      "operator": "<=",
+      "threshold": 12.0,
+      "passed": true
+    }
+  },
+  "gates": {
+    "model_gate": {
+      "passed": true,
+      "checks": [
+        "model_failure_rate",
+        "model_cer_increase",
+        "model_speaker_drop",
+        "manual_decisive_wins"
+      ]
+    },
+    "postprocess_gate": {
+      "passed": true,
+      "checks": [
+        "same_postprocess_config",
+        "postprocess_provenance",
+        "postprocess_quality_pass_rate",
+        "postprocess_quality_drop",
+        "postprocess_cer_increase",
+        "postprocess_no_clipping"
+      ]
+    },
+    "performance_gate": {
+      "passed": true,
+      "checks": [
+        "performance_mean_rtf",
+        "performance_rtf_ratio",
+        "performance_peak_cuda_gib"
+      ]
+    }
+  },
+  "accepted": true,
+  "inputs": {
+    "control_generation": {
+      "path": "data/reports/datasets/fuxuan_v1/slice12/soar_control_optimized_formal_generation.jsonl",
+      "sha256": "212460dac49a38f46d93ea1823ff88256a5c280451c282581ba24ea3ca91fad3"
+    },
+    "candidate_generation": {
+      "path": "data/reports/datasets/fuxuan_v1/slice12/soar_lora_step400_optimized_formal_generation.jsonl",
+      "sha256": "a3f9eefb8150053ef7602873969067e58e0b8903a61b25df08cf15e642f0f2a5"
+    },
+    "control_raw_metrics": {
+      "path": "data/reports/datasets/fuxuan_v1/slice12/soar_control_optimized_formal_metrics.json",
+      "sha256": "7984965c6585842909dce7db4816b789a344c648a90dbaa0fefacec17e449ac7"
+    },
+    "candidate_raw_metrics": {
+      "path": "data/reports/datasets/fuxuan_v1/slice12/soar_lora_step400_optimized_formal_metrics.json",
+      "sha256": "bbfce280cdacbb13d08e6fec766f4e43c48f4e4ecbbfef0b3bea6424b9d88b7b"
+    },
+    "control_trimmed_generation": {
+      "path": "data/reports/datasets/fuxuan_v1/slice12/soar_control_optimized_formal_trimmed_generation.jsonl",
+      "sha256": "40c161b4e5769d0f3428fcb5bf55c381b657782d747431d2b9454ba6d9691bd8"
+    },
+    "candidate_trimmed_generation": {
+      "path": "data/reports/datasets/fuxuan_v1/slice12/soar_lora_step400_optimized_formal_trimmed_generation.jsonl",
+      "sha256": "638562deb659c82d43bd2dc731b2680a63cac43b173031d965bf15a1605f8f97"
+    },
+    "control_trimmed_metrics": {
+      "path": "data/reports/datasets/fuxuan_v1/slice12/soar_control_optimized_formal_trimmed_metrics.json",
+      "sha256": "3165b57378476362a03207f5d3053e781f9e0ce56db1a88e8ca291a1d6160fc5"
+    },
+    "candidate_trimmed_metrics": {
+      "path": "data/reports/datasets/fuxuan_v1/slice12/soar_lora_step400_optimized_formal_trimmed_metrics.json",
+      "sha256": "84fe39333afedd88f718309c372871d7a214c8730656bedbe20aaf8f22e5caf3"
+    },
+    "manual_review": {
+      "path": "data/reports/datasets/fuxuan_v1/slice12/slice12_step400_manual_review.json",
+      "sha256": "dc6e9b1c96b36c9896a76931a0771bf01c84168db78d314a3ddd61fcf58df639"
+    }
+  }
+}

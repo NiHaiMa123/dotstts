@@ -1,0 +1,93 @@
+schema_version: 1
+benchmark_id: fuxuan_slice10_reference_rank
+benchmark_version: 1
+implementation_version: 1
+
+selection:
+  manifest_path: data/references/fuxuan/v1/manifest.json
+  manifest_sha256: 1a33c738c1b807337b97eaed278aee05c1458aebc1f4d16da32ba7dee879c085
+  dataset_id: fuxuan
+  dataset_version: 1
+  target_speaker_id: 崩铁符玄
+  standardized_audio_root: data/work/standardized
+
+model:
+  model_id: dots-studio/dots.tts-mf-1step
+  model_revision: 4e872aa8f47ee67887468e7494e36aad30908b1e
+  local_path: models/dots.tts-mf-1step
+  model_config_path: models/dots.tts-mf-1step/config.json
+  model_config_sha256: f3388119ec80a559013092e1875d9df8cda812bd4517476b5fc744d4e05c7785
+  model_weights_sha256: 6776f62bbd5332c2f0dc1a51cbc9bf4ac2486f644e8521838c107b55023f5e37
+  speaker_encoder_weights_sha256: 1cf3861c9dee79e4db34bd0b8a4155e68bed27a7c6274e168bb6ee4fed191c85
+  vocoder_weights_sha256: c0e45c08f480df67ac4c354b465355fcc7e2f6c8765263b6dfeddd1f4671c93d
+  precision: bfloat16
+  language: chinese
+  speaker_scale: 1.5
+  max_generate_length: 500
+  max_sequence_length: 2048
+
+test_sentences:
+  - sentence_id: neutral_report
+    text: 本座已经看过这份报告，结论相当明确。
+    purpose: neutral_baseline
+  - sentence_id: named_entity
+    text: 请把列车长和将军的消息一并告诉我。
+    purpose: named_entities
+  - sentence_id: long_decision
+    text: 天命不会替任何人做决定，关键在于当机立断。
+    purpose: long_sentence
+  - sentence_id: date_number
+    text: 七月十五日，星穹列车将在长乐天停留三小时。
+    purpose: date_and_number
+
+seeds:
+  - 20260908
+  - 20260909
+
+metrics:
+  asr_backend_id: faster_whisper
+  asr_model_id: mobiuslabsgmbh/faster-whisper-large-v3-turbo
+  asr_model_revision: 0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf
+  asr_model_root: data/work/models/asr
+  asr_python: data/work/asr_envs/faster_whisper/Scripts/python.exe
+  speaker_report_path: data/reports/datasets/fuxuan_v1/analysis/speaker_embeddings.json
+  speaker_config_path: configs/lab/datasets/fuxuan_v1.yaml
+  quality_analysis_config_path: configs/lab/quality/signal_analysis_v1.yaml
+  quality_policy_path: configs/lab/quality/training_source_review_v1.yaml
+  failure_statuses:
+    - generation_error
+    - invalid_audio
+    - asr_error
+  stability:
+    repeat_same_seed: true
+    max_duration_cv: 0.20
+    max_cer_range: 0.35
+    max_embedding_range: 0.20
+manual_gate:
+  required_sentence_count: 4
+  minimum_keep_count: 2
+  candidate_policy: majority_keep
+provenance:
+  generation_config_sha256: fe98beddb318eb16f6a674f123cbcee583984c8eca27b87c089b3a85e9ae6cb8
+
+outputs:
+  run_root: data/reports/datasets/fuxuan_v1/slice10
+  benchmark_manifest_path: data/reports/datasets/fuxuan_v1/slice10/benchmark_manifest.jsonl
+  benchmark_manifest_sha256: 9f3db2bc86a55b5ef8daf8daf5ded693b33ef4e9498aa883e4196e7bf849a762
+  generation_root: data/work/slice10/generated
+  generation_manifest_path: data/reports/datasets/fuxuan_v1/slice10/generation.jsonl
+  asr_output_path: data/reports/datasets/fuxuan_v1/slice10/asr.json
+  metrics_path: data/reports/datasets/fuxuan_v1/slice10/metrics.json
+  ranking_path: data/reports/datasets/fuxuan_v1/slice10/ranking.json
+  ranking_csv_path: data/reports/datasets/fuxuan_v1/slice10/ranking.csv
+  ranking_html_path: data/reports/datasets/fuxuan_v1/slice10/ranking.html
+  blind_listening_path: data/reports/datasets/fuxuan_v1/slice10/blind_listening.json
+  blind_listening_html_path: data/reports/datasets/fuxuan_v1/slice10/blind_listening.html
+  blind_listening_key_path: data/reports/datasets/fuxuan_v1/slice10/blind_listening_key.json
+  blind_review_template_path: data/reports/datasets/fuxuan_v1/slice10/blind_review_template.json
+  manual_decisions_path: data/reports/datasets/fuxuan_v1/slice10/blind_review_decisions.json
+  manual_review_report_path: data/reports/datasets/fuxuan_v1/slice10/manual_review.json
+  final_ranking_path: data/reports/datasets/fuxuan_v1/slice10/final_ranking.json
+  final_ranking_csv_path: data/reports/datasets/fuxuan_v1/slice10/final_ranking.csv
+  final_ranking_html_path: data/reports/datasets/fuxuan_v1/slice10/final_ranking.html
+  acceptance_path: docs/reports/slice10-acceptance.md

@@ -1,0 +1,107 @@
+schema_version: 1
+config_id: long_form_training_source
+config_version: 1
+
+paths:
+  input_root: data/inbox
+  work_root: data/work/long_form
+  report_root: data/reports/long_form
+
+decode:
+  block_seconds: 30.0
+  analysis_sample_rate_hz: 16000
+  output_sample_rate_hz: 48000
+  output_subtype: PCM_24
+  max_parallel_sources: 1
+
+segmentation:
+  frame_ms: 30.0
+  hop_ms: 10.0
+  minimum_seconds: 2.0
+  preferred_maximum_seconds: 12.0
+  hard_maximum_seconds: 15.0
+  merge_silence_seconds: 0.35
+  boundary_padding_seconds: 0.08
+  minimum_speech_ratio: 0.65
+
+screening:
+  absolute_activity_floor_dbfs: -55.0
+  activity_start_margin_db: 6.0
+  activity_continue_margin_db: 2.0
+  noise_floor_percentile: 20.0
+  maximum_activity_threshold_dbfs: -30.0
+  minimum_snr_proxy_db: 15.0
+  maximum_silence_ratio: 0.35
+  near_clip_level_dbfs: -0.1
+  maximum_near_clip_ratio: 0.0001
+  maximum_channel_level_difference_db: 6.0
+  minimum_channel_correlation_for_safe_mean: 0.25
+  spatial_window_seconds: 0.25
+  maximum_pan_standard_deviation: 0.20
+  maximum_side_to_mid_db: -1.0
+  overlap_proxy_review_score: 0.80
+  uncertain_signal_action: review
+  suspected_overlap_action: review
+  suspected_noise_or_music_action: review
+  suspected_spatial_audio_action: review
+
+speaker:
+  require_reference_for_auto_keep: true
+  mismatch_action: review
+  uncertain_action: review
+  cosine_link_threshold: 0.72
+  minimum_cluster_size: 3
+  knn_k: 5
+  target_reference_minimum_cosine: 0.75
+  encoder:
+    model_family: campplus
+    model_id: dots-studio/dots.tts-mf-1step
+    model_revision: 4e872aa8f47ee67887468e7494e36aad30908b1e
+    weights_path: models/dots.tts-mf-1step/speaker_encoder.safetensors
+    weights_sha256: 1cf3861c9dee79e4db34bd0b8a4155e68bed27a7c6274e168bb6ee4fed191c85
+    model_config_path: models/dots.tts-mf-1step/config.json
+    model_config_sha256: f3388119ec80a559013092e1875d9df8cda812bd4517476b5fc744d4e05c7785
+    license: Apache-2.0
+    input_sample_rate: 48000
+    embedding_size: 512
+    max_audio_seconds: 0.0
+    inference_device: cpu
+    inference_dtype: float32
+    l2_normalize: true
+    knn_k: 5
+    center_cosine_threshold: null
+    knn_cosine_threshold: null
+    calibration_required: true
+
+style:
+  accepted_styles:
+    - normal
+  review_styles:
+    - soft
+    - unknown
+  excluded_styles:
+    - whisper
+    - roleplay
+    - binaural_3d
+    - singing
+    - non_speech
+  maximum_groups: 5
+  minimum_group_size: 5
+  soft_below_corpus_median_db: 6.0
+  whisper_maximum_periodicity: 0.18
+  whisper_minimum_spectral_flatness: 0.02
+
+text:
+  asr_is_candidate_only: true
+  require_human_confirmation_for_training: true
+  use_timestamp_backend_for_boundaries_only: true
+  timestamp_backend_config: configs/lab/asr/backends/faster_whisper_long_form_v1.yaml
+  timestamp_python: data/work/asr_envs/faster_whisper/Scripts/python.exe
+  model_root: data/work/models/asr
+  preferred_asr_boundary_seconds: 10.0
+
+recovery:
+  atomic_segment_writes: true
+  resume_completed_sources: true
+  mark_running_as_interrupted_on_startup: true
+  delete_partial_files_on_startup: true

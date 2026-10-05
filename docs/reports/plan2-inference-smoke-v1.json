@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "task": "P2-5",
+  "sampling_unchanged": {
+    "ode_method": "euler",
+    "num_steps": 10,
+    "guidance_scale": 1.2
+  },
+  "runtime": {
+    "optimize": true,
+    "vocoder_merge_steps": 4,
+    "warmup_on_optimize": true,
+    "candidate_lora_merged_layers": 108
+  },
+  "control": {
+    "count": 12,
+    "mean_rtf_including_first_compile": 0.44016073882754886,
+    "steady_state_mean_rtf": 0.24945718345581067,
+    "peak_torch_cuda_gib": 6.457799911499023,
+    "raw_subset_cer": 0.052083333333333336,
+    "optimized_cer": 0.057291666666666664,
+    "raw_subset_speaker_cosine": 0.8760356074547694,
+    "optimized_speaker_cosine": 0.8748028695461696
+  },
+  "step400": {
+    "count": 12,
+    "mean_rtf_including_first_compile": 0.432610977904985,
+    "steady_state_mean_rtf": 0.25463462380624785,
+    "peak_torch_cuda_gib": 6.457838535308838,
+    "raw_subset_cer": 0.046875,
+    "optimized_cer": 0.03125,
+    "raw_subset_speaker_cosine": 0.882144350383911,
+    "optimized_speaker_cosine": 0.8829125779737631
+  },
+  "waveform_observation": {
+    "byte_identical": false,
+    "control_equal_sample_count": "11/12",
+    "step400_equal_sample_count": "10/12",
+    "interpretation": "torch.compile changes the numerical execution path and can amplify autoregressive sampling differences; the same effect is present in the no-adapter control. Same-job ASR and speaker metrics stayed within the predeclared safety bounds."
+  },
+  "verification": {
+    "unit_tests": "14/14 passed",
+    "ruff": "passed",
+    "control_generation": "12/12",
+    "step400_generation": "12/12",
+    "control_asr_and_metrics": "12/12",
+    "step400_asr_and_metrics": "12/12"
+  },
+  "artifacts": {
+    "control_comparison": "data/reports/datasets/fuxuan_v1/slice12/soar_control_optimized_smoke_comparison.json",
+    "step400_comparison": "data/reports/datasets/fuxuan_v1/slice12/soar_lora_step400_optimized_smoke_comparison.json",
+    "control_metrics": "data/reports/datasets/fuxuan_v1/slice12/soar_control_optimized_smoke_metrics.json",
+    "step400_metrics": "data/reports/datasets/fuxuan_v1/slice12/soar_lora_step400_optimized_smoke_metrics.json"
+  }
+}

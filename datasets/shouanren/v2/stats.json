@@ -1,0 +1,36 @@
+{
+  "candidate_count": 329,
+  "emotion_primary_counts": {
+    "test": {
+      "中立_neutral": 25
+    },
+    "train": {
+      "中立_neutral": 205
+    },
+    "validation": {
+      "中立_neutral": 26
+    }
+  },
+  "excluded_count": 73,
+  "item_count": 256,
+  "oversampled_count": 0,
+  "quality_decision_counts": {
+    "pass": 256
+  },
+  "schema_version": 1,
+  "split_algorithm": "deterministic_group_emotion_swap_v1",
+  "split_counts": {
+    "test": 25,
+    "train": 205,
+    "validation": 26
+  },
+  "split_duration_seconds": {
+    "test": 144.36793749999998,
+    "train": 1154.9384166666664,
+    "validation": 144.3726875
+  },
+  "text_source_counts": {
+    "filename_candidate_unreviewed": 256
+  },
+  "total_duration_seconds": 1443.6790416666668
+}

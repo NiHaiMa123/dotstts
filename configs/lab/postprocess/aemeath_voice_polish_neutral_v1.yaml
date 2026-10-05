@@ -1,0 +1,35 @@
+schema_version: 1
+config_id: aemeath_voice_polish_neutral_v1
+config_version: 1
+brightness_crossover_hz: 3000.0
+brightness_gain_db: 0.0
+body_eq:
+  center_hz: 210.0
+  gain_db: 0.0
+  q: 0.75
+presence_eq:
+  center_hz: 2400.0
+  gain_db: 0.0
+  q: 0.9
+parallel_compressor:
+  threshold_dbfs: -24.0
+  ratio: 3.0
+  attack_ms: 12.0
+  release_ms: 140.0
+  makeup_gain_db: 3.5
+  mix: 0.10
+  gate_dbfs: -45.0
+  frame_ms: 10.0
+deesser:
+  low_hz: 5000.0
+  high_hz: 10000.0
+  threshold_dbfs: -28.0
+  ratio: 2.0
+  maximum_reduction_db: 1.0
+  attack_ms: 5.0
+  release_ms: 80.0
+  frame_ms: 10.0
+match_input_loudness: true
+maximum_loudness_adjustment_db: 1.5
+true_peak_ceiling_dbtp: -1.0
+true_peak_oversample: 4

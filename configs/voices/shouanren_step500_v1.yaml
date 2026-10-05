@@ -1,0 +1,45 @@
+schema_version: 1
+profile_version: 1
+model_id: shouanren_step500_v1
+display_name: 守岸人 · Step 500
+description: SOAR + 守岸人 v2 数据集（256 条人工筛选）Step-500 LoRA；Euler 16 步，目标响度 -26 LUFS 后期
+base_model:
+  path: pretrained_models/dots.tts-soar
+  revision: 2f9b3e18d70d670d4c701da2dc55ded5755815ce
+adapter:
+  path: data/work/shouanren/shouanren_lora_v1/checkpoint-00000500/model
+  format: dots_tts_trainable_delta
+  training_step: 500
+  weights_sha256: 806a3823f39ff46f449600f755f3b1f7ccfb269cffa1afee3a31fcdb8de365a9
+  metadata_sha256: fbd3501c70b61015c04edb72b45bc5884d8f1948a65f28ad9c2af4f7d15f6105
+prompt:
+  audio_path: data/work/standardized/56/56784f46414575ff5789a2857fcb764ab5dcad40ce7522790997cb9d889418cd.wav
+  audio_sha256: da7e86684a7b397c86e73ace441970f8aae9f15ad9fab673c828813f3a0fd01e
+  text: 欢迎回到，这片属于你的海岸。
+runtime:
+  precision: bfloat16
+  optimize: false
+  max_generate_length: 500
+  max_sequence_length: 2048
+  vocoder_merge_steps: 4
+  warmup_on_optimize: false
+  merge_lora: true
+generation:
+  language: chinese
+  template_name: tts
+  normalize_text: false
+  speaker_scale: 1.5
+  ode_method: euler
+  num_steps: 16
+  guidance_scale: 1.2
+  base_seed: 42
+  pause_ms: 250
+  max_chars: 120
+postprocess:
+  edge_trim_config: configs/lab/postprocess/generated_audio_edge_trim_v1.yaml
+  edge_trim_sha256: 50d90b34a1dd38d363471293aba9fb675570271e6c50f5051b0ee37ffc5436f4
+  voice_polish_config: configs/lab/postprocess/shouanren_voice_polish_v1.yaml
+  voice_polish_sha256: fa7ad021b02a4376919996903cdf96a0dcd89299f1101bb2a537e6d0e4ec611d
+io:
+  input_dir: inputs/shouanren_text
+  output_dir: outputs/shouanren_audio

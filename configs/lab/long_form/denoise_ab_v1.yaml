@@ -1,0 +1,26 @@
+schema_version: 1
+config_id: long_form_denoise_ab
+config_version: 1
+
+selection:
+  total_cases: 20
+  high_noise_floor_cases: 8
+  medium_noise_floor_cases: 8
+  clean_control_cases: 4
+  high_noise_floor_dbfs: -43.0
+  clean_control_noise_floor_dbfs: -50.0
+  pending_sources_only: true
+
+enhancement:
+  backend: deepfilternet
+  package_version: 0.5.6
+  model_name: DeepFilterNet3
+  attenuation_limit_db: 8.0
+  post_filter: false
+  compensate_delay: true
+  expected_sample_rate_hz: 48000
+
+paths:
+  work_root: data/work/long_form/denoise_ab/v1
+  report_root: data/reports/long_form/denoise_ab_v1
+

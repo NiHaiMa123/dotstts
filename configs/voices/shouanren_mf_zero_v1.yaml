@@ -1,0 +1,38 @@
+schema_version: 1
+profile_version: 1
+model_id: shouanren_mf_zero_v1
+display_name: 守岸人 · MF 零样本
+description: dots.tts-mf-1step 零样本克隆（无 LoRA），1 步生成，高频噪声低于 SOAR；目标响度 -26 LUFS 后期
+base_model:
+  path: models/dots.tts-mf-1step
+prompt:
+  audio_path: data/inbox/守岸人/中立_neutral/【中立_neutral】或许这就是泰缇斯系统冒风险也要将悲鸣与噬亡星结合的原因…….wav
+  audio_sha256: d18a5ac54a2b9d6d7b59d37ad7fb6ffc1f3c44fa8c4262c8f684e589093f9556
+  text: 或许这就是泰缇斯系统冒风险也要将悲鸣与噬亡星结合的原因……
+runtime:
+  precision: bfloat16
+  optimize: false
+  max_generate_length: 500
+  max_sequence_length: 2048
+  vocoder_merge_steps: 4
+  warmup_on_optimize: false
+  merge_lora: false
+generation:
+  language: chinese
+  template_name: tts
+  normalize_text: false
+  speaker_scale: 1.5
+  ode_method: euler
+  num_steps: 1
+  guidance_scale: 0.0
+  base_seed: 42
+  pause_ms: 250
+  max_chars: 120
+postprocess:
+  edge_trim_config: configs/lab/postprocess/generated_audio_edge_trim_v1.yaml
+  edge_trim_sha256: 50d90b34a1dd38d363471293aba9fb675570271e6c50f5051b0ee37ffc5436f4
+  voice_polish_config: configs/lab/postprocess/shouanren_voice_polish_v1.yaml
+  voice_polish_sha256: fa7ad021b02a4376919996903cdf96a0dcd89299f1101bb2a537e6d0e4ec611d
+io:
+  input_dir: inputs/shouanren_text
+  output_dir: outputs/shouanren_mf_audio

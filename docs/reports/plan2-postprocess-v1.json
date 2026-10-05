@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "config_sha256": "b0d7468dea7d5686e9e0b973e0f9011083510574703af3a8698cf2dbce1f6735",
+  "control": {
+    "item_count": 72,
+    "trimmed_count": 51,
+    "raw_mean_cer": 0.058127088554720124,
+    "trimmed_mean_cer": 0.0564040309106099,
+    "trimmed_mean_speaker_cosine": 0.780011462258034,
+    "raw_quality_pass_rate": 0.18055555555555555,
+    "trimmed_quality_pass_rate": 0.8333333333333334,
+    "trimmed_mean_leading_silence_seconds": 0.198888888888889,
+    "trimmed_max_leading_silence_seconds": 0.47
+  },
+  "candidate": {
+    "item_count": 72,
+    "trimmed_count": 60,
+    "raw_mean_cer": 0.05626696950710108,
+    "trimmed_mean_cer": 0.0555359753550543,
+    "raw_mean_speaker_cosine": 0.7948088026154377,
+    "trimmed_mean_speaker_cosine": 0.787196609221518,
+    "raw_quality_pass_rate": 0.09722222222222222,
+    "trimmed_quality_pass_rate": 0.8333333333333334,
+    "trimmed_mean_leading_silence_seconds": 0.17,
+    "trimmed_max_leading_silence_seconds": 0.49
+  },
+  "safety": {
+    "raw_audio_hash_mismatch_count": 0,
+    "sidecar_count": 144,
+    "candidate_cer_improved_items": 2,
+    "candidate_cer_unchanged_items": 69,
+    "candidate_cer_worse_items": 1,
+    "first_character_cut_evidence_count": 0,
+    "candidate_quality_pass_rate_drop_against_control": 0.0
+  },
+  "decision": {
+    "postprocess_gate": "passed",
+    "reason": "quality pass rate exceeds 0.50 with no relative drop and no aggregate CER regression"
+  }
+}

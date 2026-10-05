@@ -1,0 +1,31 @@
+schema_version: 1
+benchmark_id: fuxuan_asr
+benchmark_version: 1
+sample_count: 40
+
+truth_provenance_kind: user_confirmed_filename
+truth_provenance_note: >-
+  User confirmed on 2026-08-27 that inbox filename bodies are accurate verbatim
+  transcripts. The exact filename-derived text is immutable ground truth.
+
+standardization_config_id: training_audio
+standardization_config_version: 1
+
+emotion_targets:
+  中立_neutral: 10
+  开心_happy: 10
+  生气_angry: 14
+  难过_sad: 6
+
+include_all_quality_review: true
+include_all_emotion: 难过_sad
+
+normalization_unicode_form: NFKC
+normalization_casefold: true
+remove_unicode_categories:
+  - P
+  - Z
+
+# Script and numeral variants remain meaningful ASR errors in v1.
+convert_traditional_to_simplified: false
+normalize_numbers: false

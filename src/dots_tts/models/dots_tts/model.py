@@ -116,6 +116,10 @@ class DotsTtsModel(nn.Module):
             tokenizer=tokenizer,
             latent_stats_path=self.latent_stats_path,
         )
+        if config.lora is not None and config.lora.enabled:
+            from dots_tts.training.peft import configure_lora_modules
+
+            configure_lora_modules(self, config.lora, for_training=False)
         self.vocoder = AudioVAE(config.vocoder).eval()
         self.vocoder.remove_weight_norm()
         self.hop_size = self.vocoder.hop_size
@@ -485,6 +489,7 @@ class DotsTtsModel(nn.Module):
         tokenizer = AutoTokenizer.from_pretrained(
             str(pretrained_model_name_or_path),
             local_files_only=True,
+            fix_mistral_regex=True,
         )
         model = cls(
             config,

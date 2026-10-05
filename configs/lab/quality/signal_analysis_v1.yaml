@@ -1,0 +1,22 @@
+schema_version: 1
+analysis_id: objective_signal_metrics
+analysis_version: 1
+
+frame_length_ms: 20.0
+hop_length_ms: 10.0
+silence_threshold_dbfs: -50.0
+
+# 4x polyphase interpolation is an estimate of inter-sample peak, not a claim
+# of certification against the exact BS.1770 true-peak reference filter.
+true_peak_oversample: 4
+
+# A plateau must be near peak, stable within quantization tolerance, and span
+# multiple samples. Near-full-scale samples remain a separate diagnostic.
+flat_top_min_level_dbfs: -1.0
+flat_top_tolerance_lsb: 1.5
+flat_top_min_run_samples: 3
+
+# These frame-energy percentiles form a relative SNR proxy. They are not a
+# calibrated estimate of acoustic SNR and are never an automatic reject rule.
+noise_percentile: 50.0
+speech_percentile: 90.0

@@ -1,0 +1,41 @@
+schema_version: 1
+calibration_id: fuxuan_dataset_thresholds
+calibration_version: 1
+dataset_config_path: configs/lab/datasets/fuxuan_v1.yaml
+dataset_config_sha256: 316b45f34f21a7b4a80455bacd574ba51512753be77ad4ed717c8143cdf9a43f
+candidate_snapshot_path: data/reports/datasets/fuxuan_v1/audit/candidate_snapshot.json
+candidate_snapshot_sha256: 5fd831600c498344166af3834a5809e0bba2a7831f5bea63f498deaac1daceea
+
+text:
+  report_path: data/reports/datasets/fuxuan_v1/analysis/near_text.json
+  report_sha256: ae362457486aa16b6fc35cb955214887797003d1cd71fee410b55e3239e6e7fd
+  threshold_rule: midpoint_min_positive_max_background
+  positive_pairs:
+    - left_asset_sha256: f773a229b1d2ec6b650559e67deb627008172d2a781bf368342ca599c43ac2c5
+      right_asset_sha256: fcb3062c3c2e82d1be7d9be16fd6986286a0a66cd8d9181705d546deb93ba4c3
+      review_note: shared long clause; minor prefix and wording variation
+    - left_asset_sha256: 230edf8e30910fad3a7f3b09bd751f6f86f128963731ccdc1147f2a60a8fe5b7
+      right_asset_sha256: 6d5e96e6c28812a78b7eeecf4e6c8576a5097b8dcb2ff3caeb7530a308b13954
+      review_note: shared sentence; one discourse prefix added
+    - left_asset_sha256: 0e73b650609d95770bd62027c8b67555f0932f7542052add8be6b0cccf0bdcc7
+      right_asset_sha256: 562645beba01f4c0d7a31dfd6608482fb44b3e71e9c8199b40fb3bbc80fdea98
+      review_note: shared sentence; one short imperative prefix added
+
+acoustic:
+  report_path: data/reports/datasets/fuxuan_v1/analysis/acoustic_fingerprints.json
+  report_sha256: 560b7cf0860bfc29e1f7f7f9f5febba7b780c9acffafe79be41c377f42a669c8
+  samples_per_emotion: 4
+  gain_factor: 0.5
+  leading_silence_seconds: 0.25
+  trailing_silence_seconds: 0.35
+  resample_intermediate_rate: 44100
+  threshold_rule: midpoint_min_positive_max_background
+
+speaker:
+  report_path: data/reports/datasets/fuxuan_v1/analysis/speaker_embeddings.json
+  report_sha256: c126c40c3d5aa07af3b9aa34a819a0aaa12d01f12ff29b7d4721524e72a9e499
+  mad_consistency_scale: 1.4826
+  robust_sigma_cutoff: 4.5
+  candidate_rule: center_or_knn_below_robust_lower_bound
+
+output_path: data/reports/datasets/fuxuan_v1/analysis/threshold_calibration_v1.json

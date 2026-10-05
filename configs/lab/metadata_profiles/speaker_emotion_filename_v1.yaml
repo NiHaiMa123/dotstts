@@ -1,0 +1,18 @@
+schema_version: 1
+profile_id: speaker_emotion_filename
+profile_version: 1
+
+# Directory levels are one-based and relative to the supplied inbox root.
+speaker_from: level_1_directory
+emotion_from: level_2_directory
+
+# Match the filename stem, not its extension. Named groups are part of the
+# profile contract and are validated before any inventory run begins.
+filename_pattern: '^【(?P<emotion>[^】]+)】(?P<text>.+)$'
+filename_emotion_group: emotion
+transcript_group: text
+trim_values: true
+
+# A disagreement is preserved for review; neither label silently overwrites
+# the other.
+conflict_policy: review_required

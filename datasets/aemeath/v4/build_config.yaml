@@ -1,0 +1,126 @@
+dataset_config:
+  acoustic_fingerprint:
+    calibration_required: true
+    duration_ratio_min: 0.9
+    hop_length: 160
+    n_fft: 400
+    n_mels: 64
+    near_cosine_threshold: null
+    pooled_frames: 64
+    rms_target_dbfs: -20.0
+    sample_rate: 16000
+    storage_dtype: float32_le
+    trim_top_db: 30.0
+    window_length: 400
+  dataset_id: aemeath
+  dataset_version: 4
+  eligibility:
+    allow_quality_decisions:
+    - pass
+    allow_unreviewed_filename_text: true
+    exclude_latest_review_statuses:
+    - rejected
+    - pending
+    quality_review_requires_latest_status: approved
+    require_available_source: true
+    require_nonempty_text: true
+    require_verified_standardized_hash: true
+  implementation_version: 1
+  inputs:
+    quality_analysis_id: objective_signal_metrics
+    quality_analysis_version: 1
+    quality_policy_id: training_source_review
+    quality_policy_version: 2
+    quality_report_path: data/reports/quality_v2/quality.json
+    review_benchmark_id: aemeath_asr
+    review_benchmark_version: 1
+    standardization_config_id: training_audio
+    standardization_config_path: configs/lab/standardize/training_audio_v1.yaml
+    standardization_config_version: 1
+  output:
+    canonical_parquet: dataset.parquet
+    checksums: checksums.txt
+    dataset_root: datasets/aemeath/v4
+    frozen_config: build_config.yaml
+    manifest_json: manifest.json
+    stats_json: stats.json
+    test_jsonl: test.jsonl
+    train_jsonl: train.jsonl
+    trainer_audio_paths: absolute
+    trainer_jsonl_fields:
+    - fid
+    - audio
+    - text
+    validation_jsonl: validation.jsonl
+  schema_version: 1
+  speaker_embedding:
+    calibration_required: true
+    center_cosine_threshold: null
+    embedding_size: 512
+    inference_device: cpu
+    inference_dtype: float32
+    input_sample_rate: 48000
+    knn_cosine_threshold: null
+    knn_k: 5
+    l2_normalize: true
+    license: Apache-2.0
+    max_audio_seconds: 0.0
+    model_config_path: models/dots.tts-mf-1step/config.json
+    model_config_sha256: f3388119ec80a559013092e1875d9df8cda812bd4517476b5fc744d4e05c7785
+    model_family: campplus
+    model_id: dots-studio/dots.tts-mf-1step
+    model_revision: 4e872aa8f47ee67887468e7494e36aad30908b1e
+    weights_path: models/dots.tts-mf-1step/speaker_encoder.safetensors
+    weights_sha256: 1cf3861c9dee79e4db34bd0b8a4155e68bed27a7c6274e168bb6ee4fed191c85
+  split:
+    balance_fields:
+    - item_count
+    - emotion_primary
+    - duration_seconds
+    - group_count
+    group_evidence:
+    - exact_audio
+    - exact_text
+    - reviewed_near_audio
+    - reviewed_near_text
+    low_resource_label: 开心_happy
+    low_resource_min_groups_per_eval_split: 1
+    seed: 20261028
+    strata_field: emotion_primary
+    test_ratio: 0.1
+    train_ratio: 0.8
+    validation_ratio: 0.1
+  text_similarity:
+    calibration_required: true
+    candidate_length_ratio_min: 0.8
+    casefold: true
+    near_similarity_threshold: null
+    remove_unicode_category_prefixes:
+    - P
+    - Z
+    - C
+    unicode_form: NFKC
+dataset_config_sha256: a803f6944679e643707da50b74ce592aced4e7daae871a0d176e27169fc6e9e2
+freeze_inputs:
+  analysis_run_id: e1096984-e29f-4d0f-9753-22550d1fac05
+  assignment_sha256: f1db4f6b06b479d8782d06221d40bfda4c1a006ca69461fd8b6768e7ad85c877
+  candidate_snapshot_sha256: 9b2e2f07eeedcecb653bb62111c4700a53231a08bee2b5e60686457f70aa5f12
+  edge_review_snapshot_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  input_file_sha256s:
+    reviewed_selection.json: 2f3b8b1a3813b9584547e43218b3940aad6cb6d7deb8cf5845ccca8211c4eb19
+    reviewed_selection_split.json: c9e909e0a2d89c6cbe61264f20f48cb5199a45cb1dfc47b2f716986bced85f40
+    split_audit.json: e55d6cbf300cbef15f8daabb860a42d7c1a69eb8d3c70eb7e5dbd36a22fee135
+  selection_sha256: 369dd8ac5abfbfada51eb4a4486fe2abdc072aa52bbbbfcfb374727bac5aec78
+  split_audit_sha256: a14b7b2549c1cd0b312108396f79afba3e85d7542a89b3d561ba0ef9f8920232
+schema_version: 1
+writer:
+  implementation: dots_tts_lab.dataset_artifacts@1
+  parquet:
+    compression: zstd
+    compression_level: 9
+    data_page_version: '1.0'
+    format_version: '2.6'
+    use_dictionary: false
+    write_statistics: true
+  pyarrow_version: 25.0.1
+  row_order: split(train,validation,test),asset_sha256

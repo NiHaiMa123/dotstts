@@ -1,0 +1,35 @@
+schema_version: 1
+config_id: long_form_prefilter_v1
+config_version: 1
+
+# 分块解码上限；单块内存 ≤ block_seconds × 48k × 2ch × 4B ≈ 5.8MB/30s
+block_seconds: 30.0
+
+vad:
+  backend: silero_onnx
+  package_version: "6.2.0"
+  sample_rate_hz: 16000
+  window_samples: 512
+  speech_threshold: 0.5
+  continue_threshold_ratio: 0.6
+  min_speech_seconds: 0.3
+  merge_gap_seconds: 0.35
+  # 与 DFN3 窗口对齐：30s 核心 + 两侧各 ≤2s 上下文
+  region_max_seconds: 34.0
+
+stereo:
+  window_seconds: 0.25
+  max_channel_level_difference_db: 9.0
+  min_correlation_for_safe_mean: 0.6
+  max_side_to_mid_db: -6.0
+  max_pan_standard_deviation: 0.35
+  spatial_risk_fraction_quarantine: 0.5
+
+events:
+  hop_samples: 128
+  transient_zscore: 8.0
+  max_transients_per_second: 2.0
+
+paths:
+  work_root: data/work/long_form/prefilter
+  report_root: data/reports/long_form/prefilter

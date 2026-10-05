@@ -1,0 +1,49 @@
+schema_version: 1
+config_id: long_form_identity_v1
+config_version: 1
+
+# 说话人时间轴分析窗：1.5s 窗 / 0.75s hop；低于能量门限的窗不嵌入
+windows:
+  window_seconds: 1.5
+  hop_seconds: 0.75
+  min_window_rms_dbfs: -45.0
+  min_voiced_windows_for_stability: 2
+
+# 片内转折与原型匹配阈值（结构性证据，不是 pass 门限）
+timeline:
+  turn_change_cosine: 0.55
+  prototype_match_cosine: 0.60
+  min_turn_seconds: 1.5
+  overlap_ambiguity_margin: 0.08
+
+# 冻结参考包：score 只产出 cosine 统计，判定阈值未标定前由 gate 保持 unknown
+targets:
+  reference_pack_path: configs/lab/long_form/reference_pack_suisui_v1.yaml
+  reference_pack_sha256: 0ea3fc6765bec50b7d0e2aa2076ca1421b68a0383dcee165e44292ab5cbe460a
+  reference_audio_root: data/work/long_form/exports/suisui/v1
+  max_reference_seconds: 10.0
+
+# 与 training_source_v1.yaml 同一套钉死 CAM++
+encoder:
+  model_family: campplus
+  model_id: dots-studio/dots.tts-mf-1step
+  model_revision: 4e872aa8f47ee67887468e7494e36aad30908b1e
+  weights_path: models/dots.tts-mf-1step/speaker_encoder.safetensors
+  weights_sha256: 1cf3861c9dee79e4db34bd0b8a4155e68bed27a7c6274e168bb6ee4fed191c85
+  model_config_path: models/dots.tts-mf-1step/config.json
+  model_config_sha256: f3388119ec80a559013092e1875d9df8cda812bd4517476b5fc744d4e05c7785
+  license: Apache-2.0
+  input_sample_rate: 48000
+  embedding_size: 512
+  max_audio_seconds: 0.0
+  inference_device: cpu
+  inference_dtype: float32
+  l2_normalize: true
+  knn_k: 5
+  center_cosine_threshold: null
+  knn_cosine_threshold: null
+  calibration_required: true
+
+paths:
+  work_root: data/work/long_form/identity
+  report_root: data/reports/long_form/identity

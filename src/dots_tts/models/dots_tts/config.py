@@ -49,6 +49,16 @@ class LossConfig(StrictConfigBase):
     eos_weight: float = 1.0
 
 
+class LoraArtifactConfig(StrictConfigBase):
+    enabled: bool = True
+    target_scope: Literal["core.velocity_field_predictor"] = "core.velocity_field_predictor"
+    target_modules: list[str]
+    rank: int = Field(ge=1)
+    alpha: int = Field(ge=1)
+    dropout: float = Field(default=0.0, ge=0.0, lt=1.0)
+    train_output_layer: bool = True
+
+
 class MeanFlowConfig(ConfigBase):
     enabled: bool = False
     use_duration_embedding: bool = True
@@ -129,10 +139,12 @@ class ModelConfig(ConfigBase):
     meanflow: MeanFlowConfig | None = None
     sampling: SamplingConfig | None = None
     streaming: StreamingConfig | None = None
+    lora: LoraArtifactConfig | None = None
 
 
 __all__ = [
     "LossConfig",
+    "LoraArtifactConfig",
     "MeanFlowConfig",
     "ModelConfig",
     "SamplingConfig",

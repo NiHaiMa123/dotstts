@@ -1,0 +1,33 @@
+schema_version: 2
+experiment_id: slice12_fuxuan_step400_validation_selected_v1
+
+checkpoint_selection:
+  policy: minimum_validation_loss
+  selected_step: 400
+  selected_validation_loss: 0.6849
+  selection_did_not_use: [test_metrics, manual_review]
+  adapter_path: data/work/slice12/soar_lora_v1/checkpoint-00000400/model
+  adapter_weights_sha256: de5b3bb59e510d622cf65813f75fd0f5c287c3ea8f043ea132c213d3f0d0ed54
+  adapter_metadata_sha256: 73d139b84ad4417e6c952b7e0aec5b931107c47e5a48a45a7b9ae79f2b350011
+
+metrics:
+  candidate_absolute_gates:
+    max_failure_rate: 0.05
+    max_mean_cer: 0.20
+    min_mean_speaker_cosine: 0.75
+    min_quality_pass_rate: 0.50
+    max_mean_rtf: 1.00
+    max_inference_peak_cuda_gib: 12.0
+    max_training_peak_cuda_gib: 15.0
+  regression_gates_against_training_control:
+    max_mean_cer_increase: 0.02
+    max_mean_speaker_cosine_drop: 0.02
+    max_quality_pass_rate_drop: 0.05
+    max_mean_rtf_ratio: 1.15
+
+outputs:
+  training_control_generation: data/reports/datasets/fuxuan_v1/slice12/soar_control_generation.jsonl
+  training_control_metrics: data/reports/datasets/fuxuan_v1/slice12/soar_control_metrics.json
+  trained_generation: data/reports/datasets/fuxuan_v1/slice12/soar_lora_step400_generation.jsonl
+  trained_metrics: data/reports/datasets/fuxuan_v1/slice12/soar_lora_step400_metrics.json
+  regression_report: data/reports/datasets/fuxuan_v1/slice12/regression_report_step400_v1.json

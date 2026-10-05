@@ -1,0 +1,76 @@
+train_data:
+  sources:
+  - name: shouanren_v2_train
+    weight: 1.0
+    pipeline: basic
+    adapter:
+      class_name: JsonlManifestSourceAdapter
+      params:
+        manifest_path: E:/project/dotstts/datasets/shouanren/v2/train.jsonl
+        shuffle: true
+  train_audio_sample_rate: 48000
+  audio_samples_per_llm_token: 7680
+  num_tokens_per_epoch: 1000000
+  num_workers: 2
+  pin_memory: true
+  prefetch_factor: 2
+  max_audio_seconds_in_batch: 15.5
+  max_text_tokens_in_batch: 512
+  max_samples_per_batch: 1
+  bucketing_pool_size: 32
+val_data:
+  sources:
+  - name: shouanren_v2_validation
+    weight: 1.0
+    pipeline: basic
+    adapter:
+      class_name: JsonlManifestSourceAdapter
+      params:
+        manifest_path: E:/project/dotstts/datasets/shouanren/v2/validation.jsonl
+        shuffle: false
+  train_audio_sample_rate: 48000
+  audio_samples_per_llm_token: 7680
+  num_workers: 1
+  pin_memory: true
+  prefetch_factor: 2
+  max_audio_seconds_in_batch: 15.5
+  max_text_tokens_in_batch: 512
+  max_samples_per_batch: 1
+  bucketing_pool_size: 26
+loss:
+  ce_weight: 1.0
+  fm_weight: 1.0
+  eos_weight: 1.0
+train:
+  pretrained_model_path: models/dots.tts-mf-1step
+  output_dir: data/work/shouanren/shouanren_lora_mf_v1
+  seed: 42
+  learning_rate: 1.0e-05
+  cfg_droprate: 0.0
+  xvec_drop_rate: 0.5
+  weight_decay: 0.01
+  warmup_steps: 50
+  max_train_steps: 500
+  gradient_accumulation_steps: 2
+  grad_clip_norm: 1.0
+  save_interval: 100
+  max_checkpoints_to_keep: 5
+  log_interval: 5
+  eval_interval: 100
+  max_eval_batches: 25
+  run_eval_on_start: true
+  lora:
+    enabled: true
+    target_scope: core.velocity_field_predictor
+    target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - fc1
+    - fc2
+    rank: 8
+    alpha: 16
+    dropout: 0.05
+    train_output_layer: true
+  gradient_checkpointing: true

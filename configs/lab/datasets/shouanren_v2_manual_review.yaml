@@ -1,0 +1,304 @@
+schema_version: 1
+review_id: shouanren_v2_freeze_review
+review_version: 1
+dataset_id: shouanren
+dataset_version: 2
+analysis_run_id: 5bcd2dac-ba10-4815-a54b-ce2d80a75e5f
+candidate_snapshot_sha256: fbbde1da397336040c41bc2cfd9cbc7cb7becf59059acbf6f69c4556f140db9b
+review_batch_id: shouanren-v2-freeze-review
+reviewed_at: '2026-10-05T14:28:32.696823Z'
+reviewer: freeze_speaker_dataset.py
+edge_decisions:
+- left_asset_sha256: 4554dfcda6910ae8322e39355de53795d67080586d9f9e31e93228a6d000c652
+  right_asset_sha256: a8e83953c3914902d5c53c5379ab18d0cb2e7975a34a72c11b78694f9839898d
+  evidence_type: exact_text
+  review_status: accepted
+  representative_asset_sha256: a8e83953c3914902d5c53c5379ab18d0cb2e7975a34a72c11b78694f9839898d
+  exclude_asset_sha256s:
+  - 4554dfcda6910ae8322e39355de53795d67080586d9f9e31e93228a6d000c652
+  review_note: 同文本不同录制take;保留SNR更高/时长更完整的一条
+- left_asset_sha256: 54aebae77abf217eee4127d8407c58c9f4a000708b665070f5eb80ea857e8aa7
+  right_asset_sha256: f37c1a9a6b68c3e6da24fa837b8c2d6f4ac2b32cd15c95f984962fe0be9c0cc0
+  evidence_type: exact_text
+  review_status: accepted
+  representative_asset_sha256: f37c1a9a6b68c3e6da24fa837b8c2d6f4ac2b32cd15c95f984962fe0be9c0cc0
+  exclude_asset_sha256s:
+  - 54aebae77abf217eee4127d8407c58c9f4a000708b665070f5eb80ea857e8aa7
+  review_note: 同文本不同录制take;保留SNR更高/时长更完整的一条
+- left_asset_sha256: 0ba3a7a349f6f9ec1dd96155bc3b5d0557b8958751117402f3998cec58c8ec55
+  right_asset_sha256: 488f332a6d52224568024dbc403fe97cbeb270cb977a37245e708f5610b2cb70
+  evidence_type: exact_text
+  review_status: accepted
+  representative_asset_sha256: 0ba3a7a349f6f9ec1dd96155bc3b5d0557b8958751117402f3998cec58c8ec55
+  exclude_asset_sha256s:
+  - 488f332a6d52224568024dbc403fe97cbeb270cb977a37245e708f5610b2cb70
+  review_note: 同文本不同录制take;保留SNR更高/时长更完整的一条
+- left_asset_sha256: 694d87f5e3808980f6e818e75087c122518b5ea9e3eb751ebde7ea496b6d5476
+  right_asset_sha256: c9bb7300a1c49e355ec58455ed37fe4812aaaf543cff7c9e3f7feeb5ae81145e
+  evidence_type: exact_text
+  review_status: accepted
+  representative_asset_sha256: c9bb7300a1c49e355ec58455ed37fe4812aaaf543cff7c9e3f7feeb5ae81145e
+  exclude_asset_sha256s:
+  - 694d87f5e3808980f6e818e75087c122518b5ea9e3eb751ebde7ea496b6d5476
+  review_note: 同文本不同录制take;保留SNR更高/时长更完整的一条
+speaker_decisions:
+- asset_sha256: 0b4e00649f071e87d31d95e92804a194e2ca434c475857af8e592ba0165d60bc
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 1b5114e609a775ec88cb63a21088e417a2be5e381f0c8b02f8dbcde18d0856ee
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 1b868b6cf6de810ace8a556fe3bb877b7b09807ac1f9f99a9dfc292c8cf602a5
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 1bd39664f26d039d78fd91c58db094e66a1e163eb86d04900d03a0fd03569cbd
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 1c2f03d67cdae29f7eaf13292949605a877bcaf8462e2b69ec15cb326114a28b
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 2a2018ed5d030b309785d16541469657e5e73bc0cb32ca0ef42ce29f401f2332
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 3accb3c4ccbf4062218d1611c3cc96bf8b65dbbfd3de1c8c9b5fb17d52fe7d89
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 45d240f1db3e2c2a38ec30683adb12191de1a417dfeecf25c960b94e323aa92b
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 4f2b79a4e4ac1f8b34666d3c8235d36bfd57c7a003c67cf719b63b5c9709ff3f
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 533193ef48ce1b364e38c8b14f4ff438df717742cbfe1039bd7bf70cf13614f0
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 63844a962887252cdc9d58572ff22c16e43b17727f2d82d33270dd611d38e7bd
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 79122d320787c6746d4f3b43892c87ec902ce0f5d991b2b5965ba264163ee415
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 861d9e94792d7ef6e7ad62dcf608897857486fd9d2d39de68c4620e1bdcd849e
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 87d0ab5d20b7c3a10ec43dcb7f6e8d6418f056bf9591b55b2f012ee7a1257fc8
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 8b8fffb110a10d7ef7e9d40ee7469f77232c07426d821aae67838867cf3c5822
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: a8e83953c3914902d5c53c5379ab18d0cb2e7975a34a72c11b78694f9839898d
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: acedfe8c82b1f44d7a58862bb581940d17b1fa867d6c84f7146b73cceb37eaef
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: ae0596c65767da08637e688e652affb34765b6f2f64b7ca99f26411924a7fd47
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: af293c663ccb9a8ceee531d658e3e366d1f00e971d08aec236cad398cc55b053
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: b7af0460b11ec10bd1f1ed26684ca73854d3218e44454d55b424c711ca877560
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: bc037dddcdc276070f73b54f23efd07fa31b0dcf717baa4dc10cd4158c6d901c
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: c19ff2ded1e3016135a00b003cca9cf776a23398d72b89ba724d0cfc8c2250f5
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: c2096f9aabc427ab36a16f11517ffba614fda8d3c9a66993fe7e9baf10565ab9
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: d0c66825aa076d244a7af232616c19264b02856d0f3b8721914573b2da22af4e
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: d4d070c9f61316b6d850924005d01ed0d0b28633e52a4cbc3d29124863985242
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: d57f1c1d3c90adf7f1f87959cbc11872ea0ffcf6fb338fcae5e69dae99b99cc5
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: db2ef996dbff197f77fbc2816e2422b95503ecc2c1c6ab864f6a995f3fcc634e
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: de7173eae83de9bd15e6dd4572a71d82f19dc0505b7773a6dc9002a2d0bdf41b
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: f08717d1065331d1569b89bdfc01955b2e29b82aa54ba6d4f759bd0d33dd5162
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: f29f2633c6d345c70273039df6bd4c4da53cc392899cbf3155b48413fd11b944
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: f3d5a1603e09d9a3e9f0da703d102c7e0b7d121f577010fee73e0caf26a0368b
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: ffbbac27fd35d16c53a66a63f6a93a8995840716d2ee88914c1ec545d536ee28
+  review_status: exclude_uncertain
+  review_note: 'web corpus review: user excluded'
+- asset_sha256: 0419988785b6934dd08d07ef826e99c83207722139a1005377d7cea0d9b64bc0
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 0, centroid_cosine
+    0.3571)'
+- asset_sha256: 078abc37e4bffb33f485c69cd453c270b42dd7337315ffb835dc2d1b475ebc0f
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 31, centroid_cosine
+    0.5745)'
+- asset_sha256: 0ba3a7a349f6f9ec1dd96155bc3b5d0557b8958751117402f3998cec58c8ec55
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 33, centroid_cosine
+    0.4898)'
+- asset_sha256: 1bf013c820d373b57747d56a0247db2e271d127891de1c634620627c4b529979
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 2, centroid_cosine
+    0.3857)'
+- asset_sha256: 2532dd42da36935371e98ae83156323584f5da722ace453aff70879fd6179531
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 3, centroid_cosine
+    0.4963)'
+- asset_sha256: 2874f11451ecf75162d7085b962050a707d724bce611bba6dfe7eb6211e84ebe
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 1, centroid_cosine
+    0.0391)'
+- asset_sha256: 3cb7cca698930fc93ab12d65becc31487ee38a39a06ae8961293c659fe4b0980
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 23, centroid_cosine
+    0.4329)'
+- asset_sha256: 431f6f97f1b6d490e13c8e70b3993443038e56cd13f0dd568fa7ef54091070d0
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 0, centroid_cosine
+    0.5863)'
+- asset_sha256: 4554dfcda6910ae8322e39355de53795d67080586d9f9e31e93228a6d000c652
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 19, centroid_cosine
+    0.5034)'
+- asset_sha256: 488f332a6d52224568024dbc403fe97cbeb270cb977a37245e708f5610b2cb70
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 36, centroid_cosine
+    0.2252)'
+- asset_sha256: 49b16db1f7cd3f34dab7b0e3575b108013da9c9efe0ba9a3152ffc3cc3cc5712
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 6, centroid_cosine
+    0.4817)'
+- asset_sha256: 521e57600c883ffc8f6e6bda0d6034f7e9d60175786a5876b0642947c057d9d6
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 22, centroid_cosine
+    0.3315)'
+- asset_sha256: 52ba7c68bf0477514c76ef6350966349d7888767aef168626ecef4c572c25a73
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 5, centroid_cosine
+    0.2701)'
+- asset_sha256: 53d2aeaf034602e050733e5a88a889f430d5fb8138de93f7349c7f65cc1c88fa
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 0, centroid_cosine
+    0.5516)'
+- asset_sha256: 54aebae77abf217eee4127d8407c58c9f4a000708b665070f5eb80ea857e8aa7
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 29, centroid_cosine
+    0.0816)'
+- asset_sha256: 57b43b28eff3341d0526be618b5da7281e8530106d60311c164ad2fdd6c5f3ae
+  review_status: exclude_uncertain
+  review_note: 'speaker filter: boundary_rescue not user-reviewed (centroid_cosine
+    0.6563)'
+- asset_sha256: 5c50fc32507356f8eb8c000d8f44f7ae0628ca90883e1bd34160c1e458f97734
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 3, centroid_cosine
+    0.5678)'
+- asset_sha256: 5dc992dc01db6e74ce52f24f455cdb61f9d05c1250d370cca435769eeb4f656e
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 0, centroid_cosine
+    0.4919)'
+- asset_sha256: 694d87f5e3808980f6e818e75087c122518b5ea9e3eb751ebde7ea496b6d5476
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 0, centroid_cosine
+    0.5145)'
+- asset_sha256: 6a430840f67f98c2ee71699dad1ad1fa88f273fa03a8d72d0c64b998c2105444
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 8, centroid_cosine
+    0.4434)'
+- asset_sha256: 7b4e1dc6f4233fae8783caf7b8875ed5bf95ca58d8f892fb4f64f4c101d286f0
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 0, centroid_cosine
+    0.5403)'
+- asset_sha256: 7cdf1f725f4f63884bdfc9babce26efbb301f5fdcbce3c491c3d88d33c819540
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 0, centroid_cosine
+    0.5308)'
+- asset_sha256: 7d6184f985bf344e6c1db8eb728991a6a74277aeb4b774879853408c092d7645
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 2, centroid_cosine
+    0.422)'
+- asset_sha256: 7e6289ea8d178b6af7c480728b231cee36f47c1f4d9a9522cf93471e0fa891f2
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 3, centroid_cosine
+    0.4771)'
+- asset_sha256: 91560f7c8b1c5026506978f1402f937eea9c3bc4c65b2027a115bdee17dfbbdc
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 28, centroid_cosine
+    0.3409)'
+- asset_sha256: 95b909fa2c452f60140e45a41c0ccd32b1421998d03144a20cd2a2321bed1f7e
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 32, centroid_cosine
+    0.4893)'
+- asset_sha256: b175d1f769a1f20b106f4931f816bef1634c4d275309ef582c3803557095cbe5
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 16, centroid_cosine
+    0.3877)'
+- asset_sha256: b330afea50c6e91c3ec93e8d8880ae77617888c9588edd10e4a7963ff2272b67
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 6, centroid_cosine
+    0.5329)'
+- asset_sha256: b7f8574d9754378eb0609b26f60746f5c80a8694b6a01eb17a2ccd084aaee78f
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 14, centroid_cosine
+    0.5292)'
+- asset_sha256: bb00a1ad16bdf50599f44437708c300252486e4b3a0a4bdb9f7a66d37aa30510
+  review_status: exclude_uncertain
+  review_note: 'speaker filter: boundary_rescue not user-reviewed (centroid_cosine
+    0.6466)'
+- asset_sha256: c00d0064035bb5fc8d25c11428c3450179dc3d573ec8c4c939f8accf6d1eb4ae
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 0, centroid_cosine
+    0.5624)'
+- asset_sha256: c124e646d0383ba1cf09ff7e1256c7d08a5aa753bb2fc6e0a4e22af102efac10
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 9, centroid_cosine
+    0.4489)'
+- asset_sha256: c3be6a653e820977955c6d10b80564e936dc2a1cf3ab046b5c93357afc94b297
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 18, centroid_cosine
+    0.4758)'
+- asset_sha256: c9bb7300a1c49e355ec58455ed37fe4812aaaf543cff7c9e3f7feeb5ae81145e
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 0, centroid_cosine
+    0.5412)'
+- asset_sha256: cc6e438b1b0bb6cc69805aec7e313d85f4d00aa135b49c25694f6260adc4a7b5
+  review_status: exclude_uncertain
+  review_note: 'speaker filter: boundary_rescue not user-reviewed (centroid_cosine
+    0.6631)'
+- asset_sha256: d5809643bfc8c1d661dee6fbdb5f535a6d30d3d881c24db4f28f365f52769220
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 35, centroid_cosine
+    0.1981)'
+- asset_sha256: d82b5af2e9753715a46f2c77697671df6eec1ee5adf6629bff789b89fb9a60f7
+  review_status: exclude_uncertain
+  review_note: 'speaker filter: boundary_rescue not user-reviewed (centroid_cosine
+    0.6382)'
+- asset_sha256: e9f2f02af1c3bbbd872e11d5b70a6c224a599454b0880d758af606501ab7b509
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 2, centroid_cosine
+    0.4382)'
+- asset_sha256: f37c1a9a6b68c3e6da24fa837b8c2d6f4ac2b32cd15c95f984962fe0be9c0cc0
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 21, centroid_cosine
+    0.1493)'
+- asset_sha256: f7d7d214ae89960f94a9222d63afc9df641accd3e6c7c6c3e05bd95ed0e57b88
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 26, centroid_cosine
+    0.5434)'
+- asset_sha256: fdbecaea7edf47ebe6e35334d353728ac47243e938b932f7d691cb27ea849643
+  review_status: exclude_wrong_speaker
+  review_note: 'speaker filter: outside dominant cluster (cluster 10, centroid_cosine
+    0.1865)'

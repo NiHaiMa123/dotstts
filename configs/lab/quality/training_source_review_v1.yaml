@@ -1,0 +1,18 @@
+schema_version: 1
+policy_id: training_source_review
+policy_version: 1
+
+# Initial conservative review policy. Threshold crossings request inspection;
+# only an analysis/decode failure is rejected automatically.
+min_sample_rate_hz: 40000
+min_duration_seconds: 2.0
+max_duration_seconds: 15.0
+max_abs_dc_offset: 0.01
+max_leading_silence_seconds: 0.5
+max_trailing_silence_seconds: 0.5
+max_silence_ratio: 0.45
+max_flat_top_run_count: 0
+min_integrated_loudness_lufs: -35.0
+max_integrated_loudness_lufs: -10.0
+max_true_peak_estimate_dbtp: 0.0
+min_snr_proxy_db: 12.0

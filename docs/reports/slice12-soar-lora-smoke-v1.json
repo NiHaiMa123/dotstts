@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "status": "succeeded",
+  "experiment_id": "slice12_fuxuan_formal_v2",
+  "contract_sha256": "0f15141b3445b9ae4b70171497726437cdd8edacfc7919f288315b39a3234dcb",
+  "frozen_tree_sha256": "77754574c4048a20682b0e8f9be95c322cf0848afedaf90d7c81b1f00df029af",
+  "official_soar_revision": "2f9b3e18d70d670d4c701da2dc55ded5755815ce",
+  "docker_image": {
+    "tag": "dotstts-slice12:torch2.8-cu128",
+    "id": "sha256:9cac183498ff513e66eaf67f8bd2cd513e02e99aed828812e5f781273ec5ab7e",
+    "size_bytes": 5169706191
+  },
+  "training": {
+    "start_global_step": 0,
+    "end_global_step": 1,
+    "completed_optimizer_steps": 1,
+    "total_tokens": 106,
+    "audio_tokens": 62,
+    "text_tokens": 34,
+    "elapsed_seconds": 67.72786506299997,
+    "total_parameters": 2388788830,
+    "lora_parameters": 2654208,
+    "trainable_parameters": 4884608,
+    "cuda": {
+      "device": "NVIDIA GeForce RTX 5080",
+      "peak_allocated_bytes": 10249214976,
+      "peak_reserved_bytes": 10416553984,
+      "total_memory_bytes": 17094475776,
+      "contract_peak_limit_bytes": 16106127360,
+      "within_contract_limit": true
+    }
+  },
+  "checkpoint": {
+    "path": "data/work/slice12/soar_lora_smoke_metrics_v1/checkpoint-00000001",
+    "recursive_size_bytes": 58887827,
+    "trainable_model_safetensors": {
+      "size_bytes": 19569208,
+      "sha256": "5f6fb7374e4154e4b97d4d8a2684dc9d5f6a030a735b71177c79e0def2090ca5"
+    },
+    "trainable_model_metadata_sha256": "73d139b84ad4417e6c952b7e0aec5b931107c47e5a48a45a7b9ae79f2b350011",
+    "trainer_state_sha256": "20df5120d88df59872d37132ea21d39575187f1b1887061ac9dae8060a92cecd",
+    "config_sha256": "e7f3662985a154eec54ee4aea1afbe828d0887b6131096de3200108d77dea0d5",
+    "runtime_metrics_sha256": "56497a0fc0344f47cee9e8dc62f4eaf416ff75edb71ea099eec4116cbaebda07"
+  },
+  "restore_verification": {
+    "status": "succeeded",
+    "restored_global_step": 1,
+    "completed_optimizer_steps_after_restore": 0,
+    "runtime_metrics_preserved": true,
+    "runtime_metrics_sha256_before": "56497a0fc0344f47cee9e8dc62f4eaf416ff75edb71ea099eec4116cbaebda07",
+    "runtime_metrics_sha256_after": "56497a0fc0344f47cee9e8dc62f4eaf416ff75edb71ea099eec4116cbaebda07"
+  }
+}

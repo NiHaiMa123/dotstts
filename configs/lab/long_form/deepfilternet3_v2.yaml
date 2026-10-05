@@ -1,0 +1,56 @@
+schema_version: 1
+config_id: long_form_dfn3_production
+config_version: 1
+
+# LF-13A pinned backend. 8 dB is the conservative pilot starting point from the
+# rejected v1 AB; it is a trial parameter, not an approved production effect.
+backend:
+  name: deepfilternet
+  package_version: "0.5.6"
+  model_name: DeepFilterNet3
+  attenuation_limit_db: 8.0
+  post_filter: false
+  compensate_delay: true
+  expected_image_tag: dotstts-long-form-denoise:deepfilternet-0.5.6
+
+# Fingerprints verified on 2026-09-12/13 against the local cache. Any drift is
+# an abort, never a silent model swap.
+model_files:
+  cache_root: data/work/models/deepfilternet-cache
+  config_relative_path: DeepFilterNet/DeepFilterNet3/config.ini
+  config_sha256: 415eb925d44990d938fb739f514aa3662c1ec0ea836cff044fa1291b82cb4290
+  weights_relative_path: DeepFilterNet/DeepFilterNet3/checkpoints/model_120.ckpt.best
+  weights_sha256: 23b92884f63ccf54bb026014604625ab231657b6480df65db4095c4c171e6003
+
+# Bounded adaptation: a core window of at most 30 s plus up to 2 s of real
+# context on each side. enhance() resets hidden state per call, so each window
+# is an explicitly reset, independent unit; sentences crossing a seam are
+# reprocessed whole or quarantined, never spliced.
+chunking:
+  core_max_seconds: 30.0
+  context_max_seconds: 2.0
+  reset_state_per_window: true
+  model_reuse_across_windows: true
+  seam_policy: reprocess_sentence_else_quarantine
+
+# Original L/R spatial evidence is evaluated before any downmix; binaural
+# material is not mono-collapsed and re-labeled normal.
+channels:
+  spatial_gate_before_downmix: true
+  downmix_rule: safe_mean_only
+  preserve_lr_evidence: true
+
+output:
+  work_root: data/work/long_form/enhancement/dfn3
+  report_root: data/reports/long_form/dfn3
+  final_sample_rate_hz: 48000
+  final_subtype: PCM_24
+  final_channels: 1
+
+# A backend failure blocks the enhanced candidate; it never falls back to raw
+# while claiming a denoise pass. Raw may still qualify through its own route.
+failure_policy:
+  on_backend_failure: block_candidate
+  on_missing_weights: abort_run
+  on_output_mismatch: block_candidate
+  atomic_region_commit: true

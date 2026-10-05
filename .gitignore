@@ -26,12 +26,23 @@ infer_output/
 smoke_accel/
 downloaded_data
 pretrained_models
+models/
 tmp_*
 temp_*
 debug_*
 apps/gradio/*.log
 
+# Local data workspace. Keep only the usage notes and the empty inbox marker.
+data/*
+!data/README.md
+!data/inbox/
+data/inbox/*
+!data/inbox/.gitkeep
+
 # Audio outputs (keep Gradio's bundled default prompts)
 *wav
 !apps/gradio/default_prompts/
 !apps/gradio/default_prompts/*.wav
+
+# Generated runtime artifacts
+outputs/

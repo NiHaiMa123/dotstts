@@ -189,6 +189,76 @@ class DotsTtsRuntime:
         )
 
     @classmethod
+    def from_pretrained_with_trainable_delta(
+        cls,
+        model_name_or_path: str,
+        trainable_model_dir: str | Path,
+        *,
+        revision: str | None = None,
+        cache_dir: str | None = None,
+        precision: str = "bfloat16",
+        optimize: bool = False,
+        max_generate_length: int = 500,
+        max_sequence_length: int = DEFAULT_MAX_SEQUENCE_LENGTH,
+        vocoder_merge_steps: int = 4,
+        warmup_on_optimize: bool = True,
+        merge_lora: bool = False,
+    ) -> DotsTtsRuntime:
+        """Load an official base model and overlay a compact LoRA training artifact."""
+        from dots_tts.models.dots_tts.config import LoraArtifactConfig
+        from dots_tts.training.checkpoint import (
+            TRAINABLE_MODEL_METADATA_FILENAME,
+            load_trainable_model_artifact,
+        )
+        from dots_tts.training.peft import configure_lora_modules, merge_lora_modules
+
+        pretrained_path = cls._resolve_pretrained_path(
+            model_name_or_path,
+            revision=revision,
+            cache_dir=cache_dir,
+        )
+        artifact_dir = Path(trainable_model_dir).expanduser().resolve()
+        metadata_path = artifact_dir / TRAINABLE_MODEL_METADATA_FILENAME
+        if not metadata_path.is_file():
+            raise FileNotFoundError(
+                f"Trainable-delta metadata is missing: {metadata_path}"
+            )
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        lora_payload = metadata.get("lora")
+        if not isinstance(lora_payload, dict):
+            raise ValueError("Trainable-delta metadata does not declare a LoRA config")
+
+        loaded_model = DotsTtsModel.from_pretrained(pretrained_path)
+        configure_lora_modules(
+            loaded_model,
+            LoraArtifactConfig.model_validate(lora_payload),
+            for_training=False,
+        )
+        load_trainable_model_artifact(loaded_model, artifact_dir)
+        merged_layer_count = 0
+        if merge_lora:
+            merged_layer_count = merge_lora_modules(loaded_model)
+        logger.info(
+            logc(
+                "runtime",
+                "Runtime trainable delta loaded: base={} artifact={} merged_lora_layers={}",
+            ),
+            pretrained_path,
+            artifact_dir,
+            merged_layer_count,
+        )
+        return cls(
+            model=loaded_model,
+            pretrained_path=pretrained_path,
+            precision=precision,
+            optimize=optimize,
+            max_generate_length=max_generate_length,
+            max_sequence_length=max_sequence_length,
+            vocoder_merge_steps=vocoder_merge_steps,
+            warmup_on_optimize=warmup_on_optimize,
+        )
+
+    @classmethod
     def _resolve_pretrained_path(
         cls,
         model_name_or_path: str,

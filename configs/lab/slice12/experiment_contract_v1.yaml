@@ -1,0 +1,60 @@
+schema_version: 1
+experiment_id: slice12_fuxuan_formal_v1
+dataset:
+  dataset_id: fuxuan
+  dataset_version: 1
+  source_manifest: data/references/fuxuan/v1/manifest.json
+  source_manifest_sha256: 1a33c738c1b807337b97eaed278aee05c1458aebc1f4d16da32ba7dee879c085
+  reference_ranking: data/reports/datasets/fuxuan_v1/slice10/final_ranking.json
+  approved_reference_count: 6
+model:
+  baseline_model_id: dots-studio/dots.tts-mf-1step
+  baseline_model_revision: 4e872aa8f47ee67887468e7494e36aad30908b1e
+  baseline_local_path: models/dots.tts-mf-1step
+  training_start_model: dots-studio/dots.tts-soar
+  training_start_local_path: pretrained_models/dots.tts-soar
+  precision: bfloat16
+  language: chinese
+  speaker_scale: 1.5
+  max_generate_length: 500
+  max_sequence_length: 2048
+evaluation:
+  sentences:
+    - id: neutral_report
+      text: 本座已经看过这份报告，结论相当明确。
+      class: neutral
+    - id: named_entity
+      text: 请把列车长和将军的消息一并告诉我。
+      class: named_entity
+    - id: long_decision
+      text: 天命不会替任何人做决定，关键在于当机立断。
+      class: long
+    - id: date_number
+      text: 七月十五日，星穹列车将在长乐天停留三小时。
+      class: date_number
+    - id: short_ack
+      text: 好的。
+      class: short
+    - id: out_of_domain
+      text: 秋水共长天一色，落霞与孤鹜齐飞。
+      class: reference_external_text
+  seeds: [20260908, 20260909]
+  matrix_policy: each approved reference x each sentence x each seed
+metrics:
+  asr_backend: faster_whisper
+  speaker_similarity: cosine
+  quality: signal_analysis_v1
+  failure_statuses: [generation_error, invalid_audio, asr_error]
+  thresholds:
+    max_failure_rate: 0.05
+    max_cer: 0.20
+    min_speaker_cosine: 0.75
+    min_quality_pass_rate: 0.50
+    max_rtf: 1.00
+    max_peak_cuda_gib: 12.0
+outputs:
+  root: data/reports/datasets/fuxuan_v1/slice12
+  baseline_manifest: data/reports/datasets/fuxuan_v1/slice12/baseline_manifest.jsonl
+  baseline_metrics: data/reports/datasets/fuxuan_v1/slice12/baseline_metrics.json
+  trained_metrics: data/reports/datasets/fuxuan_v1/slice12/trained_metrics.json
+  regression_report: data/reports/datasets/fuxuan_v1/slice12/regression_report.json

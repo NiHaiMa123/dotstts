@@ -1,0 +1,74 @@
+train_data:
+  train_audio_sample_rate: 48000
+  audio_samples_per_llm_token: 7680
+  sources:
+    - name: fuxuan_v1_train
+      weight: 1.0
+      pipeline: basic
+      adapter:
+        class_name: JsonlManifestSourceAdapter
+        params:
+          manifest_path: /workspace/data/work/slice12/container_manifests/train.jsonl
+          shuffle: true
+  num_tokens_per_epoch: 1000000
+  num_workers: 2
+  pin_memory: true
+  prefetch_factor: 2
+  max_audio_seconds_in_batch: 10.5
+  max_text_tokens_in_batch: 512
+  max_samples_per_batch: 1
+  bucketing_pool_size: 32
+
+val_data:
+  train_audio_sample_rate: 48000
+  audio_samples_per_llm_token: 7680
+  sources:
+    - name: fuxuan_v1_validation
+      weight: 1.0
+      pipeline: basic
+      adapter:
+        class_name: JsonlManifestSourceAdapter
+        params:
+          manifest_path: /workspace/data/work/slice12/container_manifests/validation.jsonl
+          shuffle: false
+  num_tokens_per_epoch: null
+  num_workers: 1
+  pin_memory: true
+  prefetch_factor: 2
+  max_audio_seconds_in_batch: 10.5
+  max_text_tokens_in_batch: 512
+  max_samples_per_batch: 1
+  bucketing_pool_size: 27
+
+train:
+  pretrained_model_path: /workspace/pretrained_models/dots.tts-soar
+  output_dir: /workspace/data/work/slice12/soar_lora_v1
+  seed: 20260908
+  learning_rate: 1.0e-4
+  cfg_droprate: 0.0
+  xvec_drop_rate: 0.2
+  weight_decay: 0.01
+  warmup_steps: 25
+  max_train_steps: 500
+  gradient_accumulation_steps: 1
+  grad_clip_norm: 1.0
+  save_interval: 100
+  max_checkpoints_to_keep: 3
+  log_interval: 5
+  eval_interval: 50
+  max_eval_batches: 27
+  run_eval_on_start: true
+  gradient_checkpointing: true
+  lora:
+    enabled: true
+    target_scope: core.velocity_field_predictor
+    target_modules: [q_proj, k_proj, v_proj, o_proj, fc1, fc2]
+    rank: 8
+    alpha: 16
+    dropout: 0.05
+    train_output_layer: true
+
+loss:
+  ce_weight: 1.0
+  fm_weight: 1.0
+  eos_weight: 1.0

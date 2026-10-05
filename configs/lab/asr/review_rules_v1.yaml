@@ -1,0 +1,21 @@
+schema_version: 1
+rules_id: fuxuan_review
+rules_version: 1
+
+# Homophone pairs observed on the 40-sample benchmark, where every ASR backend
+# and the reference agree on pronunciation but differ on spelling. Slice 6
+# concluded the audio carries no information about which spelling was intended,
+# so the reference (left element) wins and the sample needs no listening.
+# Left = reference spelling (kept); right = variant the backends produced
+# (substituted back to the left form during the check).
+homophone_pairs:
+  - [不只, 不止]
+  - [汇合, 会合]
+  - [不竟, 不尽]
+  - [事务, 事物]
+  - [当作, 当做]
+
+# Leading interjections the backends heard but the filenames omit. These are
+# NOT auto-decided: whether the interjection exists must be judged by listening,
+# so samples whose hypotheses begin with one of these only get highlighted.
+interjection_prefixes: [唉, 哎, 哼, 嗯, 唔]

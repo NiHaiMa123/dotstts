@@ -2,6 +2,7 @@ import math
 
 import torch
 import torch.nn as nn
+from torch.utils.checkpoint import checkpoint
 
 from dots_tts.modules.backbone.layers import Mlp, MultiHeadAttention
 
@@ -157,7 +158,11 @@ class DiT(nn.Module):
             )
 
         self.output_layer = FinalLayer(model_dim, out_dim)
+        self.gradient_checkpointing = False
         self.initialize_weights()
+
+    def set_gradient_checkpointing(self, enabled: bool) -> None:
+        self.gradient_checkpointing = bool(enabled)
 
     def initialize_weights(self):
         def _basic_init(module):
@@ -201,5 +206,15 @@ class DiT(nn.Module):
 
         x = self.input_layer(x)
         for block in self.blocks:
-            x = block(x, c, mask=attn_mask, **kwargs)
+            if self.gradient_checkpointing and self.training:
+                x = checkpoint(
+                    block,
+                    x,
+                    c,
+                    mask=attn_mask,
+                    use_reentrant=False,
+                    **kwargs,
+                )
+            else:
+                x = block(x, c, mask=attn_mask, **kwargs)
         return self.output_layer(x, c, **kwargs)

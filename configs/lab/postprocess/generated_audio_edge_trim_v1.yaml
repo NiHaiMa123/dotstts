@@ -1,0 +1,11 @@
+schema_version: 1
+config_id: generated_audio_edge_trim_v1
+config_version: 1
+silence_frame_ms: 20.0
+silence_hop_ms: 10.0
+silence_threshold_dbfs: -50.0
+trim_trigger_seconds: 0.5
+preserve_leading_seconds: 0.12
+preserve_trailing_seconds: 0.16
+fade_seconds: 0.005
+output_subtype: PCM_24
