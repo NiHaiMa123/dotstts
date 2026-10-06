@@ -1,8 +1,8 @@
 schema_version: 1
-profile_version: 1
+profile_version: 2
 model_id: shouanren_step500_v1
 display_name: 守岸人 · Step 500
-description: SOAR + 守岸人 v2 数据集（256 条人工筛选）Step-500 LoRA；Euler 16 步，目标响度 -26 LUFS 后期
+description: SOAR + 守岸人 v2 数据集（256 条人工筛选）Step-500 LoRA；盲听 v1/v2 双轮验证的最优组合（R1 参考）；Euler 16 步，目标响度 -26 LUFS 后期
 base_model:
   path: pretrained_models/dots.tts-soar
   revision: 2f9b3e18d70d670d4c701da2dc55ded5755815ce
@@ -13,9 +13,9 @@ adapter:
   weights_sha256: 806a3823f39ff46f449600f755f3b1f7ccfb269cffa1afee3a31fcdb8de365a9
   metadata_sha256: fbd3501c70b61015c04edb72b45bc5884d8f1948a65f28ad9c2af4f7d15f6105
 prompt:
-  audio_path: data/work/standardized/56/56784f46414575ff5789a2857fcb764ab5dcad40ce7522790997cb9d889418cd.wav
-  audio_sha256: da7e86684a7b397c86e73ace441970f8aae9f15ad9fab673c828813f3a0fd01e
-  text: 欢迎回到，这片属于你的海岸。
+  audio_path: data/inbox/守岸人/中立_neutral/【中立_neutral】或许这就是泰缇斯系统冒风险也要将悲鸣与噬亡星结合的原因…….wav
+  audio_sha256: d18a5ac54a2b9d6d7b59d37ad7fb6ffc1f3c44fa8c4262c8f684e589093f9556
+  text: 或许这就是泰缇斯系统冒风险也要将悲鸣与噬亡星结合的原因……
 runtime:
   precision: bfloat16
   optimize: false

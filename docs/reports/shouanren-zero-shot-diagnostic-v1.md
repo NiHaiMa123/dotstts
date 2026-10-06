@@ -75,3 +75,35 @@ prompt_text 均只含实际台词，未混入 `【中立_neutral】` 文件名�
 
 - MF-1step 在本机 bf16 下 RTF 6-33（远慢于 SOAR/MF），未查明原因，不影响样本有效性
 - x-vector-only 路径目前只在诊断脚本直接调用 runtime；生产 `run_batch`/`voice_profile` 尚不支持 `prompt_text=None`，如要采用需后续工程接入
+
+## 盲听结果（用户已提交）
+
+**重要**：用户评分约定 `沙` 分数越高=越干净（1=最沙）。以下按此方向解读。
+
+### v1（15 条，listen/shouanren_blind_v1.json）
+
+- **参考音频决定"像不像"**：所有 R1 条件的 case 像=3-4，所有 R2 条件像=1，R3/xvec 像=1。R2（3.4s 标准化短 clip）作为参考完全失败，应退役。
+- **最沙的两条都是 MF-1step+R1+T1**（O-R1-T1 与其 WebUI 成品，干净分=1）。mf-1step 的 1-step 采样存在固有沙哑伪影，与 flatness 指标（0.227/0.228，其实并不高）不一致——**谱平坦度与主观"沙"不相关**，不能单独作为判据。
+- **SOAR 零样本+R1（S-R1-T1）像=4/干净=5/自然=4**，客观 flatness 0.274 排倒数但主观干净——再次证明平坦度不能当结论。
+- **xvec-only（C2）像=1**：声纹向量保留了音色频率特征，但丢了守岸人的咬字韵律，主观上"不像"。该方向证伪。
+- MF(NFE4) 与 mf-1step 在 R1 上各有"像4/干净5"的样本，MF 质量不差且 RTF 快 30 倍。
+
+### v2 补充（6 条，listen_v2/shouanren_blind_v2.json）
+
+针对"LoRA+R1"未覆盖的空白补测 3 条 + 3 条 v1 锚点重匿名：
+
+| 匿名 | case | 像 | 干净 | 自然 |
+|---|---|---|---|---|
+| B01 | SL-R1-T2 | 5 | 5 | 5 |
+| B02 | O-R1-T1（锚点） | 5 | 1 | 5 |
+| B03 | SL-R1-T1 | 5 | 5 | 4 |
+| B04 | S-R1-T1（锚点） | 5 | 5 | 5 |
+| B05 | SL-R1-long（27s 长文） | 5 | 4 | 5 |
+| B06 | M-R1-T1（锚点） | 5 | 5 | 5 |
+
+锚点复现稳定（O-R1-T1 两轮均干净=1）。**最终结论：SOAR + Step-500 LoRA + R1 参考为最优组合**，短句/软语气/长文（干净 4-5）均达标；之前"又沙哑又不像"的成品病根是 R2 参考而非 LoRA 或底模。
+
+### 已落地的改动
+
+- `configs/voices/shouanren_step500_v1.yaml`：prompt 由 R2（标准化短 clip）换为 R1（原始长句 + 完整 transcript），profile_version → 2
+- `configs/voices/shouanren_mf_zero_v1.yaml`：标注为实验档案，不建议日常使用

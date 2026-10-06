@@ -1,8 +1,8 @@
 schema_version: 1
 profile_version: 1
 model_id: shouanren_mf_zero_v1
-display_name: 守岸人 · MF 零样本
-description: dots.tts-mf-1step 零样本克隆（无 LoRA），1 步生成，高频噪声低于 SOAR；目标响度 -26 LUFS 后期
+display_name: 守岸人 · MF 零样本（实验）
+description: dots.tts-mf-1step 零样本克隆（无 LoRA）；盲听显示 1-step 采样有固有沙哑伪影，仅作对照保留，不建议日常使用
 base_model:
   path: models/dots.tts-mf-1step
 prompt:
