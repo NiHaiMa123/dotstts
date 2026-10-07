@@ -70,3 +70,39 @@ voiced 帧规则：n_fft=2048 hop=512 @48kHz，yin f0∈80–400Hz 且 rms>40 �
 - `scripts/diagnose_suoming_grit.py`、`src/dots_tts_lab/grit_diagnostics.py`、`tests/test_grit_diagnostics.py`
 
 复现：`python scripts/diagnose_suoming_grit.py`（已生成的 wav 自动复用，幂等重跑只补缺失 case）。
+
+## 追加实验：latent 域归因（第二轮）
+
+在 `stream_step`/`decode_latents` 挂钩捕获生成 latent，对比 base / LoRA / 真实音频编码：
+
+| 信号 | 8–12k flatness | 说明 |
+|---|---:|---|
+| 真实参考音频（原始 wav） | 0.43 | 真声基线 |
+| 真实音频 AudioVAE 往返（encode→decode） | **0.51** | vocoder 对真实高频纹理的渲染本身就糙 |
+| Base 生成 | **0.33** | 过度平滑——比 vocoder 能表达的真实度还低 |
+| LoRA 生成（各 checkpoint/scale/cfg/步数） | ~0.50 | ≈ 真实音频往返水平 |
+
+latent 统计（`outputs/diagnostics/suoming_grit_v1/latents/`）：
+
+- base/LoRA 生成 latent 的 per-channel std、frame-delta RMS、时间维高频比、通道相关——**全部无显著差异**
+- latent 时域平滑（med3/med5/gauss）后解码：LoRA flatness 0.49→0.49~0.55，base 0.33→0.32~0.37——**时间平滑无效，粗糙在频谱结构不在时序**
+- 离流形检测（生成latent→decode→re-encode 自洽性）：base 与 LoRA 同为 MSE 0.205 / cos 0.994（真实音频 0.090/0.997）——**两者同等轻度离流形，LoRA 并非更"歪"**
+- 只载 LoRA 权重、剔除训练过的 output_layer：flatness 仍 0.506——**output_layer 训练无罪**
+
+### 修正后的根因结论
+
+磨砂不是"LoRA 注入了噪声"或"vocoder 坏了"。机制是：
+
+1. AudioVAE 对**真实音频的高频纹理**渲染本底就是 ~0.51 flatness 的颗粒感（参考音频往返实测）
+2. base DiT 生成的 latent 是"先验平滑"的（0.33）——干净但不真实，是欠拟合方向
+3. LoRA 把 latent 拉向真实语音分布（≈0.50），**忠实度提高的同时带回了 vocoder 渲染真实纹理时的固有颗粒**
+4. v11 后处理链的 6kHz 空气架把这层颗粒又抬了 ~4dB 到可听阈上
+
+即：磨砂 = 角色真实高频纹理 × vocoder 渲染上限 × 后处理放大。**它是"像锁暝"的伴生成本**，base 的干净是过度平滑换来的，并不更"对"。
+
+### 剩余可行方向（按代价排序）
+
+1. **听 `vocoder_roundtrip.wav`**：若真声往返也糙得可闻，则磨砂是 AudioVAE 对本音色的渲染上限，只剩后处理遮羞
+2. **v12 最小链**：低切+deesser+响度校准，把 HF 增益全撤，磨砂退回掩蔽阈下（代价：亮度回到 v5 之前）
+3. **频谱降噪器**（harmonic/noise 分解后只压非谐波成分）：之前 STFT 掩蔽原型无效，需要更强的疏化/维纳方案，风险是洗死呼吸细节
+4. **训练侧**：训练数据本身 0.40 不算脏；cfg_droprate=0、步数、target_modules 均已排除——重训预期收益低
