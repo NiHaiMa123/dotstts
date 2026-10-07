@@ -1,0 +1,12 @@
+schema_version: 1
+calibration_id: suoming_dataset_thresholds
+calibration_version: 1
+dataset_config_path: E:\project\dotstts\configs\lab\datasets\suoming_v1.yaml
+dataset_config_sha256: 163d6a067adfea67f1e4d81adb0a0a50004692b72ba2ff8edfec0961d7cff653
+candidate_snapshot_path: E:\project\dotstts\data\reports\datasets\suoming_v1\audit\candidate_snapshot.json
+candidate_snapshot_sha256: 06e27fb1b6baa71105e33a236c9d31551e426eb4c968316f8e0a7fccefb953f6
+threshold_rules:
+  text: max_observed_pair_similarity_plus_margin
+  acoustic: max_background_cosine_plus_margin
+  speaker: median_minus_4.5_robust_sigma_lower_bound
+output_path: E:\project\dotstts\data\reports\datasets\suoming_v1\analysis\threshold_calibration_v1.json

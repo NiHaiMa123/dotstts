@@ -9,7 +9,8 @@ import numpy as np
 import pyloudnorm as pyln
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, model_validator
-from scipy.signal import butter, sosfilt, sosfiltfilt
+from scipy.ndimage import median_filter
+from scipy.signal import butter, fftconvolve, istft, sosfilt, sosfiltfilt, stft
 
 from dots_tts_lab.standardization import true_peak_estimate
 
@@ -105,12 +106,105 @@ class DynamicEqBandConfig(DeesserConfig):
     band_id: str = Field(pattern=r"^[a-z][a-z0-9_.-]{2,63}$")
 
 
+class ExciterConfig(BaseModel):
+    """Optional harmonic exciter for high-frequency detail synthesis.
+
+    A source band above ``source_low_hz`` is driven through an asymmetric tanh
+    (``bias`` introduces even harmonics alongside odd ones), band-limited to
+    the ``harmonic_low_hz``–``harmonic_high_hz`` octave region, and mixed back
+    at ``mix`` relative to the source band energy — synthesized sparkle rather
+    than amplified noise floor.
+    """
+
+    model_config = ConfigDict(extra="forbid", frozen=True, strict=True)
+
+    source_low_hz: float = Field(gt=500.0, le=12_000.0)
+    drive: float = Field(gt=0.0, le=20.0)
+    bias: float = Field(ge=0.0, le=1.0)
+    harmonic_low_hz: float = Field(gt=500.0, le=20_000.0)
+    harmonic_high_hz: float = Field(gt=500.0, le=22_000.0)
+    mix: float = Field(ge=0.0, le=0.5)
+
+    @model_validator(mode="after")
+    def validate_band(self) -> ExciterConfig:
+        if self.harmonic_high_hz <= self.harmonic_low_hz:
+            raise ValueError("exciter harmonic_high_hz must exceed harmonic_low_hz")
+        if self.harmonic_low_hz < self.source_low_hz:
+            raise ValueError("exciter harmonic band must sit above source_low_hz")
+        return self
+
+
+class AmbienceConfig(BaseModel):
+    """Optional small-room ambience for de-closening a dry take.
+
+    A synthetic exponentially-decaying noise impulse response is band-limited
+    to ``band_low_hz``–``band_high_hz`` (no low-end reverb mud), delayed by
+    ``pre_delay_ms`` so the direct voice stays forward, convolved, and mixed
+    back at ``mix`` relative to dry energy. Adds depth, not audible echo.
+    """
+
+    model_config = ConfigDict(extra="forbid", frozen=True, strict=True)
+
+    rt60_ms: float = Field(gt=40.0, le=800.0)
+    pre_delay_ms: float = Field(ge=0.0, le=80.0)
+    band_low_hz: float = Field(gt=80.0, le=2_000.0)
+    band_high_hz: float = Field(gt=2_000.0, le=20_000.0)
+    mix: float = Field(ge=0.0, le=0.5)
+    tail: bool = True
+
+    @model_validator(mode="after")
+    def validate_band(self) -> AmbienceConfig:
+        if self.band_high_hz <= self.band_low_hz:
+            raise ValueError("ambience band_high_hz must exceed band_low_hz")
+        return self
+
+
+class SpectralStabilizerConfig(BaseModel):
+    """Optional temporal spectral stabilizer for frame-to-frame envelope warble.
+
+    Neural vocoders can emit a per-frame spectral wobble perceived as a
+    gritty/rough texture ("磨砂感") that static EQ cannot reach. This block
+    median-filters each STFT magnitude band across a short window — the median
+    preserves consonant edges while damping sub-100 ms envelope flutter — then
+    resynthesizes with the original phase.
+    """
+
+    model_config = ConfigDict(extra="forbid", frozen=True, strict=True)
+
+    low_hz: float = Field(gt=200.0, le=4_000.0)
+    high_hz: float = Field(gt=4_000.0, le=20_000.0)
+    frames: int = Field(ge=3, le=15)
+    strength: float = Field(gt=0.0, le=1.0)
+
+    @model_validator(mode="after")
+    def validate_band(self) -> "SpectralStabilizerConfig":
+        if self.high_hz <= self.low_hz:
+            raise ValueError("stabilizer high_hz must exceed low_hz")
+        if self.frames % 2 == 0:
+            raise ValueError("stabilizer frames must be odd")
+        return self
+
+
+class PromptLoudnessCalibrationConfig(BaseModel):
+    """Anchor batch outputs to the reference prompt audio's integrated loudness.
+
+    The batch runner renders the prompt text once, measures the polished probe
+    against the reference file, and applies the resulting fixed gain to every
+    output so per-line dynamics are preserved.
+    """
+
+    model_config = ConfigDict(extra="forbid", frozen=True, strict=True)
+
+    maximum_gain_db: float = Field(ge=0.0, le=12.0)
+
+
 class VoicePolishConfig(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True, strict=True)
 
     schema_version: Literal[1]
     config_id: str = Field(pattern=r"^[a-z][a-z0-9_.-]{2,63}$")
     config_version: int = Field(ge=1)
+    low_cut_hz: float | None = Field(default=None, ge=20.0, le=500.0)
     brightness_crossover_hz: float = Field(gt=20.0, le=20_000.0)
     brightness_gain_db: float = Field(ge=-6.0, le=6.0)
     body_eq: ParametricEqBand
@@ -120,6 +214,10 @@ class VoicePolishConfig(BaseModel):
     deesser: DeesserConfig
     match_input_loudness: bool
     target_loudness_lufs: float | None = Field(default=None, ge=-30.0, le=-10.0)
+    prompt_loudness_calibration: PromptLoudnessCalibrationConfig | None = None
+    exciter: ExciterConfig | None = None
+    ambience: AmbienceConfig | None = None
+    stabilizer: SpectralStabilizerConfig | None = None
     maximum_loudness_adjustment_db: float = Field(ge=0.0, le=6.0)
     true_peak_ceiling_dbtp: float = Field(ge=-12.0, le=0.0)
     true_peak_oversample: int = Field(ge=1, le=16)
@@ -130,6 +228,10 @@ class VoicePolishConfig(BaseModel):
             raise ValueError(
                 "target_loudness_lufs cannot be set when match_input_loudness is true"
             )
+        if self.prompt_loudness_calibration is not None and self.match_input_loudness:
+            raise ValueError(
+                "prompt_loudness_calibration cannot be combined with match_input_loudness"
+            )
         return self
 
     def canonical_sha256(self) -> str:
@@ -139,6 +241,16 @@ class VoicePolishConfig(BaseModel):
             values.pop("dynamic_eq_bands")
         if values["target_loudness_lufs"] is None:
             values.pop("target_loudness_lufs")
+        if values["prompt_loudness_calibration"] is None:
+            values.pop("prompt_loudness_calibration")
+        if values["low_cut_hz"] is None:
+            values.pop("low_cut_hz")
+        if values["exciter"] is None:
+            values.pop("exciter")
+        if values["ambience"] is None:
+            values.pop("ambience")
+        if values["stabilizer"] is None:
+            values.pop("stabilizer")
         payload = json.dumps(
             values,
             ensure_ascii=False,
@@ -181,6 +293,22 @@ def _integrated_loudness(audio: np.ndarray, sample_rate: int) -> float | None:
     except (ValueError, OverflowError):
         return None
     return value if np.isfinite(value) else None
+
+
+def measure_integrated_loudness(
+    audio: np.ndarray,
+    sample_rate: int,
+) -> float | None:
+    """Integrated loudness (LUFS) of mono or stereo audio; None if unmeasurable."""
+    values = np.asarray(audio, dtype=np.float64)
+    if values.ndim == 2:
+        values = values.mean(axis=1)
+    values = values.squeeze()
+    if values.ndim != 1 or values.size == 0 or not np.all(np.isfinite(values)):
+        return None
+    if sample_rate <= 0:
+        return None
+    return _integrated_loudness(values, sample_rate)
 
 
 def _brightness_unlimited(
@@ -366,12 +494,140 @@ def _deess(
     }
 
 
+def _excite(
+    audio: np.ndarray,
+    sample_rate: int,
+    config: ExciterConfig,
+) -> tuple[np.ndarray, dict[str, float]]:
+    if config.source_low_hz >= sample_rate / 2 or config.harmonic_high_hz >= sample_rate / 2:
+        raise ValueError("exciter bands must sit below the Nyquist frequency")
+    source = sosfiltfilt(
+        butter(4, config.source_low_hz, btype="highpass", fs=sample_rate, output="sos"),
+        audio,
+    )
+    source_rms = float(np.sqrt(np.mean(source**2)))
+    if source_rms <= 0.0:
+        return audio, {"mix": config.mix, "harmonic_level_dbfs": None}
+    driven = (
+        np.tanh(config.drive * (source / source_rms) + config.bias)
+        - np.tanh(config.bias)
+    )
+    harmonics = sosfiltfilt(
+        butter(
+            2,
+            [config.harmonic_low_hz, config.harmonic_high_hz],
+            btype="bandpass",
+            fs=sample_rate,
+            output="sos",
+        ),
+        driven,
+    )
+    harmonic_rms = float(np.sqrt(np.mean(harmonics**2)))
+    if harmonic_rms <= 0.0:
+        return audio, {"mix": config.mix, "harmonic_level_dbfs": None}
+    output = audio + config.mix * source_rms * (harmonics / harmonic_rms)
+    return output, {
+        "mix": config.mix,
+        "harmonic_level_dbfs": _db(config.mix * source_rms),
+    }
+
+
+def _ambience(
+    audio: np.ndarray,
+    sample_rate: int,
+    config: AmbienceConfig,
+) -> tuple[np.ndarray, dict[str, Any]]:
+    if config.band_high_hz >= sample_rate / 2:
+        raise ValueError("ambience band_high_hz must be below the Nyquist frequency")
+    tail_samples = int(round(config.rt60_ms / 1000.0 * sample_rate))
+    delay_samples = int(round(config.pre_delay_ms / 1000.0 * sample_rate))
+    rng = np.random.default_rng(20261007)
+    ir = rng.standard_normal(tail_samples) * np.exp(
+        -6.907755 * np.arange(tail_samples) / max(tail_samples - 1, 1)
+    )
+    ir = sosfiltfilt(
+        butter(
+            2,
+            [config.band_low_hz, config.band_high_hz],
+            btype="bandpass",
+            fs=sample_rate,
+            output="sos",
+        ),
+        ir,
+    )
+    energy = float(np.sqrt(np.sum(ir**2)))
+    if energy <= 0.0:
+        return audio, {"mix": config.mix, "tail_samples_added": 0}
+    ir = np.concatenate((np.zeros(delay_samples), ir / energy))
+    wet = fftconvolve(audio, ir)
+    if config.tail:
+        output_length = audio.size + delay_samples + tail_samples - 1
+    else:
+        output_length = audio.size
+    output = np.pad(audio, (0, output_length - audio.size))
+    output += config.mix * wet[:output_length]
+    return output, {
+        "mix": config.mix,
+        "rt60_ms": config.rt60_ms,
+        "tail_samples_added": output_length - audio.size,
+    }
+
+
+def _spectral_stabilize(
+    audio: np.ndarray,
+    sample_rate: int,
+    config: SpectralStabilizerConfig,
+) -> tuple[np.ndarray, dict[str, Any]]:
+    if config.high_hz >= sample_rate / 2:
+        raise ValueError("stabilizer high_hz must be below the Nyquist frequency")
+    nperseg = 2048
+    hop = nperseg // 4
+    _, _, z = stft(
+        audio,
+        fs=sample_rate,
+        window="hann",
+        nperseg=nperseg,
+        noverlap=nperseg - hop,
+        boundary="zeros",
+        padded=True,
+    )
+    magnitude = np.abs(z)
+    phase = z / np.maximum(magnitude, 1e-12)
+    freqs = np.fft.rfftfreq(nperseg, 1.0 / sample_rate)
+    band = (freqs >= config.low_hz) & (freqs <= config.high_hz)
+    log_mag = np.log(magnitude + 1e-12)
+    smoothed = median_filter(log_mag, size=(1, config.frames), mode="reflect")
+    blended = np.where(
+        band[:, None],
+        (1.0 - config.strength) * log_mag + config.strength * smoothed,
+        log_mag,
+    )
+    _, rebuilt = istft(
+        np.exp(blended) * phase,
+        fs=sample_rate,
+        window="hann",
+        nperseg=nperseg,
+        noverlap=nperseg - hop,
+        boundary=True,
+    )
+    output = np.zeros(audio.size)
+    take = min(audio.size, rebuilt.size)
+    output[:take] = rebuilt[:take]
+    return output, {
+        "low_hz": config.low_hz,
+        "high_hz": config.high_hz,
+        "frames": config.frames,
+        "strength": config.strength,
+    }
+
+
 def apply_fuxuan_voice_polish(
     audio: np.ndarray,
     sample_rate: int,
     config: VoicePolishConfig | None = None,
     *,
     include_brightness: bool = True,
+    calibration_gain_db: float | None = None,
 ) -> tuple[np.ndarray, dict[str, Any]]:
     """Apply the versioned near-field voice chain used by Fuxuan final outputs."""
     if sample_rate <= 0:
@@ -382,6 +638,24 @@ def apply_fuxuan_voice_polish(
     output = _mono_audio(audio).copy()
     input_true_peak = true_peak_estimate(output, resolved.true_peak_oversample)
     input_loudness = _integrated_loudness(output, sample_rate)
+    if resolved.low_cut_hz is not None:
+        if resolved.low_cut_hz >= sample_rate / 2:
+            raise ValueError("low_cut_hz must be below the Nyquist frequency")
+        output = sosfiltfilt(
+            butter(
+                2,
+                resolved.low_cut_hz,
+                btype="highpass",
+                fs=sample_rate,
+                output="sos",
+            ),
+            output,
+        )
+    stabilizer_details: dict[str, Any] = {"strength": 0.0}
+    if resolved.stabilizer is not None:
+        output, stabilizer_details = _spectral_stabilize(
+            output, sample_rate, resolved.stabilizer
+        )
     if include_brightness:
         output = _brightness_unlimited(
             output,
@@ -415,14 +689,24 @@ def apply_fuxuan_voice_polish(
                 **attenuation,
             }
         )
+    exciter_details: dict[str, Any] = {"mix": 0.0, "harmonic_level_dbfs": None}
+    if resolved.exciter is not None:
+        output, exciter_details = _excite(output, sample_rate, resolved.exciter)
     output, deesser = _deess(output, sample_rate, resolved.deesser)
+    ambience_details: dict[str, Any] = {"mix": 0.0, "tail_samples_added": 0}
+    if resolved.ambience is not None:
+        output, ambience_details = _ambience(output, sample_rate, resolved.ambience)
 
     loudness_before_matching = _integrated_loudness(output, sample_rate)
     loudness_adjustment_db = 0.0
     loudness_target = (
         input_loudness if resolved.match_input_loudness else resolved.target_loudness_lufs
     )
-    if loudness_target is not None and loudness_before_matching is not None:
+    if calibration_gain_db is not None:
+        loudness_adjustment_db = float(calibration_gain_db)
+        output *= 10.0 ** (loudness_adjustment_db / 20.0)
+        loudness_mode = "prompt_calibrated"
+    elif loudness_target is not None and loudness_before_matching is not None:
         requested_adjustment = loudness_target - loudness_before_matching
         loudness_adjustment_db = float(
             np.clip(
@@ -432,6 +716,11 @@ def apply_fuxuan_voice_polish(
             )
         )
         output *= 10.0 ** (loudness_adjustment_db / 20.0)
+        loudness_mode = (
+            "match_input" if resolved.match_input_loudness else "target_lufs"
+        )
+    else:
+        loudness_mode = "none"
 
     peak_before_safety = true_peak_estimate(output, resolved.true_peak_oversample)
     ceiling = 10.0 ** (resolved.true_peak_ceiling_dbtp / 20.0)
@@ -448,6 +737,7 @@ def apply_fuxuan_voice_polish(
         "brightness_profile": (
             DEFAULT_BRIGHTNESS_PROFILE if include_brightness else "already_applied"
         ),
+        "low_cut_hz": resolved.low_cut_hz,
         "brightness_crossover_hz": resolved.brightness_crossover_hz,
         "brightness_gain_db": resolved.brightness_gain_db,
         "body_eq": resolved.body_eq.model_dump(mode="json"),
@@ -457,12 +747,17 @@ def apply_fuxuan_voice_polish(
             **compression,
         },
         "dynamic_eq_bands": dynamic_eq,
+        "exciter": exciter_details,
+        "ambience": ambience_details,
+        "stabilizer": stabilizer_details,
         "deesser": {
             **resolved.deesser.model_dump(mode="json"),
             **deesser,
         },
         "match_input_loudness": resolved.match_input_loudness,
         "target_loudness_lufs": resolved.target_loudness_lufs,
+        "loudness_mode": loudness_mode,
+        "calibration_gain_db": calibration_gain_db,
         "input_loudness_lufs": input_loudness,
         "pre_match_loudness_lufs": loudness_before_matching,
         "maximum_loudness_adjustment_db": resolved.maximum_loudness_adjustment_db,

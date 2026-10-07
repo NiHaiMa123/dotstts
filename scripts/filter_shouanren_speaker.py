@@ -9,6 +9,7 @@ import uuid
 from pathlib import Path
 
 import numpy as np
+import soundfile as sf
 from sklearn.cluster import AgglomerativeClustering
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
@@ -39,6 +40,13 @@ def _load_candidates(speaker_id: str) -> list[dict]:
             raise FileNotFoundError(
                 f"standardized audio missing: {audio_path}"
             )
+        audio, sr = sf.read(audio_path)
+        if float(np.sqrt(np.mean(np.asarray(audio) ** 2))) < 1e-5:
+            print(
+                f"skip silent asset {asset['asset_sha256'][:12]} "
+                f"{asset['source_relative_path']}"
+            )
+            continue
         candidates.append(
             {
                 "asset_sha256": asset["asset_sha256"],

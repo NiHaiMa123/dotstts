@@ -16,6 +16,7 @@ from dots_tts_lab.postprocess import (
     apply_fuxuan_voice_polish,
     load_edge_trim_config,
     load_voice_polish_config,
+    measure_integrated_loudness,
     safe_edge_trim,
 )
 
@@ -41,6 +42,10 @@ DEFAULT_NUM_STEPS = 16
 
 _SENTENCE_PATTERN = re.compile(r".+?(?:[。！？!?；;]+[”’」』）》】]*|$)")
 _SOFT_BREAKS = "，、,：:"
+_QUESTION_EMPHASIS_PATTERN = re.compile(r"([？?])[！!]+")
+_FULLWIDTH_EMPHASIS_PATTERN = re.compile(r"！+")
+_HALFWIDTH_EMPHASIS_PATTERN = re.compile(r"!+")
+_BREAK_RUN_PATTERN = re.compile(r"[，。][，。,.]*")
 
 ProgressCallback = Callable[[dict[str, Any]], None]
 CancelCallback = Callable[[], bool]
@@ -95,6 +100,17 @@ def split_text(text: str, *, max_chars: int = 120) -> list[str]:
     return segments
 
 
+def soften_emphasis_punctuation(text: str) -> str:
+    """Demote exclamation marks to flat periods so emotive prosody cues are removed."""
+    softened = _QUESTION_EMPHASIS_PATTERN.sub(r"\1", text)
+    softened = _FULLWIDTH_EMPHASIS_PATTERN.sub("。", softened)
+    softened = _HALFWIDTH_EMPHASIS_PATTERN.sub(".", softened)
+    return _BREAK_RUN_PATTERN.sub(
+        lambda match: "。" if "。" in match.group(0) else match.group(0)[0],
+        softened,
+    )
+
+
 def discover_text_files(input_dir: Path) -> list[Path]:
     if not input_dir.is_dir():
         raise FileNotFoundError(f"Input directory does not exist: {input_dir}")
@@ -136,6 +152,7 @@ def render_segments(
     language: str = "chinese",
     template_name: str = "tts",
     normalize_text: bool = False,
+    soften_emphasis: bool = False,
     speaker_scale: float = 1.5,
     ode_method: str = "euler",
     guidance_scale: float = 1.2,
@@ -168,6 +185,8 @@ def render_segments(
             text=segment,
         )
         seed_everything(base_seed + index)
+        if soften_emphasis:
+            segment = soften_emphasis_punctuation(segment)
         result = runtime.generate(
             text=segment,
             prompt_audio_path=str(resolved_prompt_audio),
@@ -211,6 +230,103 @@ def render_segments(
     return np.concatenate(parts), sample_rate
 
 
+def _prompt_reference_loudness(prompt_audio_path: str | Path) -> float | None:
+    path = Path(prompt_audio_path).expanduser().resolve()
+    if not path.is_file():
+        return None
+    try:
+        audio, sample_rate = sf.read(str(path), dtype="float64", always_2d=True)
+    except Exception:
+        return None
+    return measure_integrated_loudness(audio, sample_rate)
+
+
+def _calibrate_prompt_loudness(
+    runtime: Any,
+    *,
+    prompt_audio_path: str | Path,
+    prompt_text: str,
+    voice_polish_config: VoicePolishConfig,
+    edge_trim_config: EdgeTrimConfig,
+    base_seed: int,
+    pause_ms: int,
+    max_chars: int,
+    num_steps: int,
+    language: str,
+    template_name: str,
+    normalize_text: bool,
+    soften_emphasis: bool,
+    speaker_scale: float,
+    ode_method: str,
+    guidance_scale: float,
+    cancelled: CancelCallback | None,
+) -> tuple[float | None, dict[str, Any]]:
+    """Measure how far the model's polished prompt render sits from the reference.
+
+    Returns the fixed gain that anchors every output to the reference loudness,
+    or None when calibration is unavailable and the configured loudness mode
+    should run instead.
+    """
+    calibration = voice_polish_config.prompt_loudness_calibration
+    report: dict[str, Any] = {"enabled": calibration is not None, "status": "disabled"}
+    if calibration is None:
+        return None, report
+    report["maximum_gain_db"] = calibration.maximum_gain_db
+    reference_lufs = _prompt_reference_loudness(prompt_audio_path)
+    report["reference_lufs"] = reference_lufs
+    if reference_lufs is None:
+        report["status"] = "reference_unavailable"
+        return None, report
+    try:
+        probe_segments = split_text(prompt_text, max_chars=max_chars)
+        probe_audio, probe_rate = render_segments(
+            runtime,
+            probe_segments,
+            edge_trim_config=edge_trim_config,
+            base_seed=base_seed,
+            pause_ms=pause_ms,
+            num_steps=num_steps,
+            prompt_audio_path=prompt_audio_path,
+            prompt_text=prompt_text,
+            language=language,
+            template_name=template_name,
+            normalize_text=normalize_text,
+            soften_emphasis=soften_emphasis,
+            speaker_scale=speaker_scale,
+            ode_method=ode_method,
+            guidance_scale=guidance_scale,
+            cancelled=cancelled,
+        )
+        polished_probe, _ = apply_fuxuan_voice_polish(
+            probe_audio,
+            probe_rate,
+            voice_polish_config,
+            calibration_gain_db=0.0,
+        )
+    except BatchCancelled:
+        raise
+    except Exception:
+        report["status"] = "calibration_error"
+        return None, report
+    probe_lufs = measure_integrated_loudness(polished_probe, probe_rate)
+    report["probe_lufs"] = probe_lufs
+    if probe_lufs is None:
+        report["status"] = "probe_unmeasurable"
+        return None, report
+    requested_gain_db = reference_lufs - probe_lufs
+    gain_db = float(
+        np.clip(
+            requested_gain_db,
+            -calibration.maximum_gain_db,
+            calibration.maximum_gain_db,
+        )
+    )
+    report["status"] = "ok"
+    report["requested_gain_db"] = requested_gain_db
+    report["calibration_gain_db"] = gain_db
+    return gain_db, report
+
+
 def write_final_audio(path: Path, audio: np.ndarray, sample_rate: int) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     partial = path.with_name(f".{path.stem}.partial.wav")
@@ -237,6 +353,7 @@ def run_batch(
     language: str = "chinese",
     template_name: str = "tts",
     normalize_text: bool = False,
+    soften_emphasis: bool = False,
     speaker_scale: float = 1.5,
     ode_method: str = "euler",
     guidance_scale: float = 1.2,
@@ -266,6 +383,7 @@ def run_batch(
             "language": language,
             "template_name": template_name,
             "normalize_text": normalize_text,
+            "soften_emphasis": soften_emphasis,
             "speaker_scale": speaker_scale,
             "ode_method": ode_method,
             "guidance_scale": guidance_scale,
@@ -276,6 +394,28 @@ def run_batch(
         stage="discovered",
         file_count=len(text_files),
     )
+    if resolved_voice_polish.prompt_loudness_calibration is not None:
+        _report_progress(progress_callback, stage="calibrating_loudness")
+    calibration_gain_db, calibration_report = _calibrate_prompt_loudness(
+        runtime,
+        prompt_audio_path=prompt_audio_path,
+        prompt_text=prompt_text,
+        voice_polish_config=resolved_voice_polish,
+        edge_trim_config=edge_trim_config,
+        base_seed=base_seed,
+        pause_ms=pause_ms,
+        max_chars=max_chars,
+        num_steps=num_steps,
+        language=language,
+        template_name=template_name,
+        normalize_text=normalize_text,
+        soften_emphasis=soften_emphasis,
+        speaker_scale=speaker_scale,
+        ode_method=ode_method,
+        guidance_scale=guidance_scale,
+        cancelled=cancelled,
+    )
+    summary["loudness_calibration"] = calibration_report
     for file_index, text_path in enumerate(text_files, start=1):
         _raise_if_cancelled(cancelled)
         relative = text_path.relative_to(input_dir)
@@ -323,6 +463,7 @@ def run_batch(
                 language=language,
                 template_name=template_name,
                 normalize_text=normalize_text,
+                soften_emphasis=soften_emphasis,
                 speaker_scale=speaker_scale,
                 ode_method=ode_method,
                 guidance_scale=guidance_scale,
@@ -341,6 +482,7 @@ def run_batch(
                 audio,
                 sample_rate,
                 resolved_voice_polish,
+                calibration_gain_db=calibration_gain_db,
             )
             write_final_audio(output_path, audio, sample_rate)
             summary["generated"].append(
@@ -428,6 +570,7 @@ def main() -> int:
     parser.add_argument("--pause-ms", type=int, default=250)
     parser.add_argument("--max-chars", type=int, default=120)
     parser.add_argument("--num-steps", type=int, default=DEFAULT_NUM_STEPS)
+    parser.add_argument("--soften-emphasis", action="store_true")
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
 
@@ -465,6 +608,7 @@ def main() -> int:
         pause_ms=args.pause_ms,
         max_chars=args.max_chars,
         num_steps=args.num_steps,
+        soften_emphasis=args.soften_emphasis,
         force=args.force,
     )
     summary["status"] = "failed" if summary["errors"] else "succeeded"

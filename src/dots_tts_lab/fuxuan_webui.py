@@ -444,6 +444,7 @@ class FuxuanWebApplication:
                 language=profile.generation.language,
                 template_name=profile.generation.template_name,
                 normalize_text=profile.generation.normalize_text,
+                soften_emphasis=profile.generation.soften_emphasis,
                 speaker_scale=profile.generation.speaker_scale,
                 ode_method=profile.generation.ode_method,
                 guidance_scale=profile.generation.guidance_scale,

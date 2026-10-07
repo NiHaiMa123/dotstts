@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 import time
+from collections import OrderedDict
 from pathlib import Path
 from typing import Any, Iterator, TypedDict
 
@@ -107,6 +109,12 @@ class DotsTtsRuntime:
         self.model.core.to(dtype=target_dtype)
         self.model = self.model.to(self.device).eval()
         self.optimize = bool(optimize)
+        if self.optimize and self.device.type == "cuda" and sys.platform == "win32":
+            # Inductor's static CUDA launcher overflows C long on Windows.
+            import torch._inductor.config as _inductor_config
+
+            if hasattr(_inductor_config, "use_static_cuda_launcher"):
+                _inductor_config.use_static_cuda_launcher = False
         self.max_generate_length = int(max_generate_length)
         self.max_sequence_length = int(max_sequence_length)
         self.vocoder_merge_steps = int(vocoder_merge_steps)
@@ -122,6 +130,9 @@ class DotsTtsRuntime:
             self.optimize,
             max_sequence_length=self.max_sequence_length,
         )
+        self._prompt_audio_cache: OrderedDict[
+            tuple[str, int, int], torch.Tensor
+        ] = OrderedDict()
         self.sample_rate = int(self.model.config.vocoder.sample_rate)
         logger.info(
             logc(
@@ -510,10 +521,29 @@ class DotsTtsRuntime:
         ).hexdigest()
         return digest[:16]
 
+    _PROMPT_AUDIO_CACHE_MAX_ENTRIES = 8
+
     def _load_prompt_audio(
         self,
         prompt_audio_path: str,
     ) -> torch.Tensor:
+        try:
+            stat = Path(prompt_audio_path).expanduser().resolve().stat()
+            cache_key: tuple[str, int, int] | None = (
+                str(Path(prompt_audio_path).expanduser().resolve()),
+                stat.st_mtime_ns,
+                stat.st_size,
+            )
+        except OSError:
+            cache_key = None
+        if cache_key is not None:
+            cached = self._prompt_audio_cache.get(cache_key)
+            if cached is not None:
+                self._prompt_audio_cache.move_to_end(cache_key)
+                logger.debug(
+                    logc("io", "Prompt audio cache hit: path={}"), cache_key[0]
+                )
+                return cached
         logger.debug(logc("io", "Loading prompt audio: path={}"), prompt_audio_path)
         prompt_audio, sample_rate = librosa.load(prompt_audio_path, sr=None, mono=True)
         prompt_audio = librosa.effects.trim(prompt_audio, top_db=30)[0]
@@ -536,6 +566,14 @@ class DotsTtsRuntime:
             self.sample_rate,
             prompt_audio.shape[-1],
         )
+        if cache_key is not None:
+            self._prompt_audio_cache[cache_key] = prompt_audio
+            self._prompt_audio_cache.move_to_end(cache_key)
+            while (
+                len(self._prompt_audio_cache)
+                > self._PROMPT_AUDIO_CACHE_MAX_ENTRIES
+            ):
+                self._prompt_audio_cache.popitem(last=False)
         return prompt_audio
 
     def _resolve_language(

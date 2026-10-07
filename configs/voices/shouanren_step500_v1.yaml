@@ -18,16 +18,17 @@ prompt:
   text: 或许这就是泰缇斯系统冒风险也要将悲鸣与噬亡星结合的原因……
 runtime:
   precision: bfloat16
-  optimize: false
+  optimize: true
   max_generate_length: 500
   max_sequence_length: 2048
   vocoder_merge_steps: 4
-  warmup_on_optimize: false
+  warmup_on_optimize: true
   merge_lora: true
 generation:
   language: chinese
   template_name: tts
   normalize_text: false
+  soften_emphasis: true
   speaker_scale: 1.5
   ode_method: euler
   num_steps: 16

@@ -56,6 +56,7 @@ class GenerationSpec(BaseModel):
     language: str = Field(min_length=1)
     template_name: str = Field(min_length=1)
     normalize_text: bool
+    soften_emphasis: bool = False
     speaker_scale: float = Field(ge=0.0, le=5.0)
     ode_method: str = Field(min_length=1)
     num_steps: int = Field(ge=1, le=100)

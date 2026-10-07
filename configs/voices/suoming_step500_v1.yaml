@@ -1,0 +1,46 @@
+schema_version: 1
+profile_version: 2
+model_id: suoming_step500_v1
+display_name: 锁暝 · Step 500
+description: SOAR + 锁暝 v1 数据集（160 条人工审核：71 favor + 89 剧情，3.7 主线 ASR 补文本经人工校对）Step-500 LoRA；25s 谛天鉴质心参考（CAM++ 余弦 0.967 全库最典型句）；Euler 16 步，v11 后期（100Hz 低切 / 频谱稳定器 7帧@0.4 轻度压帧间颤 / -2dB@340Hz 去泥 / +1.5dB@3.2k 清晰度 / +2dB@6k 空气架 / 220ms 小房间氛围 / 参考响度探针校准），soften_emphasis 去感叹号
+base_model:
+  path: pretrained_models/dots.tts-soar
+  revision: 2f9b3e18d70d670d4c701da2dc55ded5755815ce
+adapter:
+  path: data/work/suoming/suoming_lora_v1/checkpoint-00000500/model
+  format: dots_tts_trainable_delta
+  training_step: 500
+  weights_sha256: d6ffc625f7def0358665e6a2203ebaa9c01a6af6dc6cff6f0f7aa4d9cfe5e251
+  metadata_sha256: fbd3501c70b61015c04edb72b45bc5884d8f1948a65f28ad9c2af4f7d15f6105
+prompt:
+  audio_path: data/inbox/锁暝/中立_neutral/【中立_neutral】谛天鉴除了处理岁主事务，也掌管天文、历法。各州分鉴各有职责，梦州也有自己——唔……先前御者说对谛天鉴了解不多，不知不觉话多了些。总之，谛天鉴为岁主尽责，那自然，.wav
+  audio_sha256: c4322e3230ab952edb7cd456329cb5b48195d9f33c5459c0ba76d8d79d3a7f92
+  text: 谛天鉴除了处理岁主事务，也掌管天文、历法。各州分鉴各有职责，梦州也有自己——唔……先前御者说对谛天鉴了解不多，不知不觉话多了些。总之，谛天鉴为岁主尽责，那自然，御者若有所求，无论缘由，我都会回应。
+runtime:
+  precision: bfloat16
+  optimize: true
+  max_generate_length: 500
+  max_sequence_length: 2048
+  vocoder_merge_steps: 4
+  warmup_on_optimize: true
+  merge_lora: true
+generation:
+  language: chinese
+  template_name: tts
+  normalize_text: false
+  soften_emphasis: true
+  speaker_scale: 1.5
+  ode_method: euler
+  num_steps: 16
+  guidance_scale: 1.2
+  base_seed: 42
+  pause_ms: 250
+  max_chars: 120
+postprocess:
+  edge_trim_config: configs/lab/postprocess/generated_audio_edge_trim_v1.yaml
+  edge_trim_sha256: 50d90b34a1dd38d363471293aba9fb675570271e6c50f5051b0ee37ffc5436f4
+  voice_polish_config: configs/lab/postprocess/suoming_voice_polish_v11.yaml
+  voice_polish_sha256: cb8d9167158ccad008c0197f0c8a6d1856ad82fcfb4cf936b3925fafd50d14b7
+io:
+  input_dir: inputs/suoming_text
+  output_dir: outputs/suoming_audio

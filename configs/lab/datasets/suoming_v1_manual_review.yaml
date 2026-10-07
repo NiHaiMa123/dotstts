@@ -1,0 +1,20 @@
+schema_version: 1
+review_id: suoming_v1_freeze_review
+review_version: 1
+dataset_id: suoming
+dataset_version: 1
+analysis_run_id: e0a1c0aa-661e-4c66-901d-3576e5d34d3f
+candidate_snapshot_sha256: 06e27fb1b6baa71105e33a236c9d31551e426eb4c968316f8e0a7fccefb953f6
+review_batch_id: suoming-v1-freeze-review
+reviewed_at: '2026-10-06T12:41:47.390709Z'
+reviewer: freeze_speaker_dataset.py
+edge_decisions: []
+speaker_decisions:
+- asset_sha256: 8750d11958486ff3f3c0c2362476677a2b7b734d78e72a9cadc8417a6ca79606
+  review_status: confirmed_same_speaker
+  review_note: 'web corpus review: user kept (embedding boundary outlier rank 1, short
+    ASR line "成何体统"; user listened and confirmed same speaker)'
+- asset_sha256: b965f7ee47a28b4f279ef65aa5e1cc54a5452fb7efb2b5e1cecbe49ba9c78b21
+  review_status: confirmed_same_speaker
+  review_note: 'web corpus review: user kept (embedding boundary outlier rank 3, short
+    ASR line "就在心底对吧"; user listened and confirmed same speaker)'

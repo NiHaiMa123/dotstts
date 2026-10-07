@@ -18,16 +18,17 @@ prompt:
   text: 各位启程前，请先好好休养歇息一番。有什么想去的地方，尽可以逛逛。我要暂代云骑事务，无法奉陪了。
 runtime:
   precision: bfloat16
-  optimize: false
+  optimize: true
   max_generate_length: 128
   max_sequence_length: 1024
   vocoder_merge_steps: 4
-  warmup_on_optimize: false
+  warmup_on_optimize: true
   merge_lora: true
 generation:
   language: chinese
   template_name: tts
   normalize_text: false
+  soften_emphasis: true
   speaker_scale: 1.5
   ode_method: euler
   num_steps: 16

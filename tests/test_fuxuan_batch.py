@@ -5,16 +5,20 @@ import unittest
 from pathlib import Path
 
 import numpy as np
+import pyloudnorm as pyln
 import soundfile as sf
 
 from dots_tts_lab.fuxuan_batch import (
     BatchCancelled,
+    _calibrate_prompt_loudness,
     run_batch,
+    soften_emphasis_punctuation,
     split_text,
 )
 from dots_tts_lab.postprocess import (
     DEFAULT_BRIGHTNESS_GAIN_DB,
     EdgeTrimConfig,
+    VoicePolishConfig,
     apply_default_brightness,
 )
 from dots_tts_lab.standardization import true_peak_estimate
@@ -29,6 +33,23 @@ class FakeRuntime:
         return {
             "audio": np.full(4_800, 0.1, dtype=np.float32),
             "sample_rate": 48_000,
+        }
+
+
+class SineRuntime(FakeRuntime):
+    def __init__(self, amplitude: float) -> None:
+        super().__init__()
+        self.amplitude = amplitude
+
+    def generate(self, **kwargs: object) -> dict[str, object]:
+        self.calls.append(kwargs)
+        rate = 48_000
+        time = np.arange(rate, dtype=np.float64) / rate
+        return {
+            "audio": (self.amplitude * np.sin(2 * np.pi * 440.0 * time)).astype(
+                np.float32
+            ),
+            "sample_rate": rate,
         }
 
 
@@ -61,6 +82,60 @@ class TextSplittingTests(unittest.TestCase):
     def test_long_sentence_prefers_soft_boundary(self) -> None:
         result = split_text("甲" * 12 + "，" + "乙" * 15 + "。", max_chars=20)
         self.assertEqual(result, ["甲" * 12 + "，", "乙" * 15 + "。"])
+
+
+class EmphasisSofteningTests(unittest.TestCase):
+    def test_demotes_exclamation_to_period(self) -> None:
+        self.assertEqual(soften_emphasis_punctuation("你敢！胡说！！"), "你敢。胡说。")
+
+    def test_keeps_question_mark_when_stripping_emphasis(self) -> None:
+        self.assertEqual(soften_emphasis_punctuation("什么？！你说？"), "什么？你说？")
+
+    def test_collapses_break_runs_left_by_softening(self) -> None:
+        self.assertEqual(soften_emphasis_punctuation("走！，也好"), "走。也好")
+
+    def test_halfwidth_exclamation_is_softened(self) -> None:
+        self.assertEqual(soften_emphasis_punctuation("wait! stop!!"), "wait. stop.")
+
+    def test_run_batch_softens_segment_text_before_generate(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            input_dir = root / "input"
+            output_dir = root / "output"
+            input_dir.mkdir(parents=True)
+            (input_dir / "line.txt").write_text("开火！冷静点？", encoding="utf-8")
+            runtime = FakeRuntime()
+
+            run_batch(
+                runtime,
+                input_dir=input_dir,
+                output_dir=output_dir,
+                edge_trim_config=edge_trim_config(),
+                pause_ms=50,
+                soften_emphasis=True,
+            )
+
+            self.assertEqual(runtime.calls[0]["text"], "开火。")
+            self.assertEqual(runtime.calls[1]["text"], "冷静点？")
+
+    def test_run_batch_leaves_punctuation_when_disabled(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            input_dir = root / "input"
+            output_dir = root / "output"
+            input_dir.mkdir(parents=True)
+            (input_dir / "line.txt").write_text("开火！", encoding="utf-8")
+            runtime = FakeRuntime()
+
+            run_batch(
+                runtime,
+                input_dir=input_dir,
+                output_dir=output_dir,
+                edge_trim_config=edge_trim_config(),
+                pause_ms=50,
+            )
+
+            self.assertEqual(runtime.calls[0]["text"], "开火！")
 
 
 class BatchGenerationTests(unittest.TestCase):
@@ -139,6 +214,120 @@ class BatchGenerationTests(unittest.TestCase):
 
             self.assertFalse((output_dir / "cancel.wav").exists())
             self.assertFalse(any(output_dir.rglob("*.partial.wav")))
+
+
+def calibrated_polish_config() -> VoicePolishConfig:
+    return VoicePolishConfig.model_validate(
+        {
+            "schema_version": 1,
+            "config_id": "test_calibrated_polish",
+            "config_version": 1,
+            "brightness_crossover_hz": 8000.0,
+            "brightness_gain_db": 0.0,
+            "body_eq": {"center_hz": 210.0, "gain_db": 0.0, "q": 0.75},
+            "presence_eq": {"center_hz": 4000.0, "gain_db": 0.0, "q": 1.0},
+            "parallel_compressor": {
+                "threshold_dbfs": -24.0,
+                "ratio": 3.0,
+                "attack_ms": 12.0,
+                "release_ms": 140.0,
+                "makeup_gain_db": 0.0,
+                "mix": 0.10,
+                "gate_dbfs": -45.0,
+                "frame_ms": 10.0,
+            },
+            "deesser": {
+                "low_hz": 5000.0,
+                "high_hz": 10000.0,
+                "threshold_dbfs": -28.0,
+                "ratio": 2.0,
+                "maximum_reduction_db": 1.0,
+                "attack_ms": 5.0,
+                "release_ms": 80.0,
+                "frame_ms": 10.0,
+            },
+            "match_input_loudness": False,
+            "target_loudness_lufs": -17.0,
+            "prompt_loudness_calibration": {"maximum_gain_db": 6.0},
+            "maximum_loudness_adjustment_db": 6.0,
+            "true_peak_ceiling_dbtp": -1.5,
+            "true_peak_oversample": 4,
+        },
+        strict=True,
+    )
+
+
+class PromptLoudnessCalibrationBatchTests(unittest.TestCase):
+    def test_outputs_are_anchored_to_reference_loudness(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            input_dir = root / "input"
+            input_dir.mkdir()
+            output_dir = root / "output"
+            (input_dir / "line.txt").write_text("第一句。第二句！", encoding="utf-8")
+            rate = 48_000
+            time = np.arange(rate * 2, dtype=np.float64) / rate
+            reference = 0.12 * np.sin(2.0 * np.pi * 220.0 * time)
+            prompt_wav = root / "prompt.wav"
+            sf.write(prompt_wav, reference, rate, subtype="PCM_24")
+            runtime = SineRuntime(amplitude=0.2)
+
+            summary = run_batch(
+                runtime,
+                input_dir=input_dir,
+                output_dir=output_dir,
+                edge_trim_config=edge_trim_config(),
+                pause_ms=0,
+                prompt_audio_path=prompt_wav,
+                prompt_text="参考台词。",
+                voice_polish_config=calibrated_polish_config(),
+            )
+
+            calibration = summary["loudness_calibration"]
+            self.assertEqual(calibration["status"], "ok")
+            self.assertLess(calibration["calibration_gain_db"], 0.0)
+            self.assertEqual(len(summary["generated"]), 1)
+            processing = summary["generated"][0]["processing"]
+            self.assertEqual(processing["loudness_mode"], "prompt_calibrated")
+            self.assertEqual(
+                processing["calibration_gain_db"],
+                calibration["calibration_gain_db"],
+            )
+            output, output_rate = sf.read(output_dir / "line.wav")
+            reference_lufs = pyln.Meter(rate).integrated_loudness(reference)
+            self.assertAlmostEqual(
+                pyln.Meter(output_rate).integrated_loudness(output),
+                reference_lufs,
+                delta=0.5,
+            )
+            # One probe segment plus the two real segments were rendered.
+            self.assertEqual(len(runtime.calls), 3)
+            self.assertEqual(runtime.calls[0]["text"], "参考台词。")
+
+    def test_missing_prompt_audio_falls_back_to_target_loudness(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            gain, report = _calibrate_prompt_loudness(
+                SineRuntime(amplitude=0.2),
+                prompt_audio_path=root / "missing.wav",
+                prompt_text="参考台词。",
+                voice_polish_config=calibrated_polish_config(),
+                edge_trim_config=edge_trim_config(),
+                base_seed=42,
+                pause_ms=0,
+                max_chars=120,
+                num_steps=16,
+                language="chinese",
+                template_name="tts",
+                normalize_text=False,
+                soften_emphasis=False,
+                speaker_scale=1.5,
+                ode_method="euler",
+                guidance_scale=1.2,
+                cancelled=None,
+            )
+            self.assertIsNone(gain)
+            self.assertEqual(report["status"], "reference_unavailable")
 
 
 class BrightnessProcessingTests(unittest.TestCase):

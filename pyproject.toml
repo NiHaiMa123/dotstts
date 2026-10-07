@@ -64,6 +64,9 @@ dependencies = [
     # Pynini, pulled in by WeTextProcessing, does not publish Windows wheels.
     # Text normalization is optional at runtime and is loaded lazily.
     "WeTextProcessing; platform_system != 'Windows'",
+    # torch.compile (runtime optimize=True) needs Triton; upstream publishes no
+    # Windows wheel, so use the matching community port on Windows only.
+    "triton-windows>=3.4.0,<3.5; platform_system == 'Windows'",
 ]
 
 [project.optional-dependencies]
